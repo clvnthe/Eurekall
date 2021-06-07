@@ -1,0 +1,21 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-eurekall-dev-134545-authRole",
+      "UnauthRoleArn": "arn:aws:iam::846531405186:role/amplify-eurekall-dev-134545-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::846531405186:role/amplify-eurekall-dev-134545-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-eurekall-dev-134545-deployment",
+      "UnauthRoleName": "amplify-eurekall-dev-134545-unauthRole",
+      "StackName": "amplify-eurekall-dev-134545",
+      "StackId": "arn:aws:cloudformation:us-east-1:846531405186:stack/amplify-eurekall-dev-134545/f4da1b00-bf77-11eb-b5fc-1288d43a03c2",
+      "AmplifyAppId": "d2sr2dn4n8ylol"
+    },
+    "categories": {
+      "auth": {
+        "eurekalld04f353f": {},
+        "eurekall7887d23e": {}
+      }
+    }
+  }
+}
