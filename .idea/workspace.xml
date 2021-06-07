@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="graphql table update" />
+    <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="Includded consolelog">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/navigations/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/navigations/index.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -33,7 +36,7 @@
       <option name="presentableId" value="Default" />
       <updated>1623049476872</updated>
       <workItem from="1623049478696" duration="21000" />
-      <workItem from="1623049504984" duration="13865000" />
+      <workItem from="1623049504984" duration="16774000" />
     </task>
     <task id="LOCAL-00001" summary="miscellaneous changes please ignore">
       <created>1623057973234</created>
@@ -49,7 +52,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623068779746</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Includded consolelog">
+      <created>1623073064364</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1623073064364</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -69,6 +79,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="miscellaneous changes please ignore" />
     <MESSAGE value="graphql table update" />
-    <option name="LAST_COMMIT_MESSAGE" value="graphql table update" />
+    <MESSAGE value="Includded consolelog" />
+    <option name="LAST_COMMIT_MESSAGE" value="Includded consolelog" />
   </component>
 </project>

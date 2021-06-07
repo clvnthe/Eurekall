@@ -25,14 +25,6 @@ Amplify.configure(awsconfig);
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
 
-/*async function signOut() {
-  try {
-    await Auth.signOut();
-  } catch (error) {
-    console.log("error signing out: ", error);
-  }
-}*/
-
 const AppNavContainer = () => {
   const CustomDefaultTheme = {
     ...CombinedDefaultTheme,
@@ -45,7 +37,7 @@ const AppNavContainer = () => {
       text: "#333333",
     },
   };
-  console.log("hi")
+
   const CustomDarkTheme = {
     ...CombinedDarkTheme,
     colors: {
@@ -71,23 +63,6 @@ const AppNavContainer = () => {
     userName: null,
     userToken: null,
   };
-
-  /*async function isSignedIn() {
-    try {
-      const user = await Auth.currentAuthenticatedUser();
-      //setIsLoggedIn(true);
-    } catch (error) {
-      console.log("error");
-    }
-  }*/
-
-  /*const preferences = React.useMemo(
-    () => ({
-      toggleTheme,
-      isThemeDark,
-    }),
-    [toggleTheme, isThemeDark]
-  );*/
 
   const loginReducer = (prevState, action) => {
     switch (action.type) {
@@ -127,7 +102,6 @@ const AppNavContainer = () => {
     () => ({
       logIn: async () => {
         const user = await Auth.currentAuthenticatedUser();
-        console.log(user);
         const userToken = String(
           user["signInUserSession"]["accessToken"]["jwtToken"]
         );
@@ -187,7 +161,7 @@ const AppNavContainer = () => {
     []
   );
 
-  /*useEffect(() => {
+  useEffect(() => {
     setTimeout(async () => {
       let userToken;
       userToken = null;
@@ -198,7 +172,7 @@ const AppNavContainer = () => {
       }
       dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
     }, 1000);
-  }, []);*/
+  }, []);
 
   return (
     <AuthContext.Provider value={authContext}>

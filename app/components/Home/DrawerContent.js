@@ -74,23 +74,9 @@ function DrawerContent(props) {
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
               icon={({ color, size }) => (
-                <Icon name="home-outline" color={color} size={size} />
-              )}
-              label="Home"
-              onPress={() => {}}
-            ></DrawerItem>
-            <DrawerItem
-              icon={({ color, size }) => (
                 <Icon name="account-outline" color={color} size={size} />
               )}
               label="Profile"
-              onPress={() => {}}
-            ></DrawerItem>
-            <DrawerItem
-              icon={({ color, size }) => (
-                <Icon name="trophy-outline" color={color} size={size} />
-              )}
-              label="Leaderboard"
               onPress={() => {}}
             ></DrawerItem>
             <DrawerItem
