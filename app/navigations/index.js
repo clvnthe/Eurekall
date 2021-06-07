@@ -45,7 +45,7 @@ const AppNavContainer = () => {
       text: "#333333",
     },
   };
-
+  console.log("hi")
   const CustomDarkTheme = {
     ...CombinedDarkTheme,
     colors: {
