@@ -1,77 +1,46 @@
-import React, { useState } from "react";
+import React from "react";
 import { StatusBar } from "expo-status-bar";
 import { Avatar, Portal, Modal, FAB, useTheme } from "react-native-paper";
 import ReviewFormComponent from "../common/reviewForm";
 import CustomCard from "../common/CustomCard";
-import { FlatList, SafeAreaView } from "react-native";
-import colors from "../../../assets/theme/colors";
+import { FlatList, SafeAreaView, Text, View } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
+import * as Decks from "../../../store/slices/deckSlice";
+import "react-native-get-random-values";
+import { nanoid } from "nanoid";
 
 function HomeComponent(props) {
-  const theme = useTheme();
+  const dispatch = useDispatch();
+  const decks = useSelector(Decks.getDecks);
 
-  const LeftContent = (props) => (
-    <Avatar.Icon
-      {...props}
-      icon="cards-playing-outline"
-      color={theme.colors.onPrimary}
-      backgroundColor={theme.colors.primary}
-    />
-  );
+  const createDeckHandler = (title, subtitle) => {
+    dispatch(Decks.createDeck(nanoid(), title, subtitle));
+    setVisible(false);
+  };
+
+  const theme = useTheme();
 
   const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
-  const [DATA, setDATA] = useState([
-    {
-      id: "bd7acbea-c1b1-46c2-aed5-3ad53abb28ba",
-      title: "First Item",
-      subtitle: "First subtitle",
-      body: "body",
-    },
-    {
-      id: "3ac68afc-c605-48d3-a4f8-fbd91aa97f63",
-      title: "Second Item",
-      subtitle: "Second subtitle",
-      body: "body",
-    },
-    {
-      id: "58694a0f-3da1-471f-bd96-145571e29d72",
-      title: "Third Item",
-      subtitle: "Third subtitle",
-      body: "body",
-    },
-  ]);
-
-  const addCard = (card) => {
-    card.id = Math.random().toString(); //improve on this id generator (from database or use third-party library)
-    setDATA((currentCards) => {
-      return [...currentCards, card];
-    });
-    setVisible(false);
+  const deleteDeckHandler = (id) => {
+    dispatch(Decks.deleteDeck(id));
   };
 
-  const deleteCard = (cardID) => {
-    setDATA((currentCards) => {
-      return currentCards.filter((card) => card.id !== cardID);
-    });
-  };
-
-  const renderItem = ({ item }) => (
+  const renderItem = (deck) => (
     <CustomCard
-      title={item.title}
-      subtitle={item.subtitle}
-      LeftContent={LeftContent}
-      body={item.body}
-      deleteCard={deleteCard}
-      id={item.id}
+      title={deck.item.title}
+      subtitle={deck.item.subtitle}
+      deleteCard={deleteDeckHandler}
+      id={deck.item.id}
     />
   );
 
   return (
     <SafeAreaView
       style={{
-        backgroundColor: theme.colors.border,
+        backgroundColor: theme.colors.background,
         ...props.style,
       }}
       {...props}
@@ -80,6 +49,18 @@ function HomeComponent(props) {
         backgroundColor={theme.colors.background}
         style={theme.dark ? "light" : "dark"}
       />
+      <View
+        style={{
+          height: 50,
+          margin: 16,
+          marginRight: 40,
+          backgroundColor: theme.colors.background,
+        }}
+      >
+        <Text style={{ fontSize: 32, fontFamily: "sans-serif-light" }}>
+          Here are your decks
+        </Text>
+      </View>
       <FlatList
         ListHeaderComponent={
           <Portal>
@@ -101,14 +82,13 @@ function HomeComponent(props) {
                 marginVertical: 6,
               }}
             >
-              <ReviewFormComponent addCard={addCard} />
+              <ReviewFormComponent createDeckHandler={createDeckHandler} />
             </Modal>
             <FAB
               style={{
-                position: "absolute",
+                alignSelf: "flex-end",
                 margin: 16,
-                right: 0,
-                bottom: 0,
+                bottom: -550,
                 backgroundColor: theme.colors.secondary,
               }}
               icon="plus"
@@ -117,7 +97,7 @@ function HomeComponent(props) {
             />
           </Portal>
         }
-        data={DATA}
+        data={decks}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />

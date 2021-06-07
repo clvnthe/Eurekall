@@ -1,9 +1,9 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 
-import HomeNavigator from "./HomeNavigator";
-import { HOME_NAVIGATOR } from "../constants/routeNames";
+import { TAB_NAVIGATOR } from "../constants/routeNames";
 import DrawerContent from "../components/Home/DrawerContent";
+import { TabNavigator } from "./TabNavigator";
 
 const DrawerNavigator = () => {
   const Drawer = createDrawerNavigator();
@@ -11,8 +11,8 @@ const DrawerNavigator = () => {
   return (
     <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
       <Drawer.Screen
-        name={HOME_NAVIGATOR}
-        component={HomeNavigator}
+        name={TAB_NAVIGATOR}
+        component={TabNavigator}
       ></Drawer.Screen>
     </Drawer.Navigator>
   );

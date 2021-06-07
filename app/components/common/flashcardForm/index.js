@@ -1,47 +1,47 @@
 import React from "react";
 import { View } from "react-native";
-import { TextInput, Text, useTheme } from "react-native-paper";
+import { TextInput } from "react-native-paper";
 import { Formik } from "formik";
 import CustomButton from "../CustomButton";
 
-function ReviewFormComponent({ createDeckHandler }) {
+function FlashCardForm({ createFlashcardHandler }) {
   return (
     <View>
       <Formik
-        initialValues={{
-          title: "",
-          subtitle: "",
-        }}
+        initialValues={{ question: "", answer: "" }}
         onSubmit={(values, actions) => {
           actions.resetForm();
-          createDeckHandler(values.title, values.subtitle);
+          createFlashcardHandler(values.question, values.answer);
         }}
       >
         {(props) => (
           <View>
             <TextInput
               mode="outlined"
-              label="Deck Title"
+              label="Flashcard Question"
               style={{
                 marginTop: -5,
                 padding: 10,
               }}
-              placeholder="Enter deck title"
-              onChangeText={props.handleChange("title")}
-              value={props.values.title}
-              left={<TextInput.Icon name="format-title" />}
+              placeholder="Enter question"
+              onChangeText={props.handleChange("question")}
+              value={props.values.question}
+              left={<TextInput.Icon name="alpha-q-box" />}
             ></TextInput>
             <TextInput
               mode="outlined"
-              label="Deck Subtitle"
+              label="Flashcard Answer"
+              multiline={true}
+              numberOfLines={10}
+              textAlignVertical="top"
               style={{
                 marginTop: -10,
                 padding: 10,
               }}
-              placeholder="Enter deck subtitle"
-              onChangeText={props.handleChange("subtitle")}
-              value={props.values.subtitle}
-              left={<TextInput.Icon name="subtitles" />}
+              placeholder="Enter answer"
+              onChangeText={props.handleChange("answer")}
+              value={props.values.answer}
+              left={<TextInput.Icon name="alpha-a-box" />}
             ></TextInput>
             <View
               style={{
@@ -62,4 +62,4 @@ function ReviewFormComponent({ createDeckHandler }) {
   );
 }
 
-export default ReviewFormComponent;
+export default FlashCardForm;

@@ -5,4 +5,7 @@ export const CONFIRM_REGISTRATION = "ConfirmRegistration";
 export const FORGOTPASSWORD = "ForgotPassword";
 export const RESETPASSWORD = "ResetPasssword";
 export const HOME_NAVIGATOR = "Home";
+export const DRAWER_NAVIGATOR = "Drawer";
+export const TAB_NAVIGATOR = "Tab";
 export const HOME_MAIN = "HomeMain";
+export const VIEWING = "Viewing";
