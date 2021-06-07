@@ -1,16 +1,16 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateBlog = /* GraphQL */ `
-  subscription OnCreateBlog {
-    onCreateBlog {
+export const onCreateUser = /* GraphQL */ `
+  subscription OnCreateUser {
+    onCreateUser {
       id
-      name
-      posts {
+      email
+      decks {
         items {
           id
           title
-          blogID
+          userID
           createdAt
           updatedAt
         }
@@ -21,16 +21,16 @@ export const onCreateBlog = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateBlog = /* GraphQL */ `
-  subscription OnUpdateBlog {
-    onUpdateBlog {
+export const onUpdateUser = /* GraphQL */ `
+  subscription OnUpdateUser {
+    onUpdateUser {
       id
-      name
-      posts {
+      email
+      decks {
         items {
           id
           title
-          blogID
+          userID
           createdAt
           updatedAt
         }
@@ -41,16 +41,16 @@ export const onUpdateBlog = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteBlog = /* GraphQL */ `
-  subscription OnDeleteBlog {
-    onDeleteBlog {
+export const onDeleteUser = /* GraphQL */ `
+  subscription OnDeleteUser {
+    onDeleteUser {
       id
-      name
-      posts {
+      email
+      decks {
         items {
           id
           title
-          blogID
+          userID
           createdAt
           updatedAt
         }
@@ -61,26 +61,27 @@ export const onDeleteBlog = /* GraphQL */ `
     }
   }
 `;
-export const onCreatePost = /* GraphQL */ `
-  subscription OnCreatePost {
-    onCreatePost {
+export const onCreateDeck = /* GraphQL */ `
+  subscription OnCreateDeck {
+    onCreateDeck {
       id
       title
-      blogID
-      blog {
+      userID
+      user {
         id
-        name
-        posts {
+        email
+        decks {
           nextToken
         }
         createdAt
         updatedAt
       }
-      comments {
+      questions {
         items {
           id
-          postID
+          deckID
           content
+          contentans
           createdAt
           updatedAt
         }
@@ -91,26 +92,27 @@ export const onCreatePost = /* GraphQL */ `
     }
   }
 `;
-export const onUpdatePost = /* GraphQL */ `
-  subscription OnUpdatePost {
-    onUpdatePost {
+export const onUpdateDeck = /* GraphQL */ `
+  subscription OnUpdateDeck {
+    onUpdateDeck {
       id
       title
-      blogID
-      blog {
+      userID
+      user {
         id
-        name
-        posts {
+        email
+        decks {
           nextToken
         }
         createdAt
         updatedAt
       }
-      comments {
+      questions {
         items {
           id
-          postID
+          deckID
           content
+          contentans
           createdAt
           updatedAt
         }
@@ -121,26 +123,27 @@ export const onUpdatePost = /* GraphQL */ `
     }
   }
 `;
-export const onDeletePost = /* GraphQL */ `
-  subscription OnDeletePost {
-    onDeletePost {
+export const onDeleteDeck = /* GraphQL */ `
+  subscription OnDeleteDeck {
+    onDeleteDeck {
       id
       title
-      blogID
-      blog {
+      userID
+      user {
         id
-        name
-        posts {
+        email
+        decks {
           nextToken
         }
         createdAt
         updatedAt
       }
-      comments {
+      questions {
         items {
           id
-          postID
+          deckID
           content
+          contentans
           createdAt
           updatedAt
         }
@@ -151,82 +154,85 @@ export const onDeletePost = /* GraphQL */ `
     }
   }
 `;
-export const onCreateComment = /* GraphQL */ `
-  subscription OnCreateComment {
-    onCreateComment {
+export const onCreateQuestion = /* GraphQL */ `
+  subscription OnCreateQuestion {
+    onCreateQuestion {
       id
-      postID
-      post {
+      deckID
+      deck {
         id
         title
-        blogID
-        blog {
+        userID
+        user {
           id
-          name
+          email
           createdAt
           updatedAt
         }
-        comments {
+        questions {
           nextToken
         }
         createdAt
         updatedAt
       }
       content
+      contentans
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateComment = /* GraphQL */ `
-  subscription OnUpdateComment {
-    onUpdateComment {
+export const onUpdateQuestion = /* GraphQL */ `
+  subscription OnUpdateQuestion {
+    onUpdateQuestion {
       id
-      postID
-      post {
+      deckID
+      deck {
         id
         title
-        blogID
-        blog {
+        userID
+        user {
           id
-          name
+          email
           createdAt
           updatedAt
         }
-        comments {
+        questions {
           nextToken
         }
         createdAt
         updatedAt
       }
       content
+      contentans
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteComment = /* GraphQL */ `
-  subscription OnDeleteComment {
-    onDeleteComment {
+export const onDeleteQuestion = /* GraphQL */ `
+  subscription OnDeleteQuestion {
+    onDeleteQuestion {
       id
-      postID
-      post {
+      deckID
+      deck {
         id
         title
-        blogID
-        blog {
+        userID
+        user {
           id
-          name
+          email
           createdAt
           updatedAt
         }
-        comments {
+        questions {
           nextToken
         }
         createdAt
         updatedAt
       }
       content
+      contentans
       createdAt
       updatedAt
     }

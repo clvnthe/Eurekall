@@ -1,16 +1,16 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getBlog = /* GraphQL */ `
-  query GetBlog($id: ID!) {
-    getBlog(id: $id) {
+export const getUser = /* GraphQL */ `
+  query GetUser($id: ID!) {
+    getUser(id: $id) {
       id
-      name
-      posts {
+      email
+      decks {
         items {
           id
           title
-          blogID
+          userID
           createdAt
           updatedAt
         }
@@ -21,17 +21,17 @@ export const getBlog = /* GraphQL */ `
     }
   }
 `;
-export const listBlogs = /* GraphQL */ `
-  query ListBlogs(
-    $filter: ModelBlogFilterInput
+export const listUsers = /* GraphQL */ `
+  query ListUsers(
+    $filter: ModelUserFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listBlogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
-        posts {
+        email
+        decks {
           nextToken
         }
         createdAt
@@ -41,26 +41,27 @@ export const listBlogs = /* GraphQL */ `
     }
   }
 `;
-export const getPost = /* GraphQL */ `
-  query GetPost($id: ID!) {
-    getPost(id: $id) {
+export const getDeck = /* GraphQL */ `
+  query GetDeck($id: ID!) {
+    getDeck(id: $id) {
       id
       title
-      blogID
-      blog {
+      userID
+      user {
         id
-        name
-        posts {
+        email
+        decks {
           nextToken
         }
         createdAt
         updatedAt
       }
-      comments {
+      questions {
         items {
           id
-          postID
+          deckID
           content
+          contentans
           createdAt
           updatedAt
         }
@@ -71,24 +72,24 @@ export const getPost = /* GraphQL */ `
     }
   }
 `;
-export const listPosts = /* GraphQL */ `
-  query ListPosts(
-    $filter: ModelPostFilterInput
+export const listDecks = /* GraphQL */ `
+  query ListDecks(
+    $filter: ModelDeckFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPosts(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listDecks(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         title
-        blogID
-        blog {
+        userID
+        user {
           id
-          name
+          email
           createdAt
           updatedAt
         }
-        comments {
+        questions {
           nextToken
         }
         createdAt
@@ -98,51 +99,53 @@ export const listPosts = /* GraphQL */ `
     }
   }
 `;
-export const getComment = /* GraphQL */ `
-  query GetComment($id: ID!) {
-    getComment(id: $id) {
+export const getQuestion = /* GraphQL */ `
+  query GetQuestion($id: ID!) {
+    getQuestion(id: $id) {
       id
-      postID
-      post {
+      deckID
+      deck {
         id
         title
-        blogID
-        blog {
+        userID
+        user {
           id
-          name
+          email
           createdAt
           updatedAt
         }
-        comments {
+        questions {
           nextToken
         }
         createdAt
         updatedAt
       }
       content
+      contentans
       createdAt
       updatedAt
     }
   }
 `;
-export const listComments = /* GraphQL */ `
-  query ListComments(
-    $filter: ModelCommentFilterInput
+export const listQuestions = /* GraphQL */ `
+  query ListQuestions(
+    $filter: ModelQuestionFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listQuestions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        postID
-        post {
+        deckID
+        deck {
           id
           title
-          blogID
+          userID
           createdAt
           updatedAt
         }
         content
+        contentans
         createdAt
         updatedAt
       }

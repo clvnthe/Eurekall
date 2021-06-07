@@ -1,19 +1,19 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createBlog = /* GraphQL */ `
-  mutation CreateBlog(
-    $input: CreateBlogInput!
-    $condition: ModelBlogConditionInput
+export const createUser = /* GraphQL */ `
+  mutation CreateUser(
+    $input: CreateUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    createBlog(input: $input, condition: $condition) {
+    createUser(input: $input, condition: $condition) {
       id
-      name
-      posts {
+      email
+      decks {
         items {
           id
           title
-          blogID
+          userID
           createdAt
           updatedAt
         }
@@ -24,19 +24,19 @@ export const createBlog = /* GraphQL */ `
     }
   }
 `;
-export const updateBlog = /* GraphQL */ `
-  mutation UpdateBlog(
-    $input: UpdateBlogInput!
-    $condition: ModelBlogConditionInput
+export const updateUser = /* GraphQL */ `
+  mutation UpdateUser(
+    $input: UpdateUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    updateBlog(input: $input, condition: $condition) {
+    updateUser(input: $input, condition: $condition) {
       id
-      name
-      posts {
+      email
+      decks {
         items {
           id
           title
-          blogID
+          userID
           createdAt
           updatedAt
         }
@@ -47,19 +47,19 @@ export const updateBlog = /* GraphQL */ `
     }
   }
 `;
-export const deleteBlog = /* GraphQL */ `
-  mutation DeleteBlog(
-    $input: DeleteBlogInput!
-    $condition: ModelBlogConditionInput
+export const deleteUser = /* GraphQL */ `
+  mutation DeleteUser(
+    $input: DeleteUserInput!
+    $condition: ModelUserConditionInput
   ) {
-    deleteBlog(input: $input, condition: $condition) {
+    deleteUser(input: $input, condition: $condition) {
       id
-      name
-      posts {
+      email
+      decks {
         items {
           id
           title
-          blogID
+          userID
           createdAt
           updatedAt
         }
@@ -70,29 +70,30 @@ export const deleteBlog = /* GraphQL */ `
     }
   }
 `;
-export const createPost = /* GraphQL */ `
-  mutation CreatePost(
-    $input: CreatePostInput!
-    $condition: ModelPostConditionInput
+export const createDeck = /* GraphQL */ `
+  mutation CreateDeck(
+    $input: CreateDeckInput!
+    $condition: ModelDeckConditionInput
   ) {
-    createPost(input: $input, condition: $condition) {
+    createDeck(input: $input, condition: $condition) {
       id
       title
-      blogID
-      blog {
+      userID
+      user {
         id
-        name
-        posts {
+        email
+        decks {
           nextToken
         }
         createdAt
         updatedAt
       }
-      comments {
+      questions {
         items {
           id
-          postID
+          deckID
           content
+          contentans
           createdAt
           updatedAt
         }
@@ -103,29 +104,30 @@ export const createPost = /* GraphQL */ `
     }
   }
 `;
-export const updatePost = /* GraphQL */ `
-  mutation UpdatePost(
-    $input: UpdatePostInput!
-    $condition: ModelPostConditionInput
+export const updateDeck = /* GraphQL */ `
+  mutation UpdateDeck(
+    $input: UpdateDeckInput!
+    $condition: ModelDeckConditionInput
   ) {
-    updatePost(input: $input, condition: $condition) {
+    updateDeck(input: $input, condition: $condition) {
       id
       title
-      blogID
-      blog {
+      userID
+      user {
         id
-        name
-        posts {
+        email
+        decks {
           nextToken
         }
         createdAt
         updatedAt
       }
-      comments {
+      questions {
         items {
           id
-          postID
+          deckID
           content
+          contentans
           createdAt
           updatedAt
         }
@@ -136,29 +138,30 @@ export const updatePost = /* GraphQL */ `
     }
   }
 `;
-export const deletePost = /* GraphQL */ `
-  mutation DeletePost(
-    $input: DeletePostInput!
-    $condition: ModelPostConditionInput
+export const deleteDeck = /* GraphQL */ `
+  mutation DeleteDeck(
+    $input: DeleteDeckInput!
+    $condition: ModelDeckConditionInput
   ) {
-    deletePost(input: $input, condition: $condition) {
+    deleteDeck(input: $input, condition: $condition) {
       id
       title
-      blogID
-      blog {
+      userID
+      user {
         id
-        name
-        posts {
+        email
+        decks {
           nextToken
         }
         createdAt
         updatedAt
       }
-      comments {
+      questions {
         items {
           id
-          postID
+          deckID
           content
+          contentans
           createdAt
           updatedAt
         }
@@ -169,91 +172,94 @@ export const deletePost = /* GraphQL */ `
     }
   }
 `;
-export const createComment = /* GraphQL */ `
-  mutation CreateComment(
-    $input: CreateCommentInput!
-    $condition: ModelCommentConditionInput
+export const createQuestion = /* GraphQL */ `
+  mutation CreateQuestion(
+    $input: CreateQuestionInput!
+    $condition: ModelQuestionConditionInput
   ) {
-    createComment(input: $input, condition: $condition) {
+    createQuestion(input: $input, condition: $condition) {
       id
-      postID
-      post {
+      deckID
+      deck {
         id
         title
-        blogID
-        blog {
+        userID
+        user {
           id
-          name
+          email
           createdAt
           updatedAt
         }
-        comments {
+        questions {
           nextToken
         }
         createdAt
         updatedAt
       }
       content
+      contentans
       createdAt
       updatedAt
     }
   }
 `;
-export const updateComment = /* GraphQL */ `
-  mutation UpdateComment(
-    $input: UpdateCommentInput!
-    $condition: ModelCommentConditionInput
+export const updateQuestion = /* GraphQL */ `
+  mutation UpdateQuestion(
+    $input: UpdateQuestionInput!
+    $condition: ModelQuestionConditionInput
   ) {
-    updateComment(input: $input, condition: $condition) {
+    updateQuestion(input: $input, condition: $condition) {
       id
-      postID
-      post {
+      deckID
+      deck {
         id
         title
-        blogID
-        blog {
+        userID
+        user {
           id
-          name
+          email
           createdAt
           updatedAt
         }
-        comments {
+        questions {
           nextToken
         }
         createdAt
         updatedAt
       }
       content
+      contentans
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteComment = /* GraphQL */ `
-  mutation DeleteComment(
-    $input: DeleteCommentInput!
-    $condition: ModelCommentConditionInput
+export const deleteQuestion = /* GraphQL */ `
+  mutation DeleteQuestion(
+    $input: DeleteQuestionInput!
+    $condition: ModelQuestionConditionInput
   ) {
-    deleteComment(input: $input, condition: $condition) {
+    deleteQuestion(input: $input, condition: $condition) {
       id
-      postID
-      post {
+      deckID
+      deck {
         id
         title
-        blogID
-        blog {
+        userID
+        user {
           id
-          name
+          email
           createdAt
           updatedAt
         }
-        comments {
+        questions {
           nextToken
         }
         createdAt
         updatedAt
       }
       content
+      contentans
       createdAt
       updatedAt
     }

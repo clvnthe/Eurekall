@@ -1,20 +1,21 @@
-type Blog @model {
+type User @model {
   id: ID!
-  name: String!
-  posts: [Post] @connection(keyName: "byBlog", fields: ["id"])
+  email: String!
+  decks: [Deck] @connection(keyName: "byUser", fields: ["id"])
 }
 
-type Post @model @key(name: "byBlog", fields: ["blogID"]) {
+type Deck @model @key(name: "byUser", fields: ["id"]) {
   id: ID!
   title: String!
-  blogID: ID!
-  blog: Blog @connection(fields: ["blogID"])
-  comments: [Comment] @connection(keyName: "byPost", fields: ["id"])
+  userID: ID!
+  user: User @connection(fields: ["userID"])
+  questions: [Question] @connection(keyName: "byDeck", fields: ["id"])
 }
 
-type Comment @model @key(name: "byPost", fields: ["postID", "content"]) {
+type Question @model @key(name: "byDeck", fields: ["deckID", "content","contentans"]) {
   id: ID!
-  postID: ID!
-  post: Post @connection(fields: ["postID"])
+  deckID: ID!
+  deck: Deck @connection(fields: ["deckID"])
   content: String!
+  contentans: String!
 }
