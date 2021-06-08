@@ -1,15 +1,8 @@
 import React, { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useNavigation, useTheme } from "@react-navigation/native";
-import { Divider, Surface, Title } from "react-native-paper";
+import { Surface, Title, Text } from "react-native-paper";
 import { DECKS } from "../../constants/routeNames";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -40,38 +33,127 @@ function HomeComponent(props) {
         backgroundColor={theme.colors.background}
         style={theme.dark ? "light" : "dark"}
       />
-      <Title style={styles.title}>Hi {userInfo[1]}, Welcome Home</Title>
-      <Divider />
-      <View style={{ paddingTop: 10, paddingBottom: 10 }}>
-        <Text style={[styles.secondaryTitle, { color: theme.colors.text }]}>
-          Study tip of the day
+      <Title style={styles.title}>
+        <Text style={{ fontFamily: "sans-serif-thin" }}>hi </Text>
+        <Text style={{ fontWeight: "bold" }}>{userInfo[1]}</Text>
+        <Text style={{ fontFamily: "sans-serif-thin" }}>, welcome home!</Text>
+      </Title>
+      <Surface style={styles.firstContainer}>
+        <Text
+          style={[
+            styles.firstContainerText,
+            {
+              fontFamily: "sans-serif",
+            },
+          ]}
+        >
+          POINTS
         </Text>
-        <Surface style={styles.tipContainer}>
-          <Text style={styles.tipContainerText}>
-            The secret to getting ahead is getting started!
+        <Text
+          style={[
+            styles.firstContainerText,
+            {
+              fontFamily: "sans-serif-light",
+            },
+          ]}
+        >
+          800,000
+        </Text>
+      </Surface>
+      <Surface style={styles.secondContainer}>
+        <Text
+          style={[
+            styles.secondContainerText,
+            {
+              fontFamily: "sans-serif",
+              fontWeight: "bold",
+            },
+          ]}
+        >
+          #dailyadvice
+        </Text>
+        <Text
+          style={[
+            styles.secondContainerText,
+            {
+              fontFamily: "sans-serif",
+            },
+          ]}
+        >
+          the secret to getting ahead is getting started
+        </Text>
+        <Image
+          style={styles.secondContainerImage}
+          source={require("../../../assets/images/study_tip.png")}
+        ></Image>
+      </Surface>
+      <TouchableOpacity onPress={() => navigate(DECKS)}>
+        <Surface style={styles.thirdContainer}>
+          <Text
+            style={[
+              styles.thirdContainerText,
+              { fontSize: 30, fontFamily: "sans-serif" },
+            ]}
+          >
+            My Decks
+          </Text>
+          <Text
+            style={[
+              styles.thirdContainerText,
+              {
+                fontSize: 16,
+                color: theme.colors.primary,
+                top: 26,
+                fontFamily: "sans-serif-thin",
+              },
+            ]}
+          >
+            2 decks
           </Text>
           <Image
-            style={styles.tipContainerImage}
-            source={require("../../../assets/images/study_tip.png")}
+            style={styles.thirdContainerImage}
+            resizeMode="contain"
+            source={require("../../../assets/images/deckIcon.png")}
           ></Image>
         </Surface>
-      </View>
-      <Divider />
-      <View style={{ paddingTop: 10 }}>
-        <Text style={[styles.secondaryTitle, { color: theme.colors.text }]}>
-          View your decks!
-        </Text>
-        <TouchableOpacity onPress={() => navigate(DECKS)}>
-          <ImageBackground
-            style={styles.imageContainer}
-            blurRadius={3}
-            borderRadius={20}
-            source={require("../../../assets/images/deckbuttonbackground.png")}
-          >
-            <Text style={styles.imageText}>Decks</Text>
-          </ImageBackground>
-        </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
+      <Image
+        style={{ position: "absolute", height: 422, width: 422, left: -340 }}
+        source={require("../../../assets/images/bubble1.png")}
+      ></Image>
+      <Image
+        style={{
+          position: "absolute",
+          height: 44,
+          width: 44,
+          left: 40,
+          top: 350,
+        }}
+        resizeMode="contain"
+        source={require("../../../assets/images/bubble2.png")}
+      ></Image>
+      <Image
+        style={{
+          position: "absolute",
+          height: 44,
+          width: 44,
+          left: 10,
+          top: 400,
+        }}
+        resizeMode="contain"
+        source={require("../../../assets/images/bubble3.png")}
+      ></Image>
+      <Image
+        style={{
+          position: "absolute",
+          height: 67,
+          width: 67,
+          left: 25,
+          top: 450,
+        }}
+        resizeMode="contain"
+        source={require("../../../assets/images/bubble4.png")}
+      ></Image>
     </View>
   );
 }
@@ -84,53 +166,60 @@ const styles = StyleSheet.create({
     fontSize: 36,
     lineHeight: 40,
     paddingTop: 20,
-    paddingLeft: 20,
+    left: 100,
     width: 300,
   },
-  secondaryTitle: {
-    fontFamily: "sans-serif-light",
-    fontSize: 30,
-    fontWeight: "bold",
-    paddingLeft: 20,
-    paddingTop: 10,
-  },
-  tipContainer: {
-    height: 150,
-    width: 330,
-    alignSelf: "center",
-    backgroundColor: "#FBF4E2",
-    borderRadius: 20,
+  firstContainer: {
+    height: 100,
+    width: 311,
+    left: 100,
     elevation: 4,
+    backgroundColor: "#F5587B",
   },
-  tipContainerText: {
-    paddingRight: 20,
-    height: 141,
-    width: 250,
-    fontSize: 20,
-    fontFamily: "sans-serif-light",
-    textAlignVertical: "center",
-    textAlign: "right",
+  firstContainerText: {
+    left: 10,
+    top: 33,
+    color: "#ffffff",
+    fontSize: 16,
   },
-  tipContainerImage: {
-    position: "absolute",
-    height: 160,
-    width: 84,
+  secondContainer: {
+    height: 180,
+    width: 260,
+    left: 100,
+    elevation: 4,
+    backgroundColor: "#FF8A5C",
+  },
+  secondContainerText: {
+    width: 140,
+    left: 10,
+    top: 33,
+    color: "#ffffff",
+    fontSize: 18,
+  },
+  secondContainerImage: {
+    height: 175,
+    width: 150,
     transform: [{ scaleX: -1 }],
     alignSelf: "flex-end",
-    bottom: -9,
-    borderRadius: 20,
+    bottom: 76,
+    left: 30,
   },
-  imageContainer: {
-    height: 150,
-    width: 330,
-    alignSelf: "center",
-    justifyContent: "center",
+  thirdContainer: {
+    height: 140,
+    width: 260,
+    left: 100,
     elevation: 4,
+    backgroundColor: "#FFF591",
   },
-  imageText: {
-    textAlign: "center",
-    fontFamily: "sans-serif-light",
-    fontSize: 36,
-    color: "#ffffff",
+  thirdContainerText: {
+    left: 10,
+    top: 33,
+    fontWeight: "bold",
+  },
+  thirdContainerImage: {
+    height: 110,
+    width: 110,
+    alignSelf: "flex-end",
+    bottom: 40,
   },
 });
