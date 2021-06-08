@@ -52,24 +52,6 @@ function DeckComponent(props) {
         backgroundColor={theme.colors.background}
         style={theme.dark ? "light" : "dark"}
       />
-      <View
-        style={{
-          height: 50,
-          margin: 16,
-          marginRight: 40,
-          backgroundColor: theme.colors.background,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 32,
-            fontFamily: "sans-serif-light",
-            color: theme.colors.text,
-          }}
-        >
-          Here are your decks
-        </Text>
-      </View>
       <FlatList
         ListHeaderComponent={
           <Portal>
@@ -110,6 +92,7 @@ function DeckComponent(props) {
         data={decks}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
+        onEndReachedThreshold={500}
       />
     </SafeAreaView>
   );

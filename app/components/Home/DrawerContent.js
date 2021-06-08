@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { View, StyleSheet } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import {
@@ -18,9 +18,27 @@ import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { AuthContext } from "../../context/Provider";
 import Auth from "@aws-amplify/auth";
 import colors from "../../../assets/theme/colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function DrawerContent(props) {
-  const { logOut, toggleTheme, loginState } = React.useContext(AuthContext);
+  const { logOut, toggleTheme } = React.useContext(AuthContext);
+  const [userInfo, setUserInfo] = React.useState([]);
+
+  useEffect(() => {
+    setTimeout(async () => {
+      let user;
+      user = null;
+      try {
+        user = await AsyncStorage.getItem("userInfo").then((req) =>
+          JSON.parse(req)
+        );
+      } catch (err) {
+        console.log(err);
+      }
+      setUserInfo(user);
+      console.log(userInfo);
+    }, 0);
+  }, []);
 
   async function signOut() {
     try {
@@ -52,8 +70,8 @@ function DrawerContent(props) {
                 size={50}
               ></Avatar.Image>
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
-                <Title style={styles.title}>{loginState.name}</Title>
-                <Caption style={styles.caption}>@{loginState.userName}</Caption>
+                <Title style={styles.title}>{userInfo[1]}</Title>
+                <Caption style={styles.caption}>@{userInfo[2]}</Caption>
               </View>
             </View>
             <View style={styles.row}>

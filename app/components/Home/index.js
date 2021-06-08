@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import {
   Image,
@@ -9,11 +9,28 @@ import {
   View,
 } from "react-native";
 import { useNavigation, useTheme } from "@react-navigation/native";
-import { Divider, Title } from "react-native-paper";
+import { Divider, Surface, Title } from "react-native-paper";
 import { DECKS } from "../../constants/routeNames";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function HomeComponent(props) {
   const theme = useTheme();
+  const [userInfo, setUserInfo] = React.useState([]);
+
+  useEffect(() => {
+    setTimeout(async () => {
+      let user;
+      user = null;
+      try {
+        user = await AsyncStorage.getItem("userInfo").then((req) =>
+          JSON.parse(req)
+        );
+      } catch (err) {
+        console.log(err);
+      }
+      setUserInfo(user);
+    }, 0);
+  }, []);
 
   const { navigate } = useNavigation();
 
@@ -23,13 +40,13 @@ function HomeComponent(props) {
         backgroundColor={theme.colors.background}
         style={theme.dark ? "light" : "dark"}
       />
-      <Title style={styles.title}>Welcome Home</Title>
+      <Title style={styles.title}>Hi {userInfo[1]}, Welcome Home</Title>
       <Divider />
       <View style={{ paddingTop: 10, paddingBottom: 10 }}>
         <Text style={[styles.secondaryTitle, { color: theme.colors.text }]}>
           Study tip of the day
         </Text>
-        <View style={styles.tipContainer}>
+        <Surface style={styles.tipContainer}>
           <Text style={styles.tipContainerText}>
             The secret to getting ahead is getting started!
           </Text>
@@ -37,7 +54,7 @@ function HomeComponent(props) {
             style={styles.tipContainerImage}
             source={require("../../../assets/images/study_tip.png")}
           ></Image>
-        </View>
+        </Surface>
       </View>
       <Divider />
       <View style={{ paddingTop: 10 }}>
@@ -65,8 +82,10 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: "sans-serif-light",
     fontSize: 36,
-    paddingTop: 40,
+    lineHeight: 40,
+    paddingTop: 20,
     paddingLeft: 20,
+    width: 300,
   },
   secondaryTitle: {
     fontFamily: "sans-serif-light",
@@ -81,6 +100,7 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "#FBF4E2",
     borderRadius: 20,
+    elevation: 4,
   },
   tipContainerText: {
     paddingRight: 20,
@@ -105,6 +125,7 @@ const styles = StyleSheet.create({
     width: 330,
     alignSelf: "center",
     justifyContent: "center",
+    elevation: 4,
   },
   imageText: {
     textAlign: "center",

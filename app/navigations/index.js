@@ -111,6 +111,10 @@ const AppNavContainer = () => {
 
         try {
           await AsyncStorage.setItem("userToken", userToken);
+          await AsyncStorage.setItem(
+            "userInfo",
+            JSON.stringify([emailAddress, nameOfUser, userName])
+          );
         } catch (err) {
           console.log(err);
         }
@@ -121,42 +125,19 @@ const AppNavContainer = () => {
           id: userName,
           token: userToken,
         });
-        console.log(
-          "email:",
-          loginState.email,
-          "\n",
-          "name:",
-          loginState.name,
-          "\n",
-          "username:",
-          loginState.userName,
-          "\n",
-          "token:",
-          loginState.userToken
-        );
       },
       logOut: async () => {
         try {
           await AsyncStorage.removeItem("userToken");
+          await AsyncStorage.removeItem("userInfo");
         } catch (err) {
           console.log(err);
         }
         dispatch({ type: "LOGOUT" });
-        console.log(
-          "email:",
-          loginState.email,
-          "\n",
-          "name:",
-          loginState.name,
-          "\n",
-          "username:",
-          loginState.userName
-        );
       },
       toggleTheme: () => {
         setIsThemeDark((isThemeDark) => !isThemeDark);
       },
-      loginState,
     }),
     []
   );
