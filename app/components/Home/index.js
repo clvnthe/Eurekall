@@ -167,7 +167,7 @@ const styles = StyleSheet.create({
     lineHeight: 40,
     paddingTop: 20,
     left: 100,
-    width: 300,
+    width: 259,
   },
   firstContainer: {
     height: 100,
