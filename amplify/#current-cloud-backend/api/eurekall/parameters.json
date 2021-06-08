@@ -1,0 +1,11 @@
+{
+  "AppSyncApiName": "eurekall",
+  "DynamoDBBillingMode": "PAY_PER_REQUEST",
+  "DynamoDBEnableServerSideEncryption": false,
+  "AuthCognitoUserPoolId": {
+    "Fn::GetAtt": [
+      "autheurekall7887d23e",
+      "Outputs.UserPoolId"
+    ]
+  }
+}

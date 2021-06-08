@@ -1,0 +1,21 @@
+type User @model {
+  id: ID!
+  email: String!
+  decks: [Deck] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type Deck @model @key(name: "byUser", fields: ["id"]) {
+  id: ID!
+  title: String!
+  userID: ID!
+  user: User @connection(fields: ["userID"])
+  questions: [Question] @connection(keyName: "byDeck", fields: ["id"])
+}
+
+type Question @model @key(name: "byDeck", fields: ["deckID", "content","contentans"]) {
+  id: ID!
+  deckID: ID!
+  deck: Deck @connection(fields: ["deckID"])
+  content: String!
+  contentans: String!
+}

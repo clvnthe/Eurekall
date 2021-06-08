@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="Updated with redux and expo debugged">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -25,6 +26,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ChangesTree.GroupingKeys" value="module&#10;directory" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
@@ -43,7 +45,7 @@
       <workItem from="1623049478696" duration="21000" />
       <workItem from="1623049504984" duration="16774000" />
       <workItem from="1623076893897" duration="493000" />
-      <workItem from="1623113129362" duration="329000" />
+      <workItem from="1623113129362" duration="671000" />
     </task>
     <task id="LOCAL-00001" summary="miscellaneous changes please ignore">
       <created>1623057973234</created>
@@ -80,7 +82,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623077240756</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Updated with redux and expo debugged">
+      <created>1623113467025</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1623113467025</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

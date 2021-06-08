@@ -1,0 +1,106 @@
+#if( $util.isNull($ctx.source.id) )
+  #set( $result = {
+  "items":   []
+} )
+  #return($result)
+#else
+  #set( $limit = $util.defaultIfNull($context.args.limit, 100) )
+  #set( $query = {
+  "expression": "#partitionKey = :partitionKey",
+  "expressionNames": {
+      "#partitionKey": "deckID"
+  },
+  "expressionValues": {
+      ":partitionKey": {
+          "S": "$context.source.id"
+    }
+  }
+} )
+  ## [Start] Applying Key Condition **
+  #set( $sortKeyValue = "" )
+  #set( $sortKeyValue2 = "" )
+  #if( !$util.isNull($ctx.args.contentContentans) && !$util.isNull($ctx.args.contentContentans.beginsWith) )
+#if( !$util.isNull($ctx.args.contentContentans.beginsWith.content) ) #set( $sortKeyValue = "$ctx.args.contentContentans.beginsWith.content" ) #end
+#if( !$util.isNull($ctx.args.contentContentans.beginsWith.contentans) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.contentContentans.beginsWith.contentans" ) #end
+    #set( $query.expression = "$query.expression AND begins_with(#sortKey, :sortKey)" )
+    $util.qr($query.expressionNames.put("#sortKey", "content#contentans"))
+    $util.qr($query.expressionValues.put(":sortKey", { "S": "$sortKeyValue" }))
+  #end
+  #if( !$util.isNull($ctx.args.contentContentans) && !$util.isNull($ctx.args.contentContentans.between) )
+    #if( $ctx.args.contentContentans.between.size() != 2 )
+      $util.error("Argument contentContentans.between expects exactly 2 elements.")
+    #end
+#if( !$util.isNull($ctx.args.contentContentans.between[0].content) ) #set( $sortKeyValue = "$ctx.args.contentContentans.between[0].content" ) #end
+#if( !$util.isNull($ctx.args.contentContentans.between[0].contentans) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.contentContentans.between[0].contentans" ) #end
+#if( !$util.isNull($ctx.args.contentContentans.between[1].content) ) #set( $sortKeyValue2 = "$ctx.args.contentContentans.between[1].content" ) #end
+#if( !$util.isNull($ctx.args.contentContentans.between[1].contentans) ) #set( $sortKeyValue2 = "$sortKeyValue2#$ctx.args.contentContentans.between[1].contentans" ) #end
+    #set( $query.expression = "$query.expression AND #sortKey BETWEEN :sortKey0 AND :sortKey1" )
+    $util.qr($query.expressionNames.put("#sortKey", "content#contentans"))
+    $util.qr($query.expressionValues.put(":sortKey0", { "S": "$sortKeyValue" }))
+    $util.qr($query.expressionValues.put(":sortKey1", { "S": "$sortKeyValue2" }))
+  #end
+  #if( !$util.isNull($ctx.args.contentContentans) && !$util.isNull($ctx.args.contentContentans.eq) )
+#if( !$util.isNull($ctx.args.contentContentans.eq.content) ) #set( $sortKeyValue = "$ctx.args.contentContentans.eq.content" ) #end
+#if( !$util.isNull($ctx.args.contentContentans.eq.contentans) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.contentContentans.eq.contentans" ) #end
+    #set( $query.expression = "$query.expression AND #sortKey = :sortKey" )
+    $util.qr($query.expressionNames.put("#sortKey", "content#contentans"))
+    $util.qr($query.expressionValues.put(":sortKey", { "S": "$sortKeyValue" }))
+  #end
+  #if( !$util.isNull($ctx.args.contentContentans) && !$util.isNull($ctx.args.contentContentans.lt) )
+#if( !$util.isNull($ctx.args.contentContentans.lt.content) ) #set( $sortKeyValue = "$ctx.args.contentContentans.lt.content" ) #end
+#if( !$util.isNull($ctx.args.contentContentans.lt.contentans) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.contentContentans.lt.contentans" ) #end
+    #set( $query.expression = "$query.expression AND #sortKey < :sortKey" )
+    $util.qr($query.expressionNames.put("#sortKey", "content#contentans"))
+    $util.qr($query.expressionValues.put(":sortKey", { "S": "$sortKeyValue" }))
+  #end
+  #if( !$util.isNull($ctx.args.contentContentans) && !$util.isNull($ctx.args.contentContentans.le) )
+#if( !$util.isNull($ctx.args.contentContentans.le.content) ) #set( $sortKeyValue = "$ctx.args.contentContentans.le.content" ) #end
+#if( !$util.isNull($ctx.args.contentContentans.le.contentans) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.contentContentans.le.contentans" ) #end
+    #set( $query.expression = "$query.expression AND #sortKey <= :sortKey" )
+    $util.qr($query.expressionNames.put("#sortKey", "content#contentans"))
+    $util.qr($query.expressionValues.put(":sortKey", { "S": "$sortKeyValue" }))
+  #end
+  #if( !$util.isNull($ctx.args.contentContentans) && !$util.isNull($ctx.args.contentContentans.gt) )
+#if( !$util.isNull($ctx.args.contentContentans.gt.content) ) #set( $sortKeyValue = "$ctx.args.contentContentans.gt.content" ) #end
+#if( !$util.isNull($ctx.args.contentContentans.gt.contentans) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.contentContentans.gt.contentans" ) #end
+    #set( $query.expression = "$query.expression AND #sortKey > :sortKey" )
+    $util.qr($query.expressionNames.put("#sortKey", "content#contentans"))
+    $util.qr($query.expressionValues.put(":sortKey", { "S": "$sortKeyValue" }))
+  #end
+  #if( !$util.isNull($ctx.args.contentContentans) && !$util.isNull($ctx.args.contentContentans.ge) )
+#if( !$util.isNull($ctx.args.contentContentans.ge.content) ) #set( $sortKeyValue = "$ctx.args.contentContentans.ge.content" ) #end
+#if( !$util.isNull($ctx.args.contentContentans.ge.contentans) ) #set( $sortKeyValue = "$sortKeyValue#$ctx.args.contentContentans.ge.contentans" ) #end
+    #set( $query.expression = "$query.expression AND #sortKey >= :sortKey" )
+    $util.qr($query.expressionNames.put("#sortKey", "content#contentans"))
+    $util.qr($query.expressionValues.put(":sortKey", { "S": "$sortKeyValue" }))
+  #end
+
+
+  ## [End] Applying Key Condition **
+{
+      "version": "2018-05-29",
+      "operation": "Query",
+      "query":     $util.toJson($query),
+      "scanIndexForward":     #if( $context.args.sortDirection )
+      #if( $context.args.sortDirection == "ASC" )
+true
+      #else
+false
+      #end
+    #else
+true
+    #end,
+      "filter":     #if( $context.args.filter )
+$util.transform.toDynamoDBFilterExpression($ctx.args.filter)
+    #else
+null
+    #end,
+      "limit": $limit,
+      "nextToken":     #if( $context.args.nextToken )
+$util.toJson($context.args.nextToken)
+    #else
+null
+    #end,
+      "index": "byDeck"
+  }
+#end

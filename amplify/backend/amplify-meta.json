@@ -1,0 +1,64 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-eurekall-dev-134545-authRole",
+      "UnauthRoleArn": "arn:aws:iam::846531405186:role/amplify-eurekall-dev-134545-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::846531405186:role/amplify-eurekall-dev-134545-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-eurekall-dev-134545-deployment",
+      "UnauthRoleName": "amplify-eurekall-dev-134545-unauthRole",
+      "StackName": "amplify-eurekall-dev-134545",
+      "StackId": "arn:aws:cloudformation:us-east-1:846531405186:stack/amplify-eurekall-dev-134545/f4da1b00-bf77-11eb-b5fc-1288d43a03c2",
+      "AmplifyAppId": "d2sr2dn4n8ylol",
+      "AuthTriggerTemplateURL": ""
+    }
+  },
+  "auth": {
+    "eurekall7887d23e": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-eurekall-dev-134545-deployment/amplify-cfn-templates/auth/eurekall7887d23e-cloudformation-template.yml",
+        "logicalId": "autheurekall7887d23e"
+      },
+      "lastPushTimeStamp": "2021-06-07T10:46:09.764Z",
+      "output": {
+        "UserPoolId": "us-east-1_zbX54are6",
+        "AppClientIDWeb": "3n8t7kkdot2qcqq3cfeivijcse",
+        "AppClientID": "4oqdd1hp4d3qjoq5rjnf6h9do",
+        "IdentityPoolId": "us-east-1:9ceaaf51-4023-4800-8d11-0d89c259e776",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:846531405186:userpool/us-east-1_zbX54are6",
+        "IdentityPoolName": "eurekall7887d23e_identitypool_7887d23e__dev",
+        "UserPoolName": "eurekall7887d23e_userpool_7887d23e"
+      },
+      "lastPushDirHash": "sy86n7E8zEm5I19xMwvepUCSlPU="
+    }
+  },
+  "api": {
+    "eurekall": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+            "userPoolConfig": {
+              "userPoolId": "autheurekall7887d23e"
+            }
+          },
+          "additionalAuthenticationProviders": []
+        },
+        "GraphQLAPIIdOutput": "3wsa35tvcnahzlhj4layorkpr4",
+        "GraphQLAPIEndpointOutput": "https://h4lflpt5arehho6o47eriycre4.appsync-api.us-east-1.amazonaws.com/graphql"
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-eurekall-dev-134545-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apieurekall"
+      },
+      "lastPushTimeStamp": "2021-06-07T10:46:09.766Z",
+      "lastPushDirHash": "rLsXKaqg84BTcUk7dmdwRljJEA0="
+    }
+  }
+}
