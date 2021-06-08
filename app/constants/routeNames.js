@@ -9,3 +9,5 @@ export const DRAWER_NAVIGATOR = "Drawer";
 export const TAB_NAVIGATOR = "Tab";
 export const HOME_MAIN = "HomeMain";
 export const VIEWING = "Viewing";
+export const LEADERBOARD = "Leaderboard";
+export const DECKS = "Decks";

@@ -2,6 +2,7 @@ import React from "react";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
 import HomeNavigator from "./HomeNavigator";
 import { useTheme } from "@react-navigation/native";
+import LeaderboardNavigator from "./LeaderboardNavigator";
 
 const Tab = createMaterialBottomTabNavigator();
 
@@ -23,7 +24,7 @@ export const TabNavigator = () => {
       />
       <Tab.Screen
         name="Leaderboard"
-        component={HomeNavigator}
+        component={LeaderboardNavigator}
         options={{
           tabBarIcon: "trophy-outline",
         }}

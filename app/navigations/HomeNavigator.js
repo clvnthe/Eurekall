@@ -2,10 +2,10 @@ import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import HomeScreen from "../screens/Home/HomeScreen";
-import { HOME_MAIN, VIEWING } from "../constants/routeNames";
+import { DECKS, HOME_MAIN, VIEWING } from "../constants/routeNames";
 import HeaderComponent from "../components/common/Header";
 import ViewScreen from "../screens/Home/ViewScreen";
-import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
+import DeckScreen from "../screens/Home/DeckScreen";
 
 const HomeNavigator = () => {
   const HomeStack = createStackNavigator();
@@ -29,9 +29,14 @@ const HomeNavigator = () => {
         options={{ headerTitle: "Home" }}
       ></HomeStack.Screen>
       <HomeStack.Screen
+        name={DECKS}
+        component={DeckScreen}
+        options={{ headerTitle: "Decks" }}
+      ></HomeStack.Screen>
+      <HomeStack.Screen
         name={VIEWING}
         component={ViewScreen}
-        options={{ headerTitle: "View Cards" }}
+        options={{ headerTitle: "Cards" }}
       ></HomeStack.Screen>
     </HomeStack.Navigator>
   );

@@ -1,46 +1,75 @@
 import React from "react";
-import { FlatList, SafeAreaView } from "react-native";
-import { FAB, Modal, Portal, useTheme } from "react-native-paper";
-import FlashCard from "../common/FlashCard";
-import FlashCardForm from "../common/flashcardForm";
+import { StatusBar } from "expo-status-bar";
+import { Portal, Modal, FAB, useTheme } from "react-native-paper";
+import ReviewFormComponent from "../common/reviewForm";
+import CustomCard from "../common/CustomCard";
+import { FlatList, SafeAreaView, Text, View } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import * as Flashcards from "../../../store/slices/flashcardSlice";
+import * as Decks from "../../../store/slices/deckSlice";
 import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 import { useIsFocused } from "@react-navigation/core";
 
-function ViewingComponent() {
-  const isFocused = useIsFocused();
-
-  const theme = useTheme();
-
+function DeckComponent(props) {
   const dispatch = useDispatch();
-  const flashcards = useSelector(Flashcards.getFlashcards);
+  const decks = useSelector(Decks.getDecks);
 
-  const createFlashcardHandler = (question, answer) => {
-    dispatch(Flashcards.createFlashcard(nanoid(), question, answer));
+  const createDeckHandler = (title, subtitle) => {
+    dispatch(Decks.createDeck(nanoid(), title, subtitle));
     setVisible(false);
   };
 
-  const deleteFlashcardHandler = (id) => {
-    dispatch(Flashcards.deleteFlashcard(id));
-  };
+  const isFocused = useIsFocused();
+
+  const theme = useTheme();
 
   const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
 
-  const renderItem = (flashcard) => (
-    <FlashCard
-      question={flashcard.item.question}
-      answer={flashcard.item.answer}
-      id={flashcard.item.id}
-      deleteCard={deleteFlashcardHandler}
+  const deleteDeckHandler = (id) => {
+    dispatch(Decks.deleteDeck(id));
+  };
+
+  const renderItem = (deck) => (
+    <CustomCard
+      title={deck.item.title}
+      subtitle={deck.item.subtitle}
+      deleteCard={deleteDeckHandler}
+      id={deck.item.id}
     />
   );
 
   return (
-    <SafeAreaView>
+    <SafeAreaView
+      style={{
+        backgroundColor: theme.colors.background,
+        ...props.style,
+      }}
+      {...props}
+    >
+      <StatusBar
+        backgroundColor={theme.colors.background}
+        style={theme.dark ? "light" : "dark"}
+      />
+      <View
+        style={{
+          height: 50,
+          margin: 16,
+          marginRight: 40,
+          backgroundColor: theme.colors.background,
+        }}
+      >
+        <Text
+          style={{
+            fontSize: 32,
+            fontFamily: "sans-serif-light",
+            color: theme.colors.text,
+          }}
+        >
+          Here are your decks
+        </Text>
+      </View>
       <FlatList
         ListHeaderComponent={
           <Portal>
@@ -62,7 +91,7 @@ function ViewingComponent() {
                 marginVertical: 6,
               }}
             >
-              <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
+              <ReviewFormComponent createDeckHandler={createDeckHandler} />
             </Modal>
             <FAB
               visible={isFocused}
@@ -78,7 +107,7 @@ function ViewingComponent() {
             />
           </Portal>
         }
-        data={flashcards}
+        data={decks}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
@@ -86,4 +115,4 @@ function ViewingComponent() {
   );
 }
 
-export default ViewingComponent;
+export default DeckComponent;
