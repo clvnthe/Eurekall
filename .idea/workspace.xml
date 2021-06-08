@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="Includded consolelog">
+    <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="Updated with redux and expo debugged">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/navigations/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/navigations/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -11,6 +10,12 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="Git.Settings">
+    <option name="PUSH_TAGS">
+      <GitPushTagMode>
+        <option name="argument" value="--tags" />
+        <option name="title" value="All" />
+      </GitPushTagMode>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1tbtAVuKfKqgf3pM0f9cPaIz8Y1" />
@@ -37,6 +42,8 @@
       <updated>1623049476872</updated>
       <workItem from="1623049478696" duration="21000" />
       <workItem from="1623049504984" duration="16774000" />
+      <workItem from="1623076893897" duration="493000" />
+      <workItem from="1623113129362" duration="329000" />
     </task>
     <task id="LOCAL-00001" summary="miscellaneous changes please ignore">
       <created>1623057973234</created>
@@ -59,7 +66,21 @@
       <option name="project" value="LOCAL" />
       <updated>1623073064364</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Updated with redux and expo debugged">
+      <created>1623077109208</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1623077109208</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Updated with redux and expo debugged">
+      <created>1623077240756</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1623077240756</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -75,11 +96,13 @@
         </entry>
       </map>
     </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="miscellaneous changes please ignore" />
     <MESSAGE value="graphql table update" />
     <MESSAGE value="Includded consolelog" />
-    <option name="LAST_COMMIT_MESSAGE" value="Includded consolelog" />
+    <MESSAGE value="Updated with redux and expo debugged" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated with redux and expo debugged" />
   </component>
 </project>
