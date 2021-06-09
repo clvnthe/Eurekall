@@ -29,10 +29,7 @@ function HomeComponent(props) {
 
   return (
     <View>
-      <StatusBar
-        backgroundColor={theme.colors.background}
-        style={theme.dark ? "light" : "dark"}
-      />
+      <StatusBar style={theme.dark ? "light" : "dark"} />
       <Title style={styles.title}>
         <Text style={{ fontFamily: "sans-serif-thin" }}>hi </Text>
         <Text style={{ fontWeight: "bold" }}>{userInfo[1]}</Text>
@@ -102,7 +99,7 @@ function HomeComponent(props) {
               styles.thirdContainerText,
               {
                 fontSize: 16,
-                color: theme.colors.primary,
+                color: "#767676",
                 top: 26,
                 fontFamily: "sans-serif-light",
               },
@@ -173,7 +170,7 @@ const styles = StyleSheet.create({
     height: 100,
     width: 311,
     left: 100,
-    elevation: 4,
+    elevation: 10,
     backgroundColor: "#F5587B",
   },
   firstContainerText: {
@@ -186,7 +183,7 @@ const styles = StyleSheet.create({
     height: 180,
     width: 260,
     left: 100,
-    elevation: 4,
+    elevation: 8,
     backgroundColor: "#FF8A5C",
   },
   secondContainerText: {
@@ -208,7 +205,7 @@ const styles = StyleSheet.create({
     height: 140,
     width: 260,
     left: 100,
-    elevation: 4,
+    elevation: 6,
     backgroundColor: "#FFF591",
   },
   thirdContainerText: {

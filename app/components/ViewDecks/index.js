@@ -48,10 +48,7 @@ function DeckComponent(props) {
       }}
       {...props}
     >
-      <StatusBar
-        backgroundColor={theme.colors.background}
-        style={theme.dark ? "light" : "dark"}
-      />
+      <StatusBar style={"light"} />
       <FlatList
         ListHeaderComponent={
           <Portal>

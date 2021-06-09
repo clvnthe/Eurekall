@@ -19,6 +19,11 @@ import { AuthContext } from "../../context/Provider";
 import Auth from "@aws-amplify/auth";
 import colors from "../../../assets/theme/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {
+  PROFILE_NAVIGATOR,
+  SETTINGS_NAVIGATOR,
+  TAB_NAVIGATOR,
+} from "../../constants/routeNames";
 
 function DrawerContent(props) {
   const { logOut, toggleTheme } = React.useContext(AuthContext);
@@ -92,17 +97,30 @@ function DrawerContent(props) {
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
               icon={({ color, size }) => (
+                <Icon name="home-outline" color={color} size={size} />
+              )}
+              label="Home"
+              onPress={() => {
+                props.navigation.navigate(TAB_NAVIGATOR);
+              }}
+            ></DrawerItem>
+            <DrawerItem
+              icon={({ color, size }) => (
                 <Icon name="account-outline" color={color} size={size} />
               )}
               label="Profile"
-              onPress={() => {}}
+              onPress={() => {
+                props.navigation.navigate(PROFILE_NAVIGATOR);
+              }}
             ></DrawerItem>
             <DrawerItem
               icon={({ color, size }) => (
                 <Icon name="cog-outline" color={color} size={size} />
               )}
               label="Settings"
-              onPress={() => {}}
+              onPress={() => {
+                props.navigation.navigate(SETTINGS_NAVIGATOR);
+              }}
             ></DrawerItem>
           </Drawer.Section>
           <Drawer.Section title="Preferences">

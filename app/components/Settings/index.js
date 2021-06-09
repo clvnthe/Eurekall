@@ -2,16 +2,16 @@ import { useTheme } from "@react-navigation/native";
 import React from "react";
 import { Text, View } from "react-native";
 
-function LeaderboardComponent(props) {
+function SettingsComponent(props) {
   const theme = useTheme();
 
   return (
     <View style={{ height: "100%", justifyContent: "center" }}>
       <Text style={{ textAlign: "center", color: theme.colors.text }}>
-        Leaderboard Screen
+        Settings Page
       </Text>
     </View>
   );
 }
 
-export default LeaderboardComponent;
+export default SettingsComponent;

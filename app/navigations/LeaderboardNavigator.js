@@ -1,10 +1,8 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 
-import HomeScreen from "../screens/Home/HomeScreen";
-import { HOME_MAIN, LEADERBOARD, VIEWING } from "../constants/routeNames";
+import { LEADERBOARD } from "../constants/routeNames";
 import HeaderComponent from "../components/common/Header";
-import ViewScreen from "../screens/Home/ViewScreen";
 import LeaderboardScreen from "../screens/Home/LeaderboardScreen";
 
 const LeaderboardNavigator = () => {

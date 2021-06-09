@@ -33,7 +33,7 @@ const AppNavContainer = () => {
       primary: "#28A44B",
       primaryVariant: "#5DB075",
       secondary: "#98237c",
-      background: "#DEE4E7",
+      background: "#f4fdf4", //"#DEE4E7",
       text: "#333333",
     },
   };
