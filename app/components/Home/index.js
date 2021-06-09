@@ -5,10 +5,13 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 import { Surface, Title, Text } from "react-native-paper";
 import { DECKS } from "../../constants/routeNames";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as Decks from "../../../store/slices/deckSlice";
+import { useSelector } from "react-redux";
 
 function HomeComponent(props) {
   const theme = useTheme();
   const [userInfo, setUserInfo] = React.useState([]);
+  const numOfDecks = useSelector(Decks.getDecks).length;
 
   useEffect(() => {
     setTimeout(async () => {
@@ -105,7 +108,7 @@ function HomeComponent(props) {
               },
             ]}
           >
-            2 decks
+            {numOfDecks} decks
           </Text>
           <Image
             style={styles.thirdContainerImage}
