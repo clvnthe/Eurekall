@@ -92,7 +92,7 @@ function HomeComponent(props) {
           <Text
             style={[
               styles.thirdContainerText,
-              { fontSize: 30, fontFamily: "sans-serif" },
+              { fontSize: 30, fontFamily: "sans-serif", color: "#333333" },
             ]}
           >
             My Decks
@@ -104,7 +104,7 @@ function HomeComponent(props) {
                 fontSize: 16,
                 color: theme.colors.primary,
                 top: 26,
-                fontFamily: "sans-serif-thin",
+                fontFamily: "sans-serif-light",
               },
             ]}
           >
