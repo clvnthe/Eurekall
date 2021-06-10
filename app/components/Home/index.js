@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { StatusBar } from "expo-status-bar";
 import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { Surface, Title, Text } from "react-native-paper";
@@ -32,7 +31,6 @@ function HomeComponent(props) {
 
   return (
     <View>
-      <StatusBar style={theme.dark ? "light" : "dark"} />
       <Title style={styles.title}>
         <Text style={{ fontFamily: "sans-serif-thin" }}>hi </Text>
         <Text style={{ fontWeight: "bold" }}>{userInfo[1]}</Text>

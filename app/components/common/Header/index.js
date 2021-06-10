@@ -1,8 +1,8 @@
 import { useTheme } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Image } from "react-native";
 import { Appbar } from "react-native-paper";
-import { HOME_MAIN } from "../../../constants/routeNames";
 
 const HeaderComponent = ({ scene, previous, navigation, statusBarHeight }) => {
   const theme = useTheme();
@@ -24,6 +24,7 @@ const HeaderComponent = ({ scene, previous, navigation, statusBarHeight }) => {
       statusBarHeight={statusBarHeight}
       style={{ elevation: 4 }}
     >
+      <StatusBar style={theme.dark ? "light" : "dark"} />
       {previous ? (
         <Appbar.BackAction
           onPress={() => navigation.pop()}

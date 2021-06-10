@@ -115,13 +115,6 @@ function ProfileComponent(props) {
       </Subheading>
     </Container>
   );
-  /*return (
-    <View style={{ height: "100%", justifyContent: "center" }}>
-      <Text style={{ textAlign: "center", color: theme.colors.text }}>
-        Profile Page
-      </Text>
-    </View>
-  );*/
 }
 
 export default ProfileComponent;

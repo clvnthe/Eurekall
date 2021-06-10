@@ -1,5 +1,4 @@
 import React from "react";
-import { StatusBar } from "expo-status-bar";
 import { Portal, Modal, FAB, useTheme } from "react-native-paper";
 import ReviewFormComponent from "../common/reviewForm";
 import CustomCard from "../common/CustomCard";
@@ -48,7 +47,6 @@ function DeckComponent(props) {
       }}
       {...props}
     >
-      <StatusBar style={"light"} />
       <FlatList
         ListHeaderComponent={
           <Portal>

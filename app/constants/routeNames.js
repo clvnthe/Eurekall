@@ -16,3 +16,5 @@ export const EDIT_PROFILE = "EditProfile";
 export const PROFILE_NAVIGATOR = "ProfileNavigator";
 export const SETTINGS = "Settings";
 export const SETTINGS_NAVIGATOR = "SettingsNavigator";
+export const QUESTION = "Question";
+export const ANSWER = "Answer";

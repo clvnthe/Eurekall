@@ -2,9 +2,13 @@ import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Card, Divider, IconButton, Menu, useTheme } from "react-native-paper";
-import { VIEWING } from "../../../constants/routeNames";
+import {
+  QUESTION,
+  STUDY_NAVIGATOR,
+  VIEWING,
+} from "../../../constants/routeNames";
 
-function CustomCard({ title, subtitle, LeftContent, body, deleteCard, id }) {
+function CustomCard({ title, subtitle, deleteCard, id }) {
   const theme = useTheme();
   const [visible, setVisible] = React.useState(false);
 
@@ -19,7 +23,6 @@ function CustomCard({ title, subtitle, LeftContent, body, deleteCard, id }) {
         <Card.Title
           title={title}
           subtitle={subtitle}
-          //left={LeftContent}
           right={() => (
             <Menu
               visible={visible}
@@ -44,7 +47,10 @@ function CustomCard({ title, subtitle, LeftContent, body, deleteCard, id }) {
           >
             <TouchableOpacity
               style={styles.touchableButton}
-              onPress={() => console.log("opening study page")}
+              onPress={() => {
+                console.log("opening study page");
+                navigate(QUESTION);
+              }}
             >
               <Image
                 source={require("../../../../assets/images/vector1.png")}
