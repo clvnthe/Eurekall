@@ -2,11 +2,9 @@ import { useNavigation } from "@react-navigation/core";
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { Card, Divider, IconButton, Menu, useTheme } from "react-native-paper";
-import {
-  QUESTION,
-  STUDY_NAVIGATOR,
-  VIEWING,
-} from "../../../constants/routeNames";
+import { useSelector } from "react-redux";
+import { QUESTION, VIEWING } from "../../../constants/routeNames";
+import * as Decks from "../../../../store/slices/deckSlice";
 
 function CustomCard({ title, subtitle, deleteCard, id }) {
   const theme = useTheme();
@@ -16,6 +14,10 @@ function CustomCard({ title, subtitle, deleteCard, id }) {
   const closeMenu = () => setVisible(false);
 
   const { navigate } = useNavigation();
+
+  const decks = useSelector(Decks.getDecks);
+
+  const index = decks.findIndex((deck) => deck.id === id);
 
   return (
     <View style={{ backgroundColor: theme.colors.background }}>
@@ -48,8 +50,8 @@ function CustomCard({ title, subtitle, deleteCard, id }) {
             <TouchableOpacity
               style={styles.touchableButton}
               onPress={() => {
-                console.log("opening study page");
                 navigate(QUESTION);
+                console.log("opening study page");
               }}
             >
               <Image
@@ -67,7 +69,8 @@ function CustomCard({ title, subtitle, deleteCard, id }) {
             <TouchableOpacity
               style={styles.touchableButton}
               onPress={() => {
-                navigate(VIEWING);
+                navigate(VIEWING, { paramIndex: index });
+                console.log("array index: ", index);
                 console.log("opening view page");
               }}
             >

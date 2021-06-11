@@ -1,4 +1,4 @@
-import { createSelector, createSlice } from "@reduxjs/toolkit";
+/*import { createSelector, createSlice } from "@reduxjs/toolkit";
 
 const flashcardSlice = createSlice({
   name: "flashcards",
@@ -29,4 +29,4 @@ export const deleteFlashcard = (id) => flashcardDeleted({ id });
 export const getFlashcards = createSelector(
   (state) => state.flashcards,
   (flashcards) => flashcards.content
-);
+);*/

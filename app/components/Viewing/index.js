@@ -4,30 +4,35 @@ import { FAB, Modal, Portal, useTheme } from "react-native-paper";
 import FlashCard from "../common/FlashCard";
 import FlashCardForm from "../common/flashcardForm";
 import { useDispatch, useSelector } from "react-redux";
-import * as Flashcards from "../../../store/slices/flashcardSlice";
 import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 import { useIsFocused } from "@react-navigation/core";
+import * as Decks from "../../../store/slices/deckSlice";
 
-function ViewingComponent() {
+function ViewingComponent({ route }) {
   const isFocused = useIsFocused();
 
   const theme = useTheme();
 
   const dispatch = useDispatch();
-  const flashcards = useSelector(Flashcards.getFlashcards);
+  const decks = useSelector(Decks.getDecks);
 
   const createFlashcardHandler = (question, answer) => {
-    dispatch(Flashcards.createFlashcard(nanoid(), question, answer));
+    dispatch(
+      Decks.createFlashcard(route.params.paramIndex, nanoid(), question, answer)
+    );
     setVisible(false);
   };
 
   const deleteFlashcardHandler = (id) => {
-    dispatch(Flashcards.deleteFlashcard(id));
+    dispatch(Decks.deleteFlashcard(route.params.paramIndex, id));
   };
 
   const [visible, setVisible] = React.useState(false);
-  const showModal = () => setVisible(true);
+  const showModal = () => {
+    setVisible(true);
+    console.log(decks);
+  };
   const hideModal = () => setVisible(false);
 
   const renderItem = (flashcard) => (
@@ -78,7 +83,7 @@ function ViewingComponent() {
             />
           </Portal>
         }
-        data={flashcards}
+        data={decks[route.params.paramIndex].cards}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
       />
