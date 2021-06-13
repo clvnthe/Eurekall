@@ -9,8 +9,7 @@
       "UnauthRoleName": "amplify-eurekall-dev-134545-unauthRole",
       "StackName": "amplify-eurekall-dev-134545",
       "StackId": "arn:aws:cloudformation:us-east-1:846531405186:stack/amplify-eurekall-dev-134545/f4da1b00-bf77-11eb-b5fc-1288d43a03c2",
-      "AmplifyAppId": "d2sr2dn4n8ylol",
-      "AuthTriggerTemplateURL": ""
+      "AmplifyAppId": "d2sr2dn4n8ylol"
     }
   },
   "auth": {
@@ -19,11 +18,6 @@
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
       "customAuth": false,
-      "providerMetadata": {
-        "s3TemplateURL": "https://s3.amazonaws.com/amplify-eurekall-dev-134545-deployment/amplify-cfn-templates/auth/eurekall7887d23e-cloudformation-template.yml",
-        "logicalId": "autheurekall7887d23e"
-      },
-      "lastPushTimeStamp": "2021-06-07T10:46:09.764Z",
       "output": {
         "UserPoolId": "us-east-1_zbX54are6",
         "AppClientIDWeb": "3n8t7kkdot2qcqq3cfeivijcse",
@@ -33,7 +27,11 @@
         "IdentityPoolName": "eurekall7887d23e_identitypool_7887d23e__dev",
         "UserPoolName": "eurekall7887d23e_userpool_7887d23e"
       },
-      "lastPushDirHash": "sy86n7E8zEm5I19xMwvepUCSlPU="
+      "lastPushTimeStamp": "2021-06-13T13:34:13.032Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-eurekall-dev-134545-deployment/amplify-cfn-templates/auth/eurekall7887d23e-cloudformation-template.yml",
+        "logicalId": "autheurekall7887d23e"
+      }
     }
   },
   "api": {
@@ -50,15 +48,14 @@
           },
           "additionalAuthenticationProviders": []
         },
-        "GraphQLAPIIdOutput": "3wsa35tvcnahzlhj4layorkpr4",
-        "GraphQLAPIEndpointOutput": "https://h4lflpt5arehho6o47eriycre4.appsync-api.us-east-1.amazonaws.com/graphql"
+        "GraphQLAPIIdOutput": "vr5hrjuzanhjbpkvx5zxwjm62e",
+        "GraphQLAPIEndpointOutput": "https://7yvr6yjvlbdklefyc4ct3suezm.appsync-api.us-east-1.amazonaws.com/graphql"
       },
+      "lastPushTimeStamp": "2021-06-13T13:34:13.034Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-eurekall-dev-134545-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apieurekall"
-      },
-      "lastPushTimeStamp": "2021-06-07T10:46:09.766Z",
-      "lastPushDirHash": "rLsXKaqg84BTcUk7dmdwRljJEA0="
+      }
     }
   }
 }

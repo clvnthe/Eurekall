@@ -23,7 +23,7 @@
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-eurekall-dev-134545-deployment/amplify-cfn-templates/auth/eurekall7887d23e-cloudformation-template.yml",
         "logicalId": "autheurekall7887d23e"
       },
-      "lastPushTimeStamp": "2021-06-07T10:44:58.180Z",
+      "lastPushTimeStamp": "2021-06-13T10:06:26.181Z",
       "output": {
         "UserPoolId": "us-east-1_zbX54are6",
         "AppClientIDWeb": "3n8t7kkdot2qcqq3cfeivijcse",
@@ -50,15 +50,15 @@
           },
           "additionalAuthenticationProviders": []
         },
-        "GraphQLAPIIdOutput": "3wsa35tvcnahzlhj4layorkpr4",
-        "GraphQLAPIEndpointOutput": "https://h4lflpt5arehho6o47eriycre4.appsync-api.us-east-1.amazonaws.com/graphql"
+        "GraphQLAPIIdOutput": "vr5hrjuzanhjbpkvx5zxwjm62e",
+        "GraphQLAPIEndpointOutput": "https://7yvr6yjvlbdklefyc4ct3suezm.appsync-api.us-east-1.amazonaws.com/graphql"
       },
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-eurekall-dev-134545-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apieurekall"
       },
-      "lastPushTimeStamp": "2021-06-07T10:45:00.249Z",
-      "lastPushDirHash": "rLsXKaqg84BTcUk7dmdwRljJEA0="
+      "lastPushTimeStamp": "2021-06-13T10:06:28.071Z",
+      "lastPushDirHash": "3Lqo+kmVGGMTa8kpFiSTLmgNI84="
     }
   }
 }

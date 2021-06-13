@@ -7,13 +7,6 @@ export const getUser = /* GraphQL */ `
       id
       email
       decks {
-        items {
-          id
-          title
-          userID
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -31,9 +24,6 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         email
-        decks {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -46,25 +36,15 @@ export const getDeck = /* GraphQL */ `
     getDeck(id: $id) {
       id
       title
+      subtitle
       userID
       user {
         id
         email
-        decks {
-          nextToken
-        }
         createdAt
         updatedAt
       }
       questions {
-        items {
-          id
-          deckID
-          content
-          contentans
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -82,16 +62,8 @@ export const listDecks = /* GraphQL */ `
       items {
         id
         title
+        subtitle
         userID
-        user {
-          id
-          email
-          createdAt
-          updatedAt
-        }
-        questions {
-          nextToken
-        }
         createdAt
         updatedAt
       }
@@ -107,21 +79,15 @@ export const getQuestion = /* GraphQL */ `
       deck {
         id
         title
+        subtitle
         userID
-        user {
-          id
-          email
-          createdAt
-          updatedAt
-        }
-        questions {
-          nextToken
-        }
         createdAt
         updatedAt
       }
       content
       contentans
+      timestamp
+      level
       createdAt
       updatedAt
     }
@@ -137,15 +103,10 @@ export const listQuestions = /* GraphQL */ `
       items {
         id
         deckID
-        deck {
-          id
-          title
-          userID
-          createdAt
-          updatedAt
-        }
         content
         contentans
+        timestamp
+        level
         createdAt
         updatedAt
       }
