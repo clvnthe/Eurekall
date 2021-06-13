@@ -1,6 +1,13 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Card, Divider, IconButton, Menu, useTheme } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { QUESTION, VIEWING } from "../../../constants/routeNames";
@@ -50,8 +57,14 @@ function CustomCard({ title, subtitle, deleteCard, id }) {
             <TouchableOpacity
               style={styles.touchableButton}
               onPress={() => {
-                navigate(QUESTION);
-                console.log("opening study page");
+                if (decks[index].studydeck.length) {
+                  navigate(QUESTION, { paramIndex: index });
+                  console.log("opening study page");
+                } else {
+                  Alert.alert("Alert", "There are no cards to be studied", [
+                    { text: "OK", onPress: () => console.log("OK Pressed") },
+                  ]);
+                }
               }}
             >
               <Image

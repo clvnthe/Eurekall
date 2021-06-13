@@ -1,12 +1,38 @@
-import { useTheme } from "@react-navigation/native";
-import React from "react";
+import { useNavigation, useTheme } from "@react-navigation/native";
+import React, { useEffect } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import { Surface, Text, TextInput } from "react-native-paper";
 import Container from "../../common/Container";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import { useDispatch, useSelector } from "react-redux";
+import * as Decks from "../../../../store/slices/deckSlice";
+import { DECKS, QUESTION } from "../../../constants/routeNames";
 
-function AnswerComponent(props) {
+function AnswerComponent({ route }) {
   const theme = useTheme();
+  const decks = useSelector(Decks.getDecks);
+  const index = route.params.paramIndex;
+  const [studydeck, setStudydeck] = React.useState([""]);
+  //const studydeck = decks[route.params.paramIndex].studydeck;
+  const { navigate } = useNavigation();
+  const dispatch = useDispatch();
+
+  /*const popStudydeckHandler = () => {
+    dispatch(Decks.popStudydeck());
+  };*/
+
+  useEffect(() => {
+    setTimeout(async () => {
+      let tempstudydeck;
+      tempstudydeck = null;
+      try {
+        tempstudydeck = decks[index].studydeck;
+      } catch (err) {
+        console.log(err);
+      }
+      setStudydeck(tempstudydeck);
+    }, 0);
+  }, []);
 
   return (
     <Container>
@@ -14,18 +40,25 @@ function AnswerComponent(props) {
         style={[styles.answer, { backgroundColor: theme.colors.primary }]}
       >
         <Text style={styles.answerText}>
-          A concrete class is a class that has an implementation for all of its
-          methods.
+          {studydeck.length === 0 ? "" : studydeck[studydeck.length - 1].answer}
         </Text>
       </Surface>
       <Surface style={styles.userAnswer}>
         <Text>You wrote:</Text>
-        <Text>I don't know :(</Text>
+        <Text>{route.params.paramUserAnswer}</Text>
       </Surface>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: theme.colors.primary }]}
-          onPress={() => console.log("Correct Answer!")}
+          onPress={() => {
+            dispatch(Decks.popStudydeck(index));
+            {
+              studydeck.length - 1 === 0
+                ? navigate(DECKS)
+                : navigate(QUESTION, { paramIndex: index });
+            }
+            console.log("Correct Answer!");
+          }}
         >
           <Icon
             name="check-outline"
@@ -36,7 +69,15 @@ function AnswerComponent(props) {
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, { backgroundColor: "#F26C68" }]}
-          onPress={() => console.log("Wrong Answer!")}
+          onPress={() => {
+            dispatch(Decks.popStudydeck(index));
+            {
+              studydeck.length - 1 === 0
+                ? navigate(DECKS)
+                : navigate(QUESTION, { paramIndex: index });
+            }
+            console.log("Wrong Answer!");
+          }}
         >
           <Icon
             name="close-outline"

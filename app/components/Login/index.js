@@ -1,6 +1,5 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { StatusBar } from "expo-status-bar";
 import { HelperText, TextInput } from "react-native-paper";
 import { Image, View, Text, TouchableOpacity } from "react-native";
 import colors from "../../../assets/theme/colors";

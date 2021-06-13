@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { TextInput, Text, useTheme } from "react-native-paper";
 import { Formik } from "formik";
 import CustomButton from "../CustomButton";
@@ -52,7 +52,17 @@ function ReviewFormComponent({ createDeckHandler }) {
                 title="Submit"
                 bgColor="#28A44B"
                 width={310}
-                onPress={props.handleSubmit}
+                onPress={
+                  props.values.title !== "" && props.values.subtitle !== ""
+                    ? props.handleSubmit
+                    : () =>
+                        Alert.alert("Alert", "Fields cannot be empty!", [
+                          {
+                            text: "OK",
+                            onPress: () => console.log("OK Pressed"),
+                          },
+                        ])
+                }
               ></CustomButton>
             </View>
           </View>
