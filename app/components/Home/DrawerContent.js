@@ -61,6 +61,7 @@ function DrawerContent(props) {
     <View
       style={{
         flex: 1,
+        elevation: 16,
         backgroundColor: theme.dark ? "#363636" : theme.colors.background,
       }}
     >
@@ -75,19 +76,50 @@ function DrawerContent(props) {
                 size={50}
               ></Avatar.Image>
               <View style={{ marginLeft: 15, flexDirection: "column" }}>
-                <Title style={styles.title}>{userInfo[1]}</Title>
+                <Title
+                  style={[
+                    styles.title,
+                    {
+                      color: theme.dark
+                        ? theme.colors.primary
+                        : theme.colors.text,
+                    },
+                  ]}
+                >
+                  {userInfo[1]}
+                </Title>
                 <Caption style={styles.caption}>@{userInfo[2]}</Caption>
               </View>
             </View>
             <View style={styles.row}>
               <View style={styles.section}>
-                <Paragraph style={[styles.paragraph, styles.caption]}>
+                <Paragraph
+                  style={[
+                    styles.paragraph,
+                    styles.caption,
+                    {
+                      color: theme.dark
+                        ? theme.colors.primary
+                        : theme.colors.text,
+                    },
+                  ]}
+                >
                   80
                 </Paragraph>
                 <Caption style={styles.caption}>Followers</Caption>
               </View>
               <View style={styles.section}>
-                <Paragraph style={[styles.paragraph, styles.caption]}>
+                <Paragraph
+                  style={[
+                    styles.paragraph,
+                    styles.caption,
+                    {
+                      color: theme.dark
+                        ? theme.colors.primary
+                        : theme.colors.text,
+                    },
+                  ]}
+                >
                   100
                 </Paragraph>
                 <Caption style={styles.caption}>Following</Caption>

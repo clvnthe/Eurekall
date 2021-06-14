@@ -14,6 +14,7 @@ export const TabNavigator = () => {
       shifting={true}
       sceneAnimationEnabled={false}
       activeColor={theme.dark ? theme.colors.primary : theme.colors.onPrimary}
+      barStyle={{ elevation: 8 }}
     >
       <Tab.Screen
         name="Home"

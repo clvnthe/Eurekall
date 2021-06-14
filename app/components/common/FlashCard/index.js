@@ -19,7 +19,7 @@ function FlashCard({ id, question, answer, deleteCard }) {
 
   return (
     <View style={{ backgroundColor: theme.colors.background }}>
-      <Card style={{ margin: 10, elevation: 1 }}>
+      <Card style={{ margin: 10, elevation: 8 }}>
         <Card.Content>
           <Title>{question}</Title>
           <View
