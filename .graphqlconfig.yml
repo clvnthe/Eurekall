@@ -1,6 +1,6 @@
 projects:
-  eurekall:
-    schemaPath: src/graphql/schema.json
+  eurekall-dev:
+    schemaPath: ../Projects/Eurekall/src/graphql/schema.json
     includes:
       - src/graphql/**/*.js
     excludes:
@@ -10,3 +10,9 @@ projects:
         codeGenTarget: javascript
         generatedFileName: ''
         docsFilePath: src/graphql
+        region: us-east-1
+        apiId: vr5hrjuzanhjbpkvx5zxwjm62e
+        maxDepth: 2
+extensions:
+  amplify:
+    version: 3

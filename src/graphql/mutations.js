@@ -10,13 +10,6 @@ export const createUser = /* GraphQL */ `
       id
       email
       decks {
-        items {
-          id
-          title
-          userID
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -33,13 +26,6 @@ export const updateUser = /* GraphQL */ `
       id
       email
       decks {
-        items {
-          id
-          title
-          userID
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -56,13 +42,6 @@ export const deleteUser = /* GraphQL */ `
       id
       email
       decks {
-        items {
-          id
-          title
-          userID
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -78,25 +57,15 @@ export const createDeck = /* GraphQL */ `
     createDeck(input: $input, condition: $condition) {
       id
       title
+      subtitle
       userID
       user {
         id
         email
-        decks {
-          nextToken
-        }
         createdAt
         updatedAt
       }
       questions {
-        items {
-          id
-          deckID
-          content
-          contentans
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -112,25 +81,15 @@ export const updateDeck = /* GraphQL */ `
     updateDeck(input: $input, condition: $condition) {
       id
       title
+      subtitle
       userID
       user {
         id
         email
-        decks {
-          nextToken
-        }
         createdAt
         updatedAt
       }
       questions {
-        items {
-          id
-          deckID
-          content
-          contentans
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -146,25 +105,15 @@ export const deleteDeck = /* GraphQL */ `
     deleteDeck(input: $input, condition: $condition) {
       id
       title
+      subtitle
       userID
       user {
         id
         email
-        decks {
-          nextToken
-        }
         createdAt
         updatedAt
       }
       questions {
-        items {
-          id
-          deckID
-          content
-          contentans
-          createdAt
-          updatedAt
-        }
         nextToken
       }
       createdAt
@@ -183,21 +132,15 @@ export const createQuestion = /* GraphQL */ `
       deck {
         id
         title
+        subtitle
         userID
-        user {
-          id
-          email
-          createdAt
-          updatedAt
-        }
-        questions {
-          nextToken
-        }
         createdAt
         updatedAt
       }
       content
       contentans
+      timestamp
+      level
       createdAt
       updatedAt
     }
@@ -214,21 +157,15 @@ export const updateQuestion = /* GraphQL */ `
       deck {
         id
         title
+        subtitle
         userID
-        user {
-          id
-          email
-          createdAt
-          updatedAt
-        }
-        questions {
-          nextToken
-        }
         createdAt
         updatedAt
       }
       content
       contentans
+      timestamp
+      level
       createdAt
       updatedAt
     }
@@ -245,21 +182,15 @@ export const deleteQuestion = /* GraphQL */ `
       deck {
         id
         title
+        subtitle
         userID
-        user {
-          id
-          email
-          createdAt
-          updatedAt
-        }
-        questions {
-          nextToken
-        }
         createdAt
         updatedAt
       }
       content
       contentans
+      timestamp
+      level
       createdAt
       updatedAt
     }

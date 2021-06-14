@@ -7,6 +7,7 @@ type User @model {
 type Deck @model @key(name: "byUser", fields: ["id"]) {
   id: ID!
   title: String!
+  subtitle: String!
   userID: ID!
   user: User @connection(fields: ["userID"])
   questions: [Question] @connection(keyName: "byDeck", fields: ["id"])
@@ -18,4 +19,6 @@ type Question @model @key(name: "byDeck", fields: ["deckID", "content","contenta
   deck: Deck @connection(fields: ["deckID"])
   content: String!
   contentans: String!
+  timestamp: String!
+  level: String!
 }
