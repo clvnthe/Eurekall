@@ -6,7 +6,7 @@ import CustomButton from "../CustomButton";
 
 function ReviewFormComponent({ createDeckHandler }) {
   return (
-    <View>
+    <View style={{ elevation: 24 }}>
       <Formik
         initialValues={{
           title: "",
