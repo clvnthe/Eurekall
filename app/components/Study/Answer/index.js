@@ -13,8 +13,13 @@ function AnswerComponent({ route }) {
   const decks = useSelector(Decks.getDecks);
   const index = route.params.paramIndex;
   const [studydeck, setStudydeck] = React.useState([""]);
+  //const studydeck = decks[route.params.paramIndex].studydeck;
   const { navigate } = useNavigation();
   const dispatch = useDispatch();
+
+  /*const popStudydeckHandler = () => {
+    dispatch(Decks.popStudydeck());
+  };*/
 
   useEffect(() => {
     setTimeout(async () => {
@@ -34,12 +39,7 @@ function AnswerComponent({ route }) {
       <Surface
         style={[styles.answer, { backgroundColor: theme.colors.primary }]}
       >
-        <Text
-          style={[
-            styles.answerText,
-            { color: theme.dark ? theme.colors.onPrimary : "#ffffff" },
-          ]}
-        >
+        <Text style={styles.answerText}>
           {studydeck.length === 0 ? "" : studydeck[studydeck.length - 1].answer}
         </Text>
       </Surface>
@@ -62,7 +62,7 @@ function AnswerComponent({ route }) {
         >
           <Icon
             name="check-outline"
-            color={theme.dark ? theme.colors.onPrimary : "#ffffff"}
+            color="#ffffff"
             style={{ alignSelf: "center" }}
             size={40}
           ></Icon>
@@ -70,14 +70,18 @@ function AnswerComponent({ route }) {
         <TouchableOpacity
           style={[styles.button, { backgroundColor: "#F26C68" }]}
           onPress={() => {
-            dispatch(Decks.shiftItemToFrontStudydeck(index));
-            navigate(QUESTION, { paramIndex: index });
+            dispatch(Decks.popStudydeck(index));
+            {
+              studydeck.length - 1 === 0
+                ? navigate(DECKS)
+                : navigate(QUESTION, { paramIndex: index });
+            }
             console.log("Wrong Answer!");
           }}
         >
           <Icon
             name="close-outline"
-            color={theme.dark ? theme.colors.onPrimary : "#ffffff"}
+            color="#ffffff"
             style={{ alignSelf: "center" }}
             size={40}
           ></Icon>
@@ -94,7 +98,7 @@ const styles = StyleSheet.create({
     width: 330,
     height: 300,
     alignSelf: "center",
-    elevation: 8,
+    elevation: 4,
     justifyContent: "center",
     padding: 10,
   },
@@ -102,7 +106,7 @@ const styles = StyleSheet.create({
     width: 330,
     height: 130,
     alignSelf: "center",
-    elevation: 8,
+    elevation: 4,
     justifyContent: "center",
     padding: 10,
   },

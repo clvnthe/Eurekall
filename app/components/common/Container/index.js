@@ -7,7 +7,6 @@ import {
   SafeAreaView,
   ScrollView,
   TouchableWithoutFeedback,
-  View,
 } from "react-native";
 import { useTheme } from "react-native-paper";
 
@@ -39,19 +38,17 @@ export default (props, backgroundColor) => {
     );
   } else if (props.noPadding) {
     return (
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView
-          style={{
-            backgroundColor: { backgroundColor },
-            height: "100%",
-            ...props.style,
-          }}
-          {...props}
-        >
-          <StatusBar style="dark" />
-          {props.children}
-        </SafeAreaView>
-      </TouchableWithoutFeedback>
+      <SafeAreaView
+        style={{
+          backgroundColor: { backgroundColor },
+          height: "100%",
+          ...props.style,
+        }}
+        {...props}
+      >
+        <StatusBar style="dark" />
+        {props.children}
+      </SafeAreaView>
     );
   } else {
     return (

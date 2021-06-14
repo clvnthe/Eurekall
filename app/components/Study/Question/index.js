@@ -39,14 +39,7 @@ function QuestionComponent({ route }) {
       <Surface
         style={[styles.question, { backgroundColor: theme.colors.primary }]}
       >
-        <Text
-          style={[
-            styles.questionText,
-            {
-              color: theme.dark ? theme.colors.onPrimary : "#ffffff",
-            },
-          ]}
-        >
+        <Text style={styles.questionText}>
           {studydeck.length === 0
             ? ""
             : studydeck[studydeck.length - 1].question}
@@ -98,7 +91,7 @@ const styles = StyleSheet.create({
     width: 330,
     height: 300,
     alignSelf: "center",
-    elevation: 8,
+    elevation: 4,
     justifyContent: "center",
     padding: 10,
   },
@@ -106,12 +99,13 @@ const styles = StyleSheet.create({
     width: 330,
     height: 130,
     alignSelf: "center",
-    elevation: 8,
+    elevation: 4,
     justifyContent: "center",
   },
   questionText: {
     textAlign: "center",
     fontSize: 30,
+    color: "#ffffff",
   },
   userAnswerTextInput: { width: 310, alignSelf: "center" },
 });

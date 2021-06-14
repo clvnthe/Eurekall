@@ -13,7 +13,7 @@ import { useSelector } from "react-redux";
 import { QUESTION, VIEWING } from "../../../constants/routeNames";
 import * as Decks from "../../../../store/slices/deckSlice";
 
-function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
+function CustomCard({ title, subtitle, deleteCard, id }) {
   const theme = useTheme();
   const [visible, setVisible] = React.useState(false);
 
@@ -28,7 +28,7 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
 
   return (
     <View style={{ backgroundColor: theme.colors.background }}>
-      <Card style={{ margin: 10, elevation: 8 }}>
+      <Card style={{ margin: 10, elevation: 1 }}>
         <Card.Title
           title={title}
           subtitle={subtitle}
@@ -99,10 +99,7 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.touchableButton}
-              onPress={() => {
-                showAddCardModal(id);
-                console.log("opening add page");
-              }}
+              onPress={() => console.log("opening add page")}
             >
               <Image
                 source={require("../../../../assets/images/vector5.png")}
@@ -112,7 +109,7 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
                 source={require("../../../../assets/images/vector6.png")}
                 style={styles.bottomVector}
               ></Image>
-              <Text style={{ fontWeight: "bold" }}>Add Card</Text>
+              <Text style={{ fontWeight: "bold" }}>Add</Text>
             </TouchableOpacity>
           </View>
         </Card.Content>

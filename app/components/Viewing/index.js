@@ -28,7 +28,7 @@ function ViewingComponent({ route }) {
       boxType: 1,
     };
     dispatch(Decks.createFlashcard(index, card));
-    dispatch(Decks.pushOntoStudydeck(index, card));
+    dispatch(Decks.createStudydeck(index, card));
     setVisible(false);
     if (decks[index].cards.length === 0) {
       setEmpty(false);
@@ -76,7 +76,6 @@ function ViewingComponent({ route }) {
             shadowRadius: 2,
             marginHorizontal: 4,
             marginVertical: 6,
-            elevation: 24,
           }}
         >
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
