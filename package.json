@@ -21,7 +21,10 @@
     "aws-amplify-react-native": "^5.0.1",
     "deepmerge": "^4.2.2",
     "expo": "~41.0.1",
+    "expo-camera": "^11.0.3",
     "expo-font": "^9.1.0",
+    "expo-image-picker": "^10.1.4",
+    "expo-media-library": "^12.0.2",
     "expo-status-bar": "~1.0.4",
     "formik": "^2.2.8",
     "nanoid": "^3.1.23",
@@ -38,6 +41,7 @@
     "react-native-vector-icons": "^8.1.0",
     "react-native-web": "~0.13.12",
     "react-redux": "^7.2.4",
+    "reanimated-bottom-sheet": "^1.0.0-alpha.22",
     "redux": "^4.1.0",
     "redux-devtools": "^3.7.0",
     "redux-thunk": "^2.3.0"

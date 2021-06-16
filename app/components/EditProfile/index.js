@@ -15,7 +15,7 @@ import Container from "../common/Container";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import * as ImagePicker from "expo-image-picker";
 import { Camera } from "expo-camera";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import CustomButton from "../common/CustomButton";
 
 function EditProfileComponent(props) {
   const theme = useTheme();
@@ -236,6 +236,13 @@ function EditProfileComponent(props) {
             />
           }
         />
+        <View style={{ alignItems: "center" }}>
+          <CustomButton
+            title="Submit changes"
+            width={336}
+            onPress={() => console.log("pressed")}
+          />
+        </View>
       </Animated.View>
     </Container>
   );

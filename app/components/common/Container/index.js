@@ -16,7 +16,11 @@ export default (props, backgroundColor) => {
   if (props.scrollable) {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView
+        <ScrollView
+          contentContainerStyle={{
+            paddingBottom: "200%",
+          }}
+          keyboardShouldPersistTaps="always"
           style={{
             paddingTop: Constants.statusBarHeight,
             backgroundColor: { backgroundColor },
@@ -26,15 +30,9 @@ export default (props, backgroundColor) => {
           {...props}
         >
           <StatusBar style={theme.dark ? "light" : "dark"} />
-          <ScrollView
-            contentContainerStyle={{
-              paddingBottom: "200%",
-            }}
-            keyboardShouldPersistTaps="always"
-          >
-            {props.children}
-          </ScrollView>
-        </SafeAreaView>
+
+          {props.children}
+        </ScrollView>
       </TouchableWithoutFeedback>
     );
   } else if (props.noPadding) {

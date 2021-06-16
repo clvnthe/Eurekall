@@ -47,7 +47,7 @@ function CustomButton({
           {title && (
             <Text
               style={{
-                color: theme.dark ? theme.colors.onPrimary : theme.colors.text,
+                color: theme.dark ? theme.colors.onPrimary : "#ffffff",
                 paddingLeft: loading ? 5 : 0,
               }}
             >

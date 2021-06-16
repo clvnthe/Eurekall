@@ -73,58 +73,30 @@ function DrawerContent(props) {
                 source={{
                   uri: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8",
                 }}
-                size={50}
+                size={75}
               ></Avatar.Image>
-              <View style={{ marginLeft: 15, flexDirection: "column" }}>
-                <Title
-                  style={[
-                    styles.title,
-                    {
-                      color: theme.dark
-                        ? theme.colors.primary
-                        : theme.colors.text,
-                    },
-                  ]}
-                >
-                  {userInfo[1]}
-                </Title>
-                <Caption style={styles.caption}>@{userInfo[2]}</Caption>
-              </View>
             </View>
-            <View style={styles.row}>
-              <View style={styles.section}>
-                <Paragraph
-                  style={[
-                    styles.paragraph,
-                    styles.caption,
-                    {
-                      color: theme.dark
-                        ? theme.colors.primary
-                        : theme.colors.text,
-                    },
-                  ]}
-                >
-                  80
-                </Paragraph>
-                <Caption style={styles.caption}>Followers</Caption>
+            <Drawer.Section style={styles.drawerSection}>
+              <View style={{ flexDirection: "column" }}>
+                <View style={styles.section}>
+                  <Title
+                    style={[
+                      styles.title,
+                      {
+                        color: theme.dark
+                          ? theme.colors.primary
+                          : theme.colors.text,
+                      },
+                    ]}
+                  >
+                    {userInfo[1]}
+                  </Title>
+                </View>
+                <View style={styles.section}>
+                  <Caption style={styles.caption}>@{userInfo[2]}</Caption>
+                </View>
               </View>
-              <View style={styles.section}>
-                <Paragraph
-                  style={[
-                    styles.paragraph,
-                    styles.caption,
-                    {
-                      color: theme.dark
-                        ? theme.colors.primary
-                        : theme.colors.text,
-                    },
-                  ]}
-                >
-                  100
-                </Paragraph>
-                <Caption style={styles.caption}>Following</Caption>
-              </View>
-            </View>
+            </Drawer.Section>
           </View>
           <Drawer.Section style={styles.drawerSection}>
             <DrawerItem
@@ -200,7 +172,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
   },
   title: {
-    fontSize: 16,
+    fontSize: 24,
     marginTop: 3,
     fontWeight: "bold",
   },

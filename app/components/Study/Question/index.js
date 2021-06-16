@@ -4,13 +4,14 @@ import {
   useIsFocused,
 } from "@react-navigation/native";
 import React, { useEffect, useCallback } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, View } from "react-native";
 import { Surface, Text, TextInput } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { ANSWER } from "../../../constants/routeNames";
 import Container from "../../common/Container";
 import CustomButton from "../../common/CustomButton";
 import * as Decks from "../../../../store/slices/deckSlice";
+import Constants from "expo-constants";
 
 function QuestionComponent({ route }) {
   const theme = useTheme();
@@ -35,22 +36,26 @@ function QuestionComponent({ route }) {
   }, [isFocused]);
 
   return (
-    <Container scrollable>
+    <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
       <Surface
         style={[styles.question, { backgroundColor: theme.colors.primary }]}
       >
-        <Text
-          style={[
-            styles.questionText,
-            {
-              color: theme.dark ? theme.colors.onPrimary : "#ffffff",
-            },
-          ]}
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
         >
-          {studydeck.length === 0
-            ? ""
-            : studydeck[studydeck.length - 1].question}
-        </Text>
+          <Text
+            style={[
+              styles.questionText,
+              {
+                color: theme.dark ? theme.colors.onPrimary : "#ffffff",
+              },
+            ]}
+          >
+            {studydeck.length === 0
+              ? ""
+              : studydeck[studydeck.length - 1].question}
+          </Text>
+        </ScrollView>
       </Surface>
       <Surface style={styles.userAnswer}>
         <TextInput
@@ -87,7 +92,7 @@ function QuestionComponent({ route }) {
           }}
         ></CustomButton>
       </View>
-    </Container>
+    </ScrollView>
   );
 }
 
@@ -101,6 +106,7 @@ const styles = StyleSheet.create({
     elevation: 8,
     justifyContent: "center",
     padding: 10,
+    flex: 1,
   },
   userAnswer: {
     width: 330,

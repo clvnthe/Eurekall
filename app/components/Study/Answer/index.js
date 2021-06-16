@@ -1,12 +1,13 @@
 import { useNavigation, useTheme } from "@react-navigation/native";
 import React, { useEffect } from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Surface, Text, TextInput } from "react-native-paper";
 import Container from "../../common/Container";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useDispatch, useSelector } from "react-redux";
 import * as Decks from "../../../../store/slices/deckSlice";
 import { DECKS, QUESTION } from "../../../constants/routeNames";
+import Constants from "expo-constants";
 
 function AnswerComponent({ route }) {
   const theme = useTheme();
@@ -30,22 +31,30 @@ function AnswerComponent({ route }) {
   }, []);
 
   return (
-    <Container>
+    <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
       <Surface
         style={[styles.answer, { backgroundColor: theme.colors.primary }]}
       >
-        <Text
-          style={[
-            styles.answerText,
-            { color: theme.dark ? theme.colors.onPrimary : "#ffffff" },
-          ]}
+        <ScrollView
+          contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
         >
-          {studydeck.length === 0 ? "" : studydeck[studydeck.length - 1].answer}
-        </Text>
+          <Text
+            style={[
+              styles.answerText,
+              { color: theme.dark ? theme.colors.onPrimary : "#ffffff" },
+            ]}
+          >
+            {studydeck.length === 0
+              ? ""
+              : studydeck[studydeck.length - 1].answer}
+          </Text>
+        </ScrollView>
       </Surface>
       <Surface style={styles.userAnswer}>
-        <Text>You wrote:</Text>
-        <Text>{route.params.paramUserAnswer}</Text>
+        <ScrollView>
+          <Text>You wrote:</Text>
+          <Text>{route.params.paramUserAnswer}</Text>
+        </ScrollView>
       </Surface>
       <View style={styles.buttonsContainer}>
         <TouchableOpacity
@@ -83,7 +92,7 @@ function AnswerComponent({ route }) {
           ></Icon>
         </TouchableOpacity>
       </View>
-    </Container>
+    </ScrollView>
   );
 }
 

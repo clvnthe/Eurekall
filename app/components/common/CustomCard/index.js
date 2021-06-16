@@ -31,7 +31,9 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
       <Card style={{ margin: 10, elevation: 8 }}>
         <Card.Title
           title={title}
+          titleNumberOfLines={100}
           subtitle={subtitle}
+          subtitleNumberOfLines={100}
           right={() => (
             <Menu
               visible={visible}

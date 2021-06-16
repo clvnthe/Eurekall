@@ -3,41 +3,7 @@ import { createSelector, createSlice } from "@reduxjs/toolkit";
 const slice = createSlice({
   name: "decks",
   initialState: {
-    content: [
-      {
-        id: "123",
-        title: "CS2030",
-        subtitle: "Programming Methodology II",
-        cards: [
-          {
-            id: "1",
-            question: "How many legs does a spider have?",
-            answer: "Eight",
-            boxType: 1,
-          },
-          {
-            id: "2",
-            question: "What is a concrete class?",
-            answer:
-              "A concrete class is a class that has an implementation for all of its functions",
-            boxType: 1,
-          },
-        ],
-        studydeck: [
-          {
-            id: "1",
-            question: "How many legs does a spider have?",
-            answer: "Eight",
-          },
-          {
-            id: "2",
-            question: "What is a concrete class?",
-            answer:
-              "A concrete class is a class that has an implementation for all of its functions",
-          },
-        ],
-      },
-    ],
+    content: [],
   },
   reducers: {
     deckCreated: (state, action) => {
@@ -64,7 +30,7 @@ const slice = createSlice({
         action.payload.index
       ].studydeck.filter((card) => card.id !== action.payload.cardID);
     },
-    studydeckCreated: (state, action) => {
+    pushedOntoStudydeck: (state, action) => {
       state.content[action.payload.index].studydeck.push({
         id: action.payload.card.id,
         question: action.payload.card.question,
@@ -72,7 +38,33 @@ const slice = createSlice({
       });
     },
     studydeckPopped: (state, action) => {
-      state.content[action.payload.index].studydeck.pop();
+      const card = state.content[action.payload.index].studydeck.pop();
+      const index = state.content[action.payload.index].cards.findIndex(
+        (curCard) => curCard.id === card.id
+      );
+      state.content[action.payload.index].cards[index] = {
+        ...state.content[action.payload.index].cards[index],
+        boxType: ++state.content[action.payload.index].cards[index].boxType,
+      };
+      console.log(
+        "Boxtype:",
+        state.content[action.payload.index].cards[index].boxType
+      );
+    },
+    studydeckShiftCardToFront: (state, action) => {
+      const card = state.content[action.payload.index].studydeck.pop();
+      const index = state.content[action.payload.index].cards.findIndex(
+        (curCard) => curCard.id === card.id
+      );
+      state.content[action.payload.index].cards[index] = {
+        ...state.content[action.payload.index].cards[index],
+        boxType: 1,
+      };
+      state.content[action.payload.index].studydeck.unshift(card);
+      console.log(
+        "Boxtype:",
+        state.content[action.payload.index].cards[index].boxType
+      );
     },
   },
 });
@@ -84,8 +76,9 @@ const {
   deckDeleted,
   flashcardCreated,
   flashcardDeleted,
-  studydeckCreated,
+  pushedOntoStudydeck,
   studydeckPopped,
+  studydeckShiftCardToFront,
 } = slice.actions;
 
 export const createDeck = (id, title, subtitle, cards, studydeck) =>
@@ -99,10 +92,13 @@ export const createFlashcard = (index, card) =>
 export const deleteFlashcard = (index, cardID) =>
   flashcardDeleted({ index, cardID });
 
-export const createStudydeck = (index, card) =>
-  studydeckCreated({ index, card });
+export const pushOntoStudydeck = (index, card) =>
+  pushedOntoStudydeck({ index, card });
 
 export const popStudydeck = (index) => studydeckPopped({ index });
+
+export const shiftItemToFrontStudydeck = (index) =>
+  studydeckShiftCardToFront({ index });
 
 export const getDecks = createSelector(
   (state) => state.decks,
