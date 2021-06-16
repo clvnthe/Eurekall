@@ -1,121 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="Updated with redux and expo debugged">
-      <change beforePath="$PROJECT_DIR$/.graphqlconfig.yml" beforeDir="false" afterPath="$PROJECT_DIR$/.graphqlconfig.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/amplify-meta.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/amplify-meta.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/cloudformation-template.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/cloudformation-template.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/parameters.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/parameters.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Deck.questions.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Deck.questions.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Deck.questions.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Deck.questions.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Deck.user.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Deck.user.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Deck.user.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Deck.user.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.createDeck.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.createDeck.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.createDeck.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.createDeck.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.createQuestion.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.createQuestion.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.createQuestion.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.createQuestion.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.createUser.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.createUser.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.createUser.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.createUser.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.deleteDeck.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.deleteDeck.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.deleteDeck.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.deleteDeck.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.deleteQuestion.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.deleteQuestion.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.deleteQuestion.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.deleteQuestion.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.deleteUser.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.deleteUser.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.deleteUser.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.deleteUser.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.updateDeck.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.updateDeck.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.updateDeck.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.updateDeck.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.updateQuestion.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.updateQuestion.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.updateQuestion.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.updateQuestion.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.updateUser.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.updateUser.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.updateUser.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Mutation.updateUser.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.getDeck.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.getDeck.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.getDeck.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.getDeck.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.getQuestion.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.getQuestion.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.getQuestion.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.getQuestion.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.getUser.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.getUser.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.getUser.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.getUser.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.listDecks.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.listDecks.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.listDecks.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.listDecks.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.listQuestions.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.listQuestions.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.listQuestions.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.listQuestions.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.listUsers.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.listUsers.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.listUsers.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Query.listUsers.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Question.deck.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Question.deck.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Question.deck.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/Question.deck.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/User.decks.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/User.decks.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/User.decks.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/resolvers/User.decks.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/schema.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/stacks/ConnectionStack.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/stacks/ConnectionStack.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/stacks/CustomResources.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/stacks/CustomResources.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/stacks/Deck.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/stacks/Deck.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/stacks/Question.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/stacks/Question.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/stacks/User.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/build/stacks/User.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/parameters.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/parameters.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/schema.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/transform.conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/#current-cloud-backend/api/eurekall/transform.conf.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/.config/local-env-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/.config/local-env-info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/amplify-meta.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/amplify-meta.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/cloudformation-template.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/cloudformation-template.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/parameters.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/parameters.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Deck.questions.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Deck.questions.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Deck.questions.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Deck.questions.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Deck.user.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Deck.user.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Deck.user.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Deck.user.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.createDeck.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.createDeck.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.createDeck.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.createDeck.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.createQuestion.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.createQuestion.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.createQuestion.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.createQuestion.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.createUser.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.createUser.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.createUser.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.createUser.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.deleteDeck.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.deleteDeck.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.deleteDeck.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.deleteDeck.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.deleteQuestion.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.deleteQuestion.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.deleteQuestion.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.deleteQuestion.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.deleteUser.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.deleteUser.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.deleteUser.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.deleteUser.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.updateDeck.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.updateDeck.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.updateDeck.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.updateDeck.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.updateQuestion.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.updateQuestion.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.updateQuestion.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.updateQuestion.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.updateUser.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.updateUser.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.updateUser.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Mutation.updateUser.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.getDeck.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.getDeck.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.getDeck.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.getDeck.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.getQuestion.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.getQuestion.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.getQuestion.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.getQuestion.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.getUser.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.getUser.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.getUser.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.getUser.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.listDecks.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.listDecks.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.listDecks.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.listDecks.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.listQuestions.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.listQuestions.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.listQuestions.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.listQuestions.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.listUsers.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.listUsers.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.listUsers.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Query.listUsers.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Question.deck.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Question.deck.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Question.deck.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/Question.deck.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/User.decks.req.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/User.decks.req.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/User.decks.res.vtl" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/resolvers/User.decks.res.vtl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/schema.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/stacks/ConnectionStack.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/stacks/ConnectionStack.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/stacks/CustomResources.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/stacks/CustomResources.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/stacks/Deck.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/stacks/Deck.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/stacks/Question.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/stacks/Question.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/stacks/User.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/build/stacks/User.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/parameters.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/parameters.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/schema.graphql" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/schema.graphql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/api/eurekall/transform.conf.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/api/eurekall/transform.conf.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/awscloudformation/build/api/eurekall/build/cloudformation-template.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/awscloudformation/build/api/eurekall/build/cloudformation-template.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/awscloudformation/build/awscloudformation/nested-cloudformation-stack.yml" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/awscloudformation/build/awscloudformation/nested-cloudformation-stack.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/awscloudformation/nested-cloudformation-stack.yml" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/awscloudformation/nested-cloudformation-stack.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/backend/backend-config.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/backend/backend-config.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/amplify/team-provider-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/amplify/team-provider-info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/aws-exports.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/aws-exports.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/mutations.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/mutations.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/queries.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/queries.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/schema.json" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/schema.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/graphql/subscriptions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/graphql/subscriptions.js" afterDir="false" />
+    <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="Added user verification in DB if no user create user, and add decks function(buggy)">
+      <change afterPath="$PROJECT_DIR$/assets/images/emptydoodle.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/EditProfile/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/EditProfile/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Home/DrawerContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Home/DrawerContent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Login/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Login/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Study/Answer/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Study/Answer/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Study/Question/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Study/Question/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ViewDecks/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ViewDecks/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Viewing/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Viewing/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/BottomNavBar/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/Container/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/common/Container/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/CustomCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/common/CustomCard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/FlashCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/common/FlashCard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/Header/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/common/Header/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/flashcardForm/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/common/flashcardForm/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/reviewForm/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/common/reviewForm/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/navigations/TabNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/navigations/TabNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/navigations/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/navigations/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/Home/StudyScreens/AnswerScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/Home/StudyScreens/AnswerScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/Home/StudyScreens/QuestionScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/Home/StudyScreens/QuestionScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.yarn-integrity" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.yarn-integrity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/slices/deckSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/slices/deckSlice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -130,6 +40,14 @@
       </GitPushTagMode>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="1tbtAVuKfKqgf3pM0f9cPaIz8Y1" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -152,6 +70,19 @@
       <recent name="C:\Users\clvnt\Desktop\Projects\Eurekall" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -166,7 +97,9 @@
       <workItem from="1623113129362" duration="671000" />
       <workItem from="1623578212363" duration="4465000" />
       <workItem from="1623583367910" duration="2109000" />
-      <workItem from="1623588423495" duration="1045000" />
+      <workItem from="1623588423495" duration="5016000" />
+      <workItem from="1623764856268" duration="6093000" />
+      <workItem from="1623823423427" duration="12703000" />
     </task>
     <task id="LOCAL-00001" summary="miscellaneous changes please ignore">
       <created>1623057973234</created>
@@ -210,7 +143,21 @@
       <option name="project" value="LOCAL" />
       <updated>1623113467025</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Fixed AWS Connection to appsync and updated decks to include subtitle,questions to include timestamp(string) and level">
+      <created>1623591588049</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1623591588049</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Added user verification in DB if no user create user, and add decks function(buggy)">
+      <created>1623835440221</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1623835440221</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -233,6 +180,9 @@
     <MESSAGE value="graphql table update" />
     <MESSAGE value="Includded consolelog" />
     <MESSAGE value="Updated with redux and expo debugged" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated with redux and expo debugged" />
+    <MESSAGE value="Fixed AWS Connection to appsync and updated decks to include subtitle,questions to include timestamp(string) and level" />
+    <MESSAGE value="Added user verification in DB if no user create user, and add decks function" />
+    <MESSAGE value="Added user verification in DB if no user create user, and add decks function(buggy)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added user verification in DB if no user create user, and add decks function(buggy)" />
   </component>
 </project>
