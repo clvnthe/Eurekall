@@ -1,12 +1,19 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Card, Divider, IconButton, Menu, useTheme } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { QUESTION, VIEWING } from "../../../constants/routeNames";
 import * as Decks from "../../../../store/slices/deckSlice";
 
-function CustomCard({ title, subtitle, deleteCard, id }) {
+function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
   const theme = useTheme();
   const [visible, setVisible] = React.useState(false);
 
@@ -21,7 +28,7 @@ function CustomCard({ title, subtitle, deleteCard, id }) {
 
   return (
     <View style={{ backgroundColor: theme.colors.background }}>
-      <Card style={{ margin: 10, elevation: 1 }}>
+      <Card style={{ margin: 10, elevation: 8 }}>
         <Card.Title
           title={title}
           subtitle={subtitle}
@@ -50,8 +57,14 @@ function CustomCard({ title, subtitle, deleteCard, id }) {
             <TouchableOpacity
               style={styles.touchableButton}
               onPress={() => {
-                navigate(QUESTION);
-                console.log("opening study page");
+                if (decks[index].studydeck.length) {
+                  navigate(QUESTION, { paramIndex: index });
+                  console.log("opening study page");
+                } else {
+                  Alert.alert("Alert", "There are no cards to be studied", [
+                    { text: "OK", onPress: () => console.log("OK Pressed") },
+                  ]);
+                }
               }}
             >
               <Image
@@ -86,7 +99,10 @@ function CustomCard({ title, subtitle, deleteCard, id }) {
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.touchableButton}
-              onPress={() => console.log("opening add page")}
+              onPress={() => {
+                showAddCardModal(id);
+                console.log("opening add page");
+              }}
             >
               <Image
                 source={require("../../../../assets/images/vector5.png")}
@@ -96,7 +112,7 @@ function CustomCard({ title, subtitle, deleteCard, id }) {
                 source={require("../../../../assets/images/vector6.png")}
                 style={styles.bottomVector}
               ></Image>
-              <Text style={{ fontWeight: "bold" }}>Add</Text>
+              <Text style={{ fontWeight: "bold" }}>Add Card</Text>
             </TouchableOpacity>
           </View>
         </Card.Content>

@@ -152,7 +152,7 @@ const AppNavContainer = () => {
         console.log(err);
       }
       dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
-    }, 1000);
+    }, 0);
   }, []);
 
   return (

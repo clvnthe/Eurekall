@@ -19,11 +19,7 @@ const HeaderComponent = ({ scene, previous, navigation, statusBarHeight }) => {
       : scene.route.name;
 
   return (
-    <Appbar.Header
-      //style={{ backgroundColor: theme.colors.primary }}
-      statusBarHeight={statusBarHeight}
-      style={{ elevation: 4 }}
-    >
+    <Appbar.Header statusBarHeight={statusBarHeight} style={{ elevation: 4 }}>
       <StatusBar style={theme.dark ? "light" : "dark"} />
       {previous ? (
         <Appbar.BackAction

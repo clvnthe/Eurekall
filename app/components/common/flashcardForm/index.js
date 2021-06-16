@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { TextInput } from "react-native-paper";
 import { Formik } from "formik";
 import CustomButton from "../CustomButton";
@@ -52,7 +52,17 @@ function FlashCardForm({ createFlashcardHandler }) {
                 title="Submit"
                 bgColor="#28A44B"
                 width={310}
-                onPress={props.handleSubmit}
+                onPress={
+                  props.values.question !== "" && props.values.answer !== ""
+                    ? props.handleSubmit
+                    : () =>
+                        Alert.alert("Alert", "Fields cannot be empty!", [
+                          {
+                            text: "OK",
+                            onPress: () => console.log("OK Pressed"),
+                          },
+                        ])
+                }
               ></CustomButton>
             </View>
           </View>

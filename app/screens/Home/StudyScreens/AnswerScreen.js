@@ -1,8 +1,8 @@
 import React from "react";
 import AnswerComponent from "../../../components/Study/Answer";
 
-function AnswerScreen(props) {
-  return <AnswerComponent></AnswerComponent>;
+function AnswerScreen({ route }) {
+  return <AnswerComponent route={route}></AnswerComponent>;
 }
 
 export default AnswerScreen;

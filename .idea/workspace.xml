@@ -2,8 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="Added user verification in DB if no user create user, and add decks function(buggy)">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/assets/images/emptydoodle.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.expo/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/EditProfile/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/EditProfile/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Home/DrawerContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Home/DrawerContent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Login/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Login/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Study/Answer/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Study/Answer/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Study/Question/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Study/Question/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/ViewDecks/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ViewDecks/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Viewing/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Viewing/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/BottomNavBar/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/Container/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/common/Container/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/CustomCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/common/CustomCard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/FlashCard/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/common/FlashCard/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/Header/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/common/Header/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/flashcardForm/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/common/flashcardForm/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/common/reviewForm/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/common/reviewForm/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/navigations/TabNavigator.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/navigations/TabNavigator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/navigations/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/navigations/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/Home/StudyScreens/AnswerScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/Home/StudyScreens/AnswerScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screens/Home/StudyScreens/QuestionScreen.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/screens/Home/StudyScreens/QuestionScreen.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/node_modules/.yarn-integrity" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.yarn-integrity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/slices/deckSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/slices/deckSlice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -77,7 +99,7 @@
       <workItem from="1623583367910" duration="2109000" />
       <workItem from="1623588423495" duration="5016000" />
       <workItem from="1623764856268" duration="6093000" />
-      <workItem from="1623823423427" duration="11910000" />
+      <workItem from="1623823423427" duration="12703000" />
     </task>
     <task id="LOCAL-00001" summary="miscellaneous changes please ignore">
       <created>1623057973234</created>
@@ -128,7 +150,14 @@
       <option name="project" value="LOCAL" />
       <updated>1623591588049</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Added user verification in DB if no user create user, and add decks function(buggy)">
+      <created>1623835440221</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1623835440221</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
