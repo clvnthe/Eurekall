@@ -11,6 +11,24 @@ import { nanoid } from "nanoid";
 import { useIsFocused } from "@react-navigation/core";
 import styles from "./styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import firebase from 'firebase';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+  authDomain: "eurekall.firebaseapp.com",
+  projectId: "eurekall",
+  storageBucket: "eurekall.appspot.com",
+  messagingSenderId: "132679568347",
+  appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+  measurementId: "G-H1N45TFCSX"
+}
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}else {
+  firebase.app(); // if already initialized, use that one
+}
+const firestore = firebase.firestore();
+const fireauth = firebase.auth();
 
 function DeckComponent(props) {
   const dispatch = useDispatch();
@@ -18,13 +36,48 @@ function DeckComponent(props) {
   const [empty, setEmpty] = useState(!decks.length);
   const [index, setIndex] = useState("");
 
-  const createDeckHandler = (title, subtitle) => {
-    dispatch(Decks.createDeck(nanoid(), title, subtitle, [], []));
-    setVisible(false);
-    if (decks.length === 0) {
-      setEmpty(false);
+  const createDeckDatabase = async (title,subtitle,id) => {
+    const userEmail = String(await fireauth.currentUser.email);
+    const deckRef = firestore.collection('users').doc(userEmail).
+    collection('decks').doc(id);
+    await deckRef.set({
+      title: title,
+      subtitle: subtitle,
+      id: id
+    })
+  }
+
+  const createDeckHandler = (title, subtitle,id = nanoid(), loadStatus = false) => {
+    console.log(id);
+    if (loadStatus){
+      dispatch(Decks.createDeck(id, title, subtitle, [], []));
+      setVisible(false);
+      if (decks.length === 0) {
+        setEmpty(false);
+      }
+    } else {
+      console.log(id);
+      dispatch(Decks.createDeck(id, title, subtitle, [], []));
+      createDeckDatabase(title,subtitle,id);
+      setVisible(false);
+      if (decks.length === 0) {
+        setEmpty(false);
+      }
     }
   };
+
+  const loadDeckDatabase = async() => {
+    const userEmail = String(await fireauth.currentUser.email);
+    const retrieveDeckRef = firestore.collection('users').doc(userEmail).collection('decks');
+    const deckRetrieve = await retrieveDeckRef.get();
+    if (deckRetrieve.empty) {
+      console.log('no decks');
+    } else {
+      deckRetrieve.forEach(doc => {
+        createDeckHandler(doc.data()["title"],doc.data()["subtitle"],doc.data()["id"],true)
+      })
+    }
+  }
 
   const isFocused = useIsFocused();
 
@@ -53,7 +106,14 @@ function DeckComponent(props) {
     setVisibleAddCardModal(false);
   };
 
+  const deleteDeckDatabase = async (id) => {
+    const userEmail = String(await fireauth.currentUser.email);
+    await firestore.collection('users').doc(userEmail)
+        .collection('decks').doc(id).delete();
+  }
+
   const deleteDeckHandler = (id) => {
+    deleteDeckDatabase(id);
     dispatch(Decks.deleteDeck(id));
     if (decks.length === 1) {
       setEmpty(true);
