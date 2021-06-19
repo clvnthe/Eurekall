@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { Surface, Title, Text } from "react-native-paper";
 import { DECKS } from "../../constants/routeNames";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Decks from "../../../store/slices/deckSlice";
 import { useSelector } from "react-redux";
+import styles from "./styles";
 
 function HomeComponent(props) {
   const theme = useTheme();
@@ -89,15 +90,15 @@ function HomeComponent(props) {
         <Surface style={styles.thirdContainer}>
           <Text
             style={[
-              styles.thirdContainerText,
-              { fontSize: 30, fontFamily: "sans-serif", color: "#333333" },
+              styles.thirdContainerText1,
+              { fontFamily: "sans-serif", color: "#333333" },
             ]}
           >
             My Decks
           </Text>
           <Text
             style={[
-              styles.thirdContainerText,
+              styles.thirdContainerText2,
               {
                 fontSize: 16,
                 color: "#767676",
@@ -116,39 +117,21 @@ function HomeComponent(props) {
         </Surface>
       </TouchableOpacity>
       <Image
-        style={{ position: "absolute", height: 422, width: 422, left: -340 }}
+        style={styles.bubble1}
         source={require("../../../assets/images/bubble1.png")}
       ></Image>
       <Image
-        style={{
-          position: "absolute",
-          height: 44,
-          width: 44,
-          left: 40,
-          top: 350,
-        }}
+        style={styles.bubble2}
         resizeMode="contain"
         source={require("../../../assets/images/bubble2.png")}
       ></Image>
       <Image
-        style={{
-          position: "absolute",
-          height: 44,
-          width: 44,
-          left: 10,
-          top: 400,
-        }}
+        style={styles.bubble3}
         resizeMode="contain"
         source={require("../../../assets/images/bubble3.png")}
       ></Image>
       <Image
-        style={{
-          position: "absolute",
-          height: 67,
-          width: 67,
-          left: 25,
-          top: 450,
-        }}
+        style={styles.bubble4}
         resizeMode="contain"
         source={require("../../../assets/images/bubble4.png")}
       ></Image>
@@ -157,67 +140,3 @@ function HomeComponent(props) {
 }
 
 export default HomeComponent;
-
-const styles = StyleSheet.create({
-  title: {
-    fontFamily: "sans-serif-light",
-    fontSize: 36,
-    lineHeight: 40,
-    paddingTop: 20,
-    left: 100,
-    width: 259,
-  },
-  firstContainer: {
-    height: 100,
-    width: 311,
-    left: 100,
-    elevation: 10,
-    backgroundColor: "#F5587B",
-  },
-  firstContainerText: {
-    left: 10,
-    top: 33,
-    color: "#ffffff",
-    fontSize: 16,
-  },
-  secondContainer: {
-    height: 180,
-    width: 260,
-    left: 100,
-    elevation: 8,
-    backgroundColor: "#FF8A5C",
-  },
-  secondContainerText: {
-    width: 140,
-    left: 10,
-    top: 33,
-    color: "#ffffff",
-    fontSize: 18,
-  },
-  secondContainerImage: {
-    height: 175,
-    width: 150,
-    transform: [{ scaleX: -1 }],
-    alignSelf: "flex-end",
-    bottom: 76,
-    left: 30,
-  },
-  thirdContainer: {
-    height: 140,
-    width: 260,
-    left: 100,
-    elevation: 6,
-    backgroundColor: "#FFF591",
-  },
-  thirdContainerText: {
-    left: 10,
-    top: 33,
-    fontWeight: "bold",
-  },
-  thirdContainerImage: {
-    height: 110,
-    width: 110,
-    alignSelf: "flex-end",
-    bottom: 40,
-  },
-});

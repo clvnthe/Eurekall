@@ -38,7 +38,6 @@ function CustomButton({
         onPress={onPress}
         style={[
           styles.wrapper,
-          { width: width },
           { backgroundColor: bgColor ? bgColor : theme.colors.primary },
         ]}
       >

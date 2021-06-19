@@ -3,15 +3,15 @@ import {
   useTheme,
   useIsFocused,
 } from "@react-navigation/native";
-import React, { useEffect, useCallback } from "react";
-import { Alert, ScrollView, StyleSheet, View } from "react-native";
+import React, { useEffect } from "react";
+import { Alert, ScrollView, View } from "react-native";
 import { Surface, Text, TextInput } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { ANSWER } from "../../../constants/routeNames";
-import Container from "../../common/Container";
 import CustomButton from "../../common/CustomButton";
 import * as Decks from "../../../../store/slices/deckSlice";
 import Constants from "expo-constants";
+import EStyleSheet from "react-native-extended-stylesheet";
 
 function QuestionComponent({ route }) {
   const theme = useTheme();
@@ -73,10 +73,10 @@ function QuestionComponent({ route }) {
           }
         ></TextInput>
       </Surface>
-      <View style={{ alignItems: "flex-end" }}>
+      <View style={{ alignItems: "center" }}>
         <CustomButton
           title="Submit"
-          width={165}
+          //width={165}
           onPress={() => {
             if (userAnswer !== "") {
               navigate(ANSWER, {
@@ -98,26 +98,26 @@ function QuestionComponent({ route }) {
 
 export default QuestionComponent;
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   question: {
-    width: 330,
-    height: 300,
+    width: "350rem",
+    height: "320rem",
     alignSelf: "center",
-    elevation: 8,
+    elevation: "8rem",
     justifyContent: "center",
-    padding: 10,
+    padding: "10rem",
     flex: 1,
   },
   userAnswer: {
-    width: 330,
-    height: 130,
+    width: "350rem",
+    height: "135rem",
     alignSelf: "center",
-    elevation: 8,
+    elevation: "8rem",
     justifyContent: "center",
   },
   questionText: {
     textAlign: "center",
-    fontSize: 30,
+    fontSize: "35rem",
   },
-  userAnswerTextInput: { width: 310, alignSelf: "center" },
+  userAnswerTextInput: { width: "320rem", alignSelf: "center" },
 });

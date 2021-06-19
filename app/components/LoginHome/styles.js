@@ -1,35 +1,40 @@
-import { StyleSheet, Platform, StatusBar } from "react-native";
-import colors from "../../../assets/theme/colors";
+import EStyleSheet from "react-native-extended-stylesheet";
 
-export default StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-  logoContainer: {
-    top: 30,
-    justifyContent: "center",
-    alignItems: "center",
-    width: "100%",
-    height: "50%",
-  },
+export default EStyleSheet.create({
   logo: {
     width: "100%",
-    height: 130,
-    top: 140,
-    left: -40,
+    height: "60rem",
+    top: "200rem",
+    right: "40rem",
     position: "absolute",
   },
-  registerSection: {
-    flexDirection: "row",
+  backgroundImage: {
+    width: "100%",
+    height: "110%",
   },
-  registerText: {
-    textDecorationLine: "underline",
-    color: colors.primary,
+  doodle: {
+    width: "200rem",
+    height: "210rem",
+    position: "absolute",
+    bottom: "60rem",
   },
-  forgotPWText: {
-    textDecorationLine: "underline",
-    color: colors.primary,
-    paddingLeft: 130,
+  title: {
+    width: "80%",
+    top: "270rem",
+    right: "50rem",
+    fontSize: "55rem",
+    lineHeight: "58rem",
+    position: "absolute",
+    fontFamily: "sans-serif-thin",
+  },
+  signUpButton: {
+    position: "absolute",
+    top: "45%",
+    alignSelf: "center",
+  },
+  loginButton: {
+    position: "absolute",
+    top: "52%",
+    alignSelf: "center",
   },
 });

@@ -1,12 +1,13 @@
-import { StyleSheet } from "react-native";
+import EStyleSheet from "react-native-extended-stylesheet";
 
-export default StyleSheet.create({
+export default EStyleSheet.create({
   wrapper: {
     height: 51,
     marginVertical: 5,
     borderRadius: 100,
     alignItems: "center",
     justifyContent: "space-evenly",
+    width: "340rem",
   },
   inputContainer: {
     paddingVertical: 10,

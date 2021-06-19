@@ -20,7 +20,7 @@ export default (props, backgroundColor) => {
           contentContainerStyle={{
             paddingBottom: "200%",
           }}
-          keyboardShouldPersistTaps="always"
+          //keyboardShouldPersistTaps="always"
           style={{
             paddingTop: Constants.statusBarHeight,
             backgroundColor: { backgroundColor },

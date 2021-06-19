@@ -18,10 +18,7 @@ import DrawerNavigator from "./DrawerNavigator";
 
 import { AuthContext } from "../context/Provider";
 import firebase from "firebase";
-import {current} from "@reduxjs/toolkit";
-
-
-
+import { current } from "@reduxjs/toolkit";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -30,18 +27,17 @@ const firebaseConfig = {
   storageBucket: "eurekall.appspot.com",
   messagingSenderId: "132679568347",
   appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
-  measurementId: "G-H1N45TFCSX"
-}
+  measurementId: "G-H1N45TFCSX",
+};
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-}else {
+} else {
   firebase.app(); // if already initialized, use that one
 }
 
 const firestore = firebase.firestore();
 const fireauth = firebase.auth();
-
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
@@ -74,8 +70,7 @@ const AppNavContainer = () => {
   };
 
   const [isThemeDark, setIsThemeDark] = React.useState(false);
-  const [userTempDetails, setUserTempDetails] = React.useState('');
-
+  const [userTempDetails, setUserTempDetails] = React.useState("");
 
   let theme = isThemeDark ? CustomDarkTheme : CustomDefaultTheme;
 
@@ -126,8 +121,8 @@ const AppNavContainer = () => {
       logIn: async () => {
         const userToken = String(await fireauth.currentUser.getIdToken());
         const emailAddress = String(await fireauth.currentUser.email);
-        const userRef = firestore.collection('users');
-        const userData = await userRef.where('email','==',emailAddress).get();
+        const userRef = firestore.collection("users");
+        const userData = await userRef.where("email", "==", emailAddress).get();
         const userDetails = userData["docs"][0].data();
         const nameOfUser = String(userDetails["name"]);
         const userName = String(userDetails["preferred_username"]);

@@ -8,6 +8,7 @@ import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 import { useIsFocused } from "@react-navigation/core";
 import * as Decks from "../../../store/slices/deckSlice";
+import EStyleSheet from "react-native-extended-stylesheet";
 
 function ViewingComponent({ route }) {
   const isFocused = useIsFocused();
@@ -63,32 +64,24 @@ function ViewingComponent({ route }) {
         <Modal
           visible={visible}
           onDismiss={hideModal}
-          contentContainerStyle={{
-            backgroundColor: theme.colors.background,
-            borderWidth: 1,
-            borderColor: theme.colors.surface,
-            padding: 10,
-            fontSize: 18,
-            borderRadius: 6,
-            shadowOffset: { width: 1, height: 1 },
-            shadowColor: "#333",
-            shadowOpacity: 0.3,
-            shadowRadius: 2,
-            marginHorizontal: 4,
-            marginVertical: 6,
-            elevation: 24,
-          }}
+          contentContainerStyle={[
+            styles.modal,
+            {
+              backgroundColor: theme.colors.background,
+              borderColor: theme.colors.surface,
+            },
+          ]}
         >
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
         </Modal>
         <FAB
           visible={isFocused}
-          style={{
-            alignSelf: "flex-end",
-            top: 580,
-            right: 16,
-            backgroundColor: theme.colors.secondary,
-          }}
+          style={[
+            styles.fab,
+            {
+              backgroundColor: theme.colors.secondary,
+            },
+          ]}
           icon="plus"
           color={theme.colors.onPrimary}
           onPress={showModal}
@@ -98,17 +91,15 @@ function ViewingComponent({ route }) {
         <View style={{ flex: 1 }}>
           <Image
             source={require("../../../assets/images/emptydoodle.png")}
-            style={{ top: 320, width: 288, height: 388 }}
+            style={styles.doodle}
           ></Image>
           <Text
-            style={{
-              fontFamily: "sans-serif-thin",
-              fontSize: 36,
-              textAlign: "center",
-              bottom: 250,
-              width: 363,
-              color: theme.colors.text,
-            }}
+            style={[
+              styles.title,
+              {
+                color: theme.colors.text,
+              },
+            ]}
           >
             hmm it seems there are no cards added yet, create a card by pressing
             this button!
@@ -124,5 +115,33 @@ function ViewingComponent({ route }) {
     </SafeAreaView>
   );
 }
+
+const styles = EStyleSheet.create({
+  doodle: { top: "335rem", width: "300rem", height: "410rem" },
+  title: {
+    fontFamily: "sans-serif-thin",
+    fontSize: "40rem",
+    textAlign: "center",
+    bottom: "250rem",
+  },
+  fab: {
+    alignSelf: "flex-end",
+    top: "614rem",
+    right: "17rem",
+    elevation: 6,
+  },
+  modal: {
+    padding: "10rem",
+    borderRadius: "20rem",
+    borderWidth: "1rem",
+    shadowOffset: { width: "1rem", height: "1rem" },
+    shadowColor: "#333",
+    shadowOpacity: "0.3rem",
+    shadowRadius: "2rem",
+    marginHorizontal: "4rem",
+    marginVertical: "6rem",
+    elevation: "24rem",
+  },
+});
 
 export default ViewingComponent;

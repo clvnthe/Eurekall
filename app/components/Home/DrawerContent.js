@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import {
   Avatar,
   Title,
   Caption,
-  Paragraph,
   Drawer,
   Text,
   TouchableRipple,
@@ -14,6 +13,7 @@ import {
   Appbar,
 } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import EStyleSheet from "react-native-extended-stylesheet";
 
 import { AuthContext } from "../../context/Provider";
 import colors from "../../../assets/theme/colors";
@@ -31,16 +31,15 @@ const firebaseConfig = {
   storageBucket: "eurekall.appspot.com",
   messagingSenderId: "132679568347",
   appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
-  measurementId: "G-H1N45TFCSX"
-}
+  measurementId: "G-H1N45TFCSX",
+};
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-}else {
+} else {
   firebase.app(); // if already initialized, use that one
 }
 
 const fireauth = firebase.auth();
-
 
 function DrawerContent(props) {
   const { logOut, toggleTheme } = React.useContext(AuthContext);
@@ -85,7 +84,7 @@ function DrawerContent(props) {
       <DrawerContentScrollView {...props}>
         <View style={styles.drawerContent}>
           <View style={styles.userInfoSection}>
-            <View style={{ flexDirection: "row", marginTop: 15 }}>
+            <View style={styles.profilePicContainer}>
               <Avatar.Image
                 source={{
                   uri: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8",
@@ -181,48 +180,50 @@ function DrawerContent(props) {
   );
 }
 
-const styles = StyleSheet.create({
+const styles = EStyleSheet.create({
   drawerContent: {
     flex: 1,
   },
   userInfoSection: {
-    paddingLeft: 20,
+    paddingLeft: "20rem",
   },
+  profilePicContainer: { flexDirection: "row", marginTop: "15rem" },
   title: {
-    fontSize: 24,
-    marginTop: 3,
+    fontSize: "25rem",
+    marginTop: "3rem",
     fontWeight: "bold",
   },
   caption: {
-    fontSize: 14,
-    lineHeight: 14,
+    fontSize: "15rem",
+    lineHeight: "15rem",
   },
   row: {
-    marginTop: 20,
+    marginTop: "20rem",
     flexDirection: "row",
   },
   section: {
     flexDirection: "row",
     alignItems: "center",
-    marginRight: 15,
+    marginRight: "15rem",
   },
   paragraph: {
     fontWeight: "bold",
-    marginRight: 3,
+    marginRight: "3rem",
   },
   drawerSection: {
-    marginTop: 15,
+    marginTop: "15rem",
   },
   bottomDrawerSection: {
-    marginBottom: 15,
+    marginBottom: "15rem",
     borderTopColor: "#f4f4f4",
-    borderTopWidth: 1,
+    borderTopWidth: "1rem",
   },
   preference: {
     flexDirection: "row",
     justifyContent: "space-between",
-    paddingVertical: 2,
-    paddingHorizontal: 16,
+    paddingVertical: "2rem",
+    paddingHorizontal: "16rem",
   },
 });
+
 export default DrawerContent;

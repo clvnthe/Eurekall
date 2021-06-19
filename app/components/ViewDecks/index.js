@@ -9,17 +9,14 @@ import * as Decks from "../../../store/slices/deckSlice";
 import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 import { useIsFocused } from "@react-navigation/core";
+import styles from "./styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
-
 
 function DeckComponent(props) {
   const dispatch = useDispatch();
   const decks = useSelector(Decks.getDecks);
   const [empty, setEmpty] = useState(!decks.length);
   const [index, setIndex] = useState("");
-
-
 
   const createDeckHandler = (title, subtitle) => {
     dispatch(Decks.createDeck(nanoid(), title, subtitle, [], []));
@@ -88,47 +85,31 @@ function DeckComponent(props) {
           style={{
             justifyContent: "center",
           }}
-          contentContainerStyle={{
-            backgroundColor: theme.colors.background,
-            padding: 10,
-            fontSize: 18,
-            marginHorizontal: 4,
-            marginVertical: 6,
-            elevation: 24,
-          }}
+          contentContainerStyle={[
+            styles.modal,
+            {
+              backgroundColor: theme.colors.background,
+            },
+          ]}
         >
           <ReviewFormComponent createDeckHandler={createDeckHandler} />
         </Modal>
         <Modal
           visible={visibleAddCardModal}
           onDismiss={hideAddCardModal}
-          contentContainerStyle={{
-            backgroundColor: theme.colors.background,
-            borderWidth: 1,
-            borderColor: theme.colors.surface,
-            padding: 10,
-            fontSize: 18,
-            borderRadius: 6,
-            shadowOffset: { width: 1, height: 1 },
-            shadowColor: "#333",
-            shadowOpacity: 0.3,
-            shadowRadius: 2,
-            marginHorizontal: 4,
-            marginVertical: 6,
-            elevation: 24,
-          }}
+          contentContainerStyle={[
+            styles.modal,
+            {
+              backgroundColor: theme.colors.background,
+              borderColor: theme.colors.surface,
+            },
+          ]}
         >
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
         </Modal>
         <FAB
           visible={isFocused}
-          style={{
-            alignSelf: "flex-end",
-            top: 580,
-            right: 16,
-            backgroundColor: theme.colors.secondary,
-            elevation: 6,
-          }}
+          style={[styles.fab, { backgroundColor: theme.colors.secondary }]}
           icon="plus"
           color={theme.colors.onPrimary}
           onPress={showModal}
@@ -138,17 +119,15 @@ function DeckComponent(props) {
         <View style={{ flex: 1 }}>
           <Image
             source={require("../../../assets/images/emptydoodle.png")}
-            style={{ top: 320, width: 288, height: 388 }}
+            style={styles.doodle}
           ></Image>
           <Text
-            style={{
-              fontFamily: "sans-serif-thin",
-              fontSize: 36,
-              textAlign: "center",
-              bottom: 250,
-              width: 363,
-              color: theme.colors.text,
-            }}
+            style={[
+              styles.title,
+              {
+                color: theme.colors.text,
+              },
+            ]}
           >
             hmm it seems there are no decks added yet, create a deck by pressing
             this button!

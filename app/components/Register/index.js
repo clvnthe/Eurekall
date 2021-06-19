@@ -1,12 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import {
-  Image,
-  View,
-  Text,
-  TouchableOpacity,
-  ImageBackground,
-} from "react-native";
+import { Image, View, Text, TouchableOpacity } from "react-native";
 import { HelperText, TextInput } from "react-native-paper";
 
 import { CONFIRM_REGISTRATION, LOGIN } from "../../constants/routeNames";
@@ -15,28 +9,25 @@ import CustomButton from "../common/CustomButton";
 import styles from "./styles";
 import colors from "../../../assets/theme/colors";
 
-
 import { useTheme } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import firebase from "firebase";
 const firebaseConfig = {
-    apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
-    authDomain: "eurekall.firebaseapp.com",
-    projectId: "eurekall",
-    storageBucket: "eurekall.appspot.com",
-    messagingSenderId: "132679568347",
-    appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
-    measurementId: "G-H1N45TFCSX"
-}
+  apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+  authDomain: "eurekall.firebaseapp.com",
+  projectId: "eurekall",
+  storageBucket: "eurekall.appspot.com",
+  messagingSenderId: "132679568347",
+  appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+  measurementId: "G-H1N45TFCSX",
+};
 if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}else {
-    firebase.app(); // if already initialized, use that one
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use that one
 }
 const firestore = firebase.firestore();
 const fireauth = firebase.auth();
-
-
 
 function RegisterComponent() {
   const [name, setName] = React.useState("");
@@ -58,19 +49,22 @@ function RegisterComponent() {
   async function signUp() {
     try {
       setLoading(true);
-      const docRef = firestore.collection('users').doc(email);
-      const userDetails = await fireauth.createUserWithEmailAndPassword(email,password);
+      const docRef = firestore.collection("users").doc(email);
+      const userDetails = await fireauth.createUserWithEmailAndPassword(
+        email,
+        password
+      );
       await firebase.auth().currentUser.sendEmailVerification();
       await docRef.set({
-          email: email,
-          preferred_username: username,
-          name: name,
-          decks : []
-      })
+        email: email,
+        preferred_username: username,
+        name: name,
+        decks: [],
+      });
       setIsSignInHelperTextVisible(false);
       setLoading(false);
       console.log("successful signup");
-      alert("please verify your account from your email")
+      alert("please verify your account from your email");
       navigate(LOGIN);
     } catch (error) {
       setIsSignInHelperTextVisible(true);
@@ -135,38 +129,25 @@ function RegisterComponent() {
 
   return (
     <Container scrollable backgroundColor={theme.colors.background}>
-      <View style={styles.logoContainer}>
-        <Image
-          style={styles.logo}
-          resizeMode="contain"
-          source={
-            theme.dark
-              ? require("../../../assets/images/eurekall_whitelogo.png")
-              : require("../../../assets/images/eurekall_logo.png")
-          }
-        ></Image>
-      </View>
       <Image
-        style={{
-          position: "absolute",
-          width: 134,
-          height: 199,
-          left: "60%",
-          top: 70,
-        }}
+        style={styles.logo}
+        source={
+          theme.dark
+            ? require("../../../assets/images/eurekall_whitelogo.png")
+            : require("../../../assets/images/eurekall_logo.png")
+        }
+      ></Image>
+      <Image
+        style={styles.doodle}
         source={require("../../../assets/images/registerdoodle.png")}
       ></Image>
       <Text
-        style={{
-          position: "absolute",
-          width: "50%",
-          height: "125%",
-          top: 100,
-          left: "4%",
-          fontSize: 44,
-          fontFamily: "sans-serif-thin",
-          color: theme.colors.text,
-        }}
+        style={[
+          styles.title,
+          {
+            color: theme.colors.text,
+          },
+        ]}
       >
         Register here
       </Text>
@@ -175,12 +156,7 @@ function RegisterComponent() {
         mode="flat"
         label="Your name"
         placeholder="Enter your name"
-        style={{
-          width: "93%",
-          top: 210,
-          alignSelf: "center",
-          position: "absolute",
-        }}
+        style={styles.nameTextInput}
         value={name}
         onChangeText={setName}
         autoCapitalize="words"
@@ -196,10 +172,7 @@ function RegisterComponent() {
         error={isHelperTextVisible ? hasErrors(name) : false}
       />
       <HelperText
-        style={{
-          position: "absolute",
-          top: 270,
-        }}
+        style={styles.nameHelperText}
         type="error"
         visible={isHelperTextVisible ? hasErrors(name) : false}
       >
@@ -212,12 +185,7 @@ function RegisterComponent() {
         label="Email address"
         placeholder="e.g., abc@xyz.com"
         keyboardType="email-address"
-        style={{
-          width: 336,
-          top: 290,
-          alignSelf: "center",
-          position: "absolute",
-        }}
+        style={styles.emailTextInput}
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
@@ -233,20 +201,14 @@ function RegisterComponent() {
         error={isHelperTextVisible ? emailHasErrors(email) : false}
       />
       <HelperText
-        style={{
-          position: "absolute",
-          top: 350,
-        }}
+        style={styles.emailHelperText}
         type="error"
         visible={isHelperTextVisible ? emailHasErrors(email) : false}
       >
         {getEmailErrorMessage(email)}
       </HelperText>
       <HelperText
-        style={{
-          position: "absolute",
-          top: 350,
-        }}
+        style={styles.emailHelperText}
         type="error"
         visible={!emailHasErrors(email) ? isSignInHelperTextVisible : false}
       >
@@ -258,12 +220,7 @@ function RegisterComponent() {
         mode="flat"
         label="Username"
         placeholder="Enter username"
-        style={{
-          width: 336,
-          top: 370,
-          alignSelf: "center",
-          position: "absolute",
-        }}
+        style={styles.usernameTextInput}
         value={username}
         onChangeText={setUsername}
         autoCapitalize="none"
@@ -279,10 +236,7 @@ function RegisterComponent() {
         error={isHelperTextVisible ? hasErrors(username) : false}
       />
       <HelperText
-        style={{
-          position: "absolute",
-          top: 430,
-        }}
+        style={styles.usernameHelperText}
         type="error"
         visible={isHelperTextVisible ? hasErrors(username) : false}
       >
@@ -294,12 +248,7 @@ function RegisterComponent() {
         mode="flat"
         label="Password"
         placeholder="Enter password"
-        style={{
-          width: 336,
-          top: 450,
-          alignSelf: "center",
-          position: "absolute",
-        }}
+        style={styles.passwordTextInput}
         value={password}
         onChangeText={setPassword}
         left={
@@ -319,35 +268,24 @@ function RegisterComponent() {
         error={isHelperTextVisible ? passwordHasErrors(password) : false}
       />
       <HelperText
-        style={{
-          position: "absolute",
-          top: 510,
-        }}
+        style={styles.passwordHelperText}
         visible={hasText(password) ? !isHelperTextVisible : false}
       >
         Password requires at least 6 characters.
       </HelperText>
       <HelperText
-        style={{
-          position: "absolute",
-          top: 510,
-        }}
+        style={styles.passwordHelperText}
         type="error"
         visible={isHelperTextVisible ? passwordHasErrors(password) : false}
       >
         {getPasswordErrorMessage(password)}
       </HelperText>
-      <View
-        style={{
-          top: 510,
-          alignSelf: "center",
-        }}
-      >
+      <View style={styles.buttonView}>
         <CustomButton
           title="Sign Up"
           bgColor={theme.colors.primary}
           loading={loading}
-          width={343}
+          //width={343}
           onPress={() => {
             hasErrors(name) ||
             hasErrors(username) ||
@@ -359,7 +297,7 @@ function RegisterComponent() {
         ></CustomButton>
       </View>
       <View style={styles.signInSection}>
-        <Text style={{ color: theme.colors.text, fontSize: 16 }}>
+        <Text style={[styles.signInText1, { color: theme.colors.text }]}>
           Already have an account?
         </Text>
         <TouchableOpacity
@@ -367,7 +305,7 @@ function RegisterComponent() {
             navigate(LOGIN);
           }}
         >
-          <Text style={[styles.signInText, { color: theme.colors.primary }]}>
+          <Text style={[styles.signInText2, { color: theme.colors.primary }]}>
             {" "}
             Sign in!
           </Text>

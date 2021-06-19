@@ -13,22 +13,21 @@ import { AuthContext } from "../../context/Provider";
 import { useTheme } from "@react-navigation/native";
 import firebase from "firebase";
 const firebaseConfig = {
-    apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
-    authDomain: "eurekall.firebaseapp.com",
-    projectId: "eurekall",
-    storageBucket: "eurekall.appspot.com",
-    messagingSenderId: "132679568347",
-    appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
-    measurementId: "G-H1N45TFCSX"
-}
+  apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+  authDomain: "eurekall.firebaseapp.com",
+  projectId: "eurekall",
+  storageBucket: "eurekall.appspot.com",
+  messagingSenderId: "132679568347",
+  appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+  measurementId: "G-H1N45TFCSX",
+};
 if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}else {
-    firebase.app(); // if already initialized, use that one
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use that one
 }
 const firestore = firebase.firestore();
 const fireauth = firebase.auth();
-
 
 function LoginComponent(props) {
   const [email, setEmail] = React.useState("");
@@ -44,7 +43,7 @@ function LoginComponent(props) {
     try {
       setLoading(true);
       setIsSignInHelperTextVisible(false);
-      const user = await fireauth.signInWithEmailAndPassword(email,password);
+      const user = await fireauth.signInWithEmailAndPassword(email, password);
       console.log("login successful");
       setLoading(false);
       logIn();
@@ -103,26 +102,16 @@ function LoginComponent(props) {
         }
       ></Image>
       <Image
-        style={{
-          position: "absolute",
-          width: 149,
-          height: 169,
-          left: "60%",
-          top: 170,
-        }}
+        style={styles.doodle}
         source={require("../../../assets/images/logindoodle.png")}
       ></Image>
       <Text
-        style={{
-          position: "absolute",
-          width: "50%",
-          height: 136,
-          top: 200,
-          left: "3%",
-          fontSize: 48,
-          fontFamily: "sans-serif-thin",
-          color: theme.colors.text,
-        }}
+        style={[
+          styles.title,
+          {
+            color: theme.colors.text,
+          },
+        ]}
       >
         Login here
       </Text>
@@ -132,12 +121,7 @@ function LoginComponent(props) {
         label="Email address"
         placeholder="e.g., abc@xyz.com"
         keyboardType="email-address"
-        style={{
-          width: 336,
-          top: 320,
-          alignSelf: "center",
-          position: "absolute",
-        }}
+        style={styles.emailAddressTextInput}
         value={email}
         onChangeText={setEmail}
         returnKeyType="next"
@@ -152,10 +136,7 @@ function LoginComponent(props) {
         error={isHelperTextVisible ? emailHasErrors(email) : false}
       />
       <HelperText
-        style={{
-          position: "absolute",
-          top: 380,
-        }}
+        style={styles.emailAddressHelperText}
         type="error"
         visible={isHelperTextVisible ? emailHasErrors(email) : false}
       >
@@ -167,12 +148,7 @@ function LoginComponent(props) {
         mode="flat"
         label="Password"
         placeholder="Enter password"
-        style={{
-          width: 336,
-          top: 400,
-          alignSelf: "center",
-          position: "absolute",
-        }}
+        style={styles.passwordTextInput}
         value={password}
         onChangeText={setPassword}
         left={
@@ -192,20 +168,14 @@ function LoginComponent(props) {
         error={isHelperTextVisible ? passwordHasErrors(password) : false}
       />
       <HelperText
-        style={{
-          position: "absolute",
-          top: 460,
-        }}
+        style={styles.passwordHelperText}
         type="error"
         visible={isHelperTextVisible ? passwordHasErrors(password) : false}
       >
         {getPasswordErrorMessage(password)}
       </HelperText>
       <HelperText
-        style={{
-          position: "absolute",
-          top: 460,
-        }}
+        style={styles.passwordHelperText}
         type="error"
         visible={
           !emailHasErrors(email) && !passwordHasErrors(password)
@@ -216,33 +186,34 @@ function LoginComponent(props) {
         Please enter a correct email and password. Note that both fields may be
         case-sensitive.
       </HelperText>
-      <View
-        style={{
-          position: "absolute",
-          top: 462,
-          paddingTop: 28,
-          alignSelf: "center",
-        }}
-      >
+      <View style={styles.loginButtonView}>
         <CustomButton
           title="Log In"
           bgColor={theme.colors.primary}
           loading={loading}
-          width={343}
+          //width={343}
           onPress={() => {
             setIsHelperTextVisible(true);
             signIn();
           }}
         ></CustomButton>
       </View>
-      <View
-        style={{
-          top: 620,
-          flexDirection: "row",
-          alignSelf: "center",
-        }}
-      >
-        <Text style={{ color: theme.colors.text, fontSize: 16 }}>
+      <View style={styles.forgotPasswordView}>
+        <TouchableOpacity
+          onPress={() => {
+            setEmail("");
+            setPassword("");
+            setIsHelperTextVisible(false);
+            navigate(FORGOTPASSWORD);
+          }}
+        >
+          <Text style={[styles.forgotPWText, { color: theme.colors.primary }]}>
+            Forgot your password?{" "}
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={styles.signUpView}>
+        <Text style={[styles.signUpText, { color: theme.colors.text }]}>
           Don't have an account?{" "}
         </Text>
         <TouchableOpacity
@@ -258,51 +229,21 @@ function LoginComponent(props) {
           </Text>
         </TouchableOpacity>
       </View>
-      <View
-        style={{
-          top: 510,
-          width: 178,
-          height: 19,
-          alignSelf: "center",
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            setEmail("");
-            setPassword("");
-            setIsHelperTextVisible(false);
-            navigate(FORGOTPASSWORD);
-          }}
-        >
-          <Text style={[styles.forgotPWText, { color: theme.colors.primary }]}>
-            Forgot your password?
-          </Text>
-        </TouchableOpacity>
-      </View>
-      <View
-        style={{
-          paddingLeft: 15,
-          paddingRight: 15,
-          top: 533,
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <View style={{ flex: 1, height: 1, backgroundColor: colors.grey }} />
+      <View style={styles.dividerView}>
+        <View style={[styles.dividerLine, { backgroundColor: colors.grey }]} />
         <View>
           <Text
-            style={{
-              top: -2,
-              width: 30,
-              textAlign: "center",
-              fontFamily: "sans-serif-light",
-              color: colors.grey,
-            }}
+            style={[
+              styles.dividerText,
+              {
+                color: colors.grey,
+              },
+            ]}
           >
             or
           </Text>
         </View>
-        <View style={{ flex: 1, height: 1, backgroundColor: colors.grey }} />
+        <View style={[styles.dividerLine, { backgroundColor: colors.grey }]} />
       </View>
     </Container>
   );

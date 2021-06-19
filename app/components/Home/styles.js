@@ -1,11 +1,99 @@
-import { StyleSheet } from "react-native";
+import EStyleSheet from "react-native-extended-stylesheet";
 
-export default StyleSheet.create({
-  containerStyle: {
-    borderWidth: 1,
-    borderColor: "#ddd",
-    padding: 10,
-    fontSize: 18,
-    borderRadius: 6,
+export default EStyleSheet.create({
+  title: {
+    fontFamily: "sans-serif-light",
+    fontSize: "38rem",
+    lineHeight: "39rem",
+    paddingTop: "20rem",
+    left: "105rem",
+    width: "273rem",
+  },
+  firstContainer: {
+    height: "111rem",
+    width: "275rem",
+    left: "105rem",
+    elevation: 10,
+    backgroundColor: "#F5587B",
+    justifyContent: "center",
+  },
+  firstContainerText: {
+    left: "12rem",
+    color: "#ffffff",
+    fontSize: "17rem",
+  },
+  secondContainer: {
+    height: "190rem",
+    width: "275rem",
+    left: "105rem",
+    elevation: 8,
+    backgroundColor: "#FF8A5C",
+  },
+  secondContainerText: {
+    width: "135rem",
+    left: "12rem",
+    top: "33rem",
+    color: "#ffffff",
+    fontSize: "19rem",
+  },
+  secondContainerImage: {
+    height: "190rem",
+    width: "160rem",
+    transform: [{ scaleX: -1 }],
+    alignSelf: "flex-end",
+    bottom: "85rem",
+    left: "40rem",
+  },
+  thirdContainer: {
+    height: "150rem",
+    width: "275rem",
+    left: "105rem",
+    elevation: 6,
+    backgroundColor: "#FFF591",
+  },
+  thirdContainerText1: {
+    left: "12rem",
+    top: "35rem",
+    fontWeight: "bold",
+    fontSize: "30rem",
+  },
+  thirdContainerText2: {
+    left: "12rem",
+    top: "30rem",
+    fontSize: "16rem",
+    fontWeight: "bold",
+  },
+  thirdContainerImage: {
+    height: "120rem",
+    width: "120rem",
+    alignSelf: "flex-end",
+    bottom: "50rem",
+  },
+  bubble1: {
+    position: "absolute",
+    height: "460rem",
+    width: "460rem",
+    left: "-380rem",
+  },
+  bubble2: {
+    position: "absolute",
+    height: "50rem",
+    width: "52rem",
+    left: "40rem",
+    top: "350rem",
+  },
+  bubble3: {
+    position: "absolute",
+    height: "41rem",
+    width: "42rem",
+    left: "10rem",
+    top: "400rem",
+  },
+  bubble4: {
+    position: "absolute",
+    height: "67rem",
+    width: "69rem",
+    left: "25rem",
+    top: "450rem",
   },
 });

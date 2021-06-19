@@ -7,28 +7,24 @@ import { useTheme } from "@react-navigation/native";
 import { LOGIN, RESETPASSWORD } from "../../constants/routeNames";
 import CustomButton from "../common/CustomButton";
 import styles from "./styles";
-import colors from "../../../assets/theme/colors";
 import Container from "../common/Container";
-
-
 
 import firebase from "firebase";
 const firebaseConfig = {
-    apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
-    authDomain: "eurekall.firebaseapp.com",
-    projectId: "eurekall",
-    storageBucket: "eurekall.appspot.com",
-    messagingSenderId: "132679568347",
-    appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
-    measurementId: "G-H1N45TFCSX"
-}
+  apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+  authDomain: "eurekall.firebaseapp.com",
+  projectId: "eurekall",
+  storageBucket: "eurekall.appspot.com",
+  messagingSenderId: "132679568347",
+  appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+  measurementId: "G-H1N45TFCSX",
+};
 if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}else {
-    firebase.app(); // if already initialized, use that one
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use that one
 }
 const fireauth = firebase.auth();
-
 
 function ForgotPasswordComponent() {
   const [loading, setLoading] = React.useState(false);
@@ -40,7 +36,7 @@ function ForgotPasswordComponent() {
   async function forgotPassword() {
     try {
       await fireauth.sendPasswordResetEmail(email);
-      alert('Rest password link has been sent to your email')
+      alert("Rest password link has been sent to your email");
       setLoading(true);
       setIsSignInHelperTextVisible(false);
       setLoading(false);
@@ -74,7 +70,6 @@ function ForgotPasswordComponent() {
     <Container backgroundColor={theme.colors.background}>
       <Image
         style={styles.logo}
-        resizeMode="contain"
         source={
           theme.dark
             ? require("../../../assets/images/eurekall_whitelogo.png")
@@ -82,26 +77,16 @@ function ForgotPasswordComponent() {
         }
       ></Image>
       <Image
-        style={{
-          position: "absolute",
-          width: 135,
-          height: 169,
-          left: "65%",
-          top: 200,
-        }}
+        style={styles.doodle}
         source={require("../../../assets/images/forgotpassworddoodle.png")}
       ></Image>
       <Text
-        style={{
-          position: "absolute",
-          width: "100%",
-          height: 136,
-          top: 200,
-          left: "3%",
-          fontSize: 48,
-          fontFamily: "sans-serif-thin",
-          color: theme.colors.text,
-        }}
+        style={[
+          styles.title,
+          {
+            color: theme.colors.text,
+          },
+        ]}
       >
         Forgot your password?
       </Text>
@@ -111,12 +96,7 @@ function ForgotPasswordComponent() {
         label="Email address"
         placeholder="e.g., abc@xyz.com"
         keyboardType="email-address"
-        style={{
-          width: 336,
-          top: 320,
-          alignSelf: "center",
-          position: "absolute",
-        }}
+        style={styles.emailTextInput}
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"
@@ -129,38 +109,25 @@ function ForgotPasswordComponent() {
         error={isHelperTextVisible ? emailHasErrors(email) : false}
       />
       <HelperText
-        style={{
-          position: "absolute",
-          top: 380,
-        }}
+        style={styles.emailHelperText}
         type="error"
         visible={isHelperTextVisible ? emailHasErrors(email) : false}
       >
         {getEmailErrorMessage(email)}
       </HelperText>
       <HelperText
-        style={{
-          position: "absolute",
-          top: 380,
-        }}
+        style={styles.emailHelperText}
         type="error"
         visible={!emailHasErrors(email) ? isSignInHelperTextVisible : false}
       >
         Please enter a correct email address.
       </HelperText>
-      <View
-        style={{
-          position: "absolute",
-          top: 362,
-          paddingTop: 28,
-          alignSelf: "center",
-        }}
-      >
+      <View style={styles.buttonView}>
         <CustomButton
           title="Submit"
           bgColor={theme.colors.primary}
           loading={loading}
-          width={343}
+          //width={343}
           onPress={() => {
             emailHasErrors(email)
               ? setIsHelperTextVisible(true)
