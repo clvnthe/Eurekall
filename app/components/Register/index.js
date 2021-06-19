@@ -15,11 +15,28 @@ import CustomButton from "../common/CustomButton";
 import styles from "./styles";
 import colors from "../../../assets/theme/colors";
 
-import Amplify, { Auth } from "aws-amplify";
-import awsconfig from "../../../src/aws-exports";
+
 import { useTheme } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
-Amplify.configure(awsconfig);
+import firebase from "firebase";
+const firebaseConfig = {
+    apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+    authDomain: "eurekall.firebaseapp.com",
+    projectId: "eurekall",
+    storageBucket: "eurekall.appspot.com",
+    messagingSenderId: "132679568347",
+    appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+    measurementId: "G-H1N45TFCSX"
+}
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}else {
+    firebase.app(); // if already initialized, use that one
+}
+const firestore = firebase.firestore();
+const fireauth = firebase.auth();
+
+
 
 function RegisterComponent() {
   const [name, setName] = React.useState("");
@@ -37,23 +54,24 @@ function RegisterComponent() {
     return text.length > 0 && text.length < 6;
   };
 
-  // For AWS amplify registration
+  // For firebase registration
   async function signUp() {
     try {
       setLoading(true);
-      const { user } = await Auth.signUp({
-        username: email,
-        password: password,
-        attributes: {
-          preferred_username: username, // optional
-          name: name, // optional - E.164 number convention
-          // other custom attributes
-        },
-      });
+      const docRef = firestore.collection('users').doc(email);
+      const userDetails = await fireauth.createUserWithEmailAndPassword(email,password);
+      await firebase.auth().currentUser.sendEmailVerification();
+      await docRef.set({
+          email: email,
+          preferred_username: username,
+          name: name,
+          decks : []
+      })
       setIsSignInHelperTextVisible(false);
       setLoading(false);
       console.log("successful signup");
-      navigate(CONFIRM_REGISTRATION);
+      alert("please verify your account from your email")
+      navigate(LOGIN);
     } catch (error) {
       setIsSignInHelperTextVisible(true);
       console.log("error signing up:", error);

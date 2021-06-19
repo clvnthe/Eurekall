@@ -10,9 +10,25 @@ import styles from "./styles";
 import colors from "../../../assets/theme/colors";
 import Container from "../common/Container";
 
-import Amplify, { Auth } from "aws-amplify";
-import awsconfig from "../../../src/aws-exports";
-Amplify.configure(awsconfig);
+
+
+import firebase from "firebase";
+const firebaseConfig = {
+    apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+    authDomain: "eurekall.firebaseapp.com",
+    projectId: "eurekall",
+    storageBucket: "eurekall.appspot.com",
+    messagingSenderId: "132679568347",
+    appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+    measurementId: "G-H1N45TFCSX"
+}
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}else {
+    firebase.app(); // if already initialized, use that one
+}
+const fireauth = firebase.auth();
+
 
 function ForgotPasswordComponent() {
   const [loading, setLoading] = React.useState(false);
@@ -23,12 +39,12 @@ function ForgotPasswordComponent() {
   // For AWS forget password
   async function forgotPassword() {
     try {
+      await fireauth.sendPasswordResetEmail(email);
+      alert('Rest password link has been sent to your email')
       setLoading(true);
       setIsSignInHelperTextVisible(false);
-      const { user } = await Auth.forgotPassword(email);
-      console.log("forgot password successful");
       setLoading(false);
-      navigate(RESETPASSWORD, { username: email });
+      navigate(LOGIN);
     } catch (error) {
       setIsSignInHelperTextVisible(true);
       console.log("error confirming account:", error);

@@ -16,7 +16,6 @@ import {
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 
 import { AuthContext } from "../../context/Provider";
-import Auth from "@aws-amplify/auth";
 import colors from "../../../assets/theme/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {
@@ -24,6 +23,24 @@ import {
   SETTINGS_NAVIGATOR,
   TAB_NAVIGATOR,
 } from "../../constants/routeNames";
+import firebase from "firebase";
+const firebaseConfig = {
+  apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+  authDomain: "eurekall.firebaseapp.com",
+  projectId: "eurekall",
+  storageBucket: "eurekall.appspot.com",
+  messagingSenderId: "132679568347",
+  appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+  measurementId: "G-H1N45TFCSX"
+}
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}else {
+  firebase.app(); // if already initialized, use that one
+}
+
+const fireauth = firebase.auth();
+
 
 function DrawerContent(props) {
   const { logOut, toggleTheme } = React.useContext(AuthContext);
@@ -47,7 +64,7 @@ function DrawerContent(props) {
 
   async function signOut() {
     try {
-      await Auth.signOut();
+      await fireauth.signOut();
       console.log("successful logging out");
       logOut();
     } catch (error) {

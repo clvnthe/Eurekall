@@ -16,11 +16,32 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import AuthNavigator from "./AuthNavigator";
 import DrawerNavigator from "./DrawerNavigator";
 
-import Amplify, { Auth } from "aws-amplify";
-import awsconfig from "../../src/aws-exports";
 import { AuthContext } from "../context/Provider";
+import firebase from "firebase";
+import {current} from "@reduxjs/toolkit";
 
-Amplify.configure(awsconfig);
+
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+  authDomain: "eurekall.firebaseapp.com",
+  projectId: "eurekall",
+  storageBucket: "eurekall.appspot.com",
+  messagingSenderId: "132679568347",
+  appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+  measurementId: "G-H1N45TFCSX"
+}
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}else {
+  firebase.app(); // if already initialized, use that one
+}
+
+const firestore = firebase.firestore();
+const fireauth = firebase.auth();
+
 
 const CombinedDefaultTheme = merge(PaperDefaultTheme, NavigationDefaultTheme);
 const CombinedDarkTheme = merge(PaperDarkTheme, NavigationDarkTheme);
@@ -53,6 +74,8 @@ const AppNavContainer = () => {
   };
 
   const [isThemeDark, setIsThemeDark] = React.useState(false);
+  const [userTempDetails, setUserTempDetails] = React.useState('');
+
 
   let theme = isThemeDark ? CustomDarkTheme : CustomDefaultTheme;
 
@@ -101,13 +124,13 @@ const AppNavContainer = () => {
   const authContext = React.useMemo(
     () => ({
       logIn: async () => {
-        const user = await Auth.currentAuthenticatedUser();
-        const userToken = String(
-          user["signInUserSession"]["accessToken"]["jwtToken"]
-        );
-        const emailAddress = String(user["attributes"]["email"]);
-        const nameOfUser = String(user["attributes"]["name"]);
-        const userName = String(user["attributes"]["preferred_username"]);
+        const userToken = String(await fireauth.currentUser.getIdToken());
+        const emailAddress = String(await fireauth.currentUser.email);
+        const userRef = firestore.collection('users');
+        const userData = await userRef.where('email','==',emailAddress).get();
+        const userDetails = userData["docs"][0].data();
+        const nameOfUser = String(userDetails["name"]);
+        const userName = String(userDetails["preferred_username"]);
 
         try {
           await AsyncStorage.setItem("userToken", userToken);

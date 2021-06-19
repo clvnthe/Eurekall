@@ -9,11 +9,26 @@ import CustomButton from "../common/CustomButton";
 import styles from "./styles";
 import Container from "../common/Container";
 
-import Amplify, { Auth } from "aws-amplify";
-import awsconfig from "../../../src/aws-exports";
 import { AuthContext } from "../../context/Provider";
 import { useTheme } from "@react-navigation/native";
-Amplify.configure(awsconfig);
+import firebase from "firebase";
+const firebaseConfig = {
+    apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+    authDomain: "eurekall.firebaseapp.com",
+    projectId: "eurekall",
+    storageBucket: "eurekall.appspot.com",
+    messagingSenderId: "132679568347",
+    appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+    measurementId: "G-H1N45TFCSX"
+}
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}else {
+    firebase.app(); // if already initialized, use that one
+}
+const firestore = firebase.firestore();
+const fireauth = firebase.auth();
+
 
 function LoginComponent(props) {
   const [email, setEmail] = React.useState("");
@@ -24,12 +39,12 @@ function LoginComponent(props) {
   const { logIn } = React.useContext(AuthContext);
   const theme = useTheme();
 
-  //For aws Amplify connection
+  //For firebase connection
   async function signIn() {
     try {
       setLoading(true);
       setIsSignInHelperTextVisible(false);
-      const user = await Auth.signIn(email, password);
+      const user = await fireauth.signInWithEmailAndPassword(email,password);
       console.log("login successful");
       setLoading(false);
       logIn();
