@@ -36,11 +36,12 @@ function ForgotPasswordComponent() {
   async function forgotPassword() {
     try {
       await fireauth.sendPasswordResetEmail(email);
-      alert("Rest password link has been sent to your email");
+      alert("Reset password link has been sent to your email");
       setLoading(true);
       setIsSignInHelperTextVisible(false);
       setLoading(false);
-      navigate(LOGIN);
+      setEmail(""); //reset field
+      navigate(RESETPASSWORD);
     } catch (error) {
       setIsSignInHelperTextVisible(true);
       console.log("error confirming account:", error);

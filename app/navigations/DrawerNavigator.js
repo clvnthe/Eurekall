@@ -76,7 +76,10 @@ const DrawerNavigator = () => {
   const Drawer = createDrawerNavigator();
 
   return (
-    <Drawer.Navigator drawerContent={(props) => <DrawerContent {...props} />}>
+    <Drawer.Navigator
+      minSwipeDistance={10}
+      drawerContent={(props) => <DrawerContent {...props} />}
+    >
       <Drawer.Screen name={TAB_NAVIGATOR} component={TabNavigator} />
       <Drawer.Screen name={PROFILE_NAVIGATOR} component={ProfileNavigator} />
       <Drawer.Screen name={SETTINGS_NAVIGATOR} component={SettingsNavigator} />

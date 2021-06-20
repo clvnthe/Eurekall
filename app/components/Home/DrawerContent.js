@@ -23,7 +23,10 @@ import {
   SETTINGS_NAVIGATOR,
   TAB_NAVIGATOR,
 } from "../../constants/routeNames";
+import { useDispatch } from "react-redux";
+import * as Decks from "../../../store/slices/deckSlice";
 import firebase from "firebase";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
   authDomain: "eurekall.firebaseapp.com",
@@ -44,6 +47,8 @@ const fireauth = firebase.auth();
 function DrawerContent(props) {
   const { logOut, toggleTheme } = React.useContext(AuthContext);
   const [userInfo, setUserInfo] = React.useState([]);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(async () => {
@@ -173,7 +178,10 @@ function DrawerContent(props) {
             <Icon name="exit-to-app" color={color} size={size} />
           )}
           label="Sign Out"
-          onPress={() => signOut()}
+          onPress={() => {
+            dispatch(Decks.resetDeckState());
+            signOut();
+          }}
         ></DrawerItem>
       </Drawer.Section>
     </View>

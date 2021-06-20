@@ -11,7 +11,7 @@ import { nanoid } from "nanoid";
 import { useIsFocused } from "@react-navigation/core";
 import styles from "./styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import firebase from 'firebase';
+import firebase from "firebase";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -20,11 +20,11 @@ const firebaseConfig = {
   storageBucket: "eurekall.appspot.com",
   messagingSenderId: "132679568347",
   appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
-  measurementId: "G-H1N45TFCSX"
-}
+  measurementId: "G-H1N45TFCSX",
+};
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-}else {
+} else {
   firebase.app(); // if already initialized, use that one
 }
 const firestore = firebase.firestore();
@@ -36,20 +36,28 @@ function DeckComponent(props) {
   const [empty, setEmpty] = useState(!decks.length);
   const [index, setIndex] = useState("");
 
-  const createDeckDatabase = async (title,subtitle,id) => {
+  const createDeckDatabase = async (title, subtitle, id) => {
     const userEmail = String(await fireauth.currentUser.email);
-    const deckRef = firestore.collection('users').doc(userEmail).
-    collection('decks').doc(id);
+    const deckRef = firestore
+      .collection("users")
+      .doc(userEmail)
+      .collection("decks")
+      .doc(id);
     await deckRef.set({
       title: title,
       subtitle: subtitle,
-      id: id
-    })
-  }
+      id: id,
+    });
+  };
 
-  const createDeckHandler = (title, subtitle,id = nanoid(), loadStatus = false) => {
+  const createDeckHandler = (
+    title,
+    subtitle,
+    id = nanoid(),
+    loadStatus = false
+  ) => {
     console.log(id);
-    if (loadStatus){
+    if (loadStatus) {
       dispatch(Decks.createDeck(id, title, subtitle, [], []));
       setVisible(false);
       if (decks.length === 0) {
@@ -58,7 +66,7 @@ function DeckComponent(props) {
     } else {
       console.log(id);
       dispatch(Decks.createDeck(id, title, subtitle, [], []));
-      createDeckDatabase(title,subtitle,id);
+      createDeckDatabase(title, subtitle, id);
       setVisible(false);
       if (decks.length === 0) {
         setEmpty(false);
@@ -66,18 +74,35 @@ function DeckComponent(props) {
     }
   };
 
-  const loadDeckDatabase = async() => {
-    const userEmail = String(await fireauth.currentUser.email);
-    const retrieveDeckRef = firestore.collection('users').doc(userEmail).collection('decks');
-    const deckRetrieve = await retrieveDeckRef.get();
-    if (deckRetrieve.empty) {
-      console.log('no decks');
-    } else {
-      deckRetrieve.forEach(doc => {
-        createDeckHandler(doc.data()["title"],doc.data()["subtitle"],doc.data()["id"],true)
-      })
-    }
-  }
+  const loadDeckDatabase = (deckRetrieve) => {
+    deckRetrieve.forEach((doc) => {
+      createDeckHandler(
+        doc.data().title,
+        doc.data().subtitle,
+        doc.data().id,
+        true
+      );
+    });
+  };
+
+  useEffect(() => {
+    setTimeout(async () => {
+      const userEmail = String(await fireauth.currentUser.email);
+      const retrieveDeckRef = firestore
+        .collection("users")
+        .doc(userEmail)
+        .collection("decks");
+      const deckRetrieve = await retrieveDeckRef.get();
+      if (!deckRetrieve.empty) {
+        if (decks.length === 0) {
+          loadDeckDatabase(deckRetrieve);
+        }
+        console.log("Decks already loaded");
+      } else {
+        console.log("No decks");
+      }
+    }, 0);
+  }, []);
 
   const isFocused = useIsFocused();
 
@@ -108,9 +133,13 @@ function DeckComponent(props) {
 
   const deleteDeckDatabase = async (id) => {
     const userEmail = String(await fireauth.currentUser.email);
-    await firestore.collection('users').doc(userEmail)
-        .collection('decks').doc(id).delete();
-  }
+    await firestore
+      .collection("users")
+      .doc(userEmail)
+      .collection("decks")
+      .doc(id)
+      .delete();
+  };
 
   const deleteDeckHandler = (id) => {
     deleteDeckDatabase(id);
