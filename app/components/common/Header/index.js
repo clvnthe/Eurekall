@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { Image } from "react-native";
 import { Appbar } from "react-native-paper";
+import { useFonts } from "expo-font";
 
 const HeaderComponent = ({ scene, previous, navigation, statusBarHeight }) => {
   const theme = useTheme();
@@ -18,6 +19,18 @@ const HeaderComponent = ({ scene, previous, navigation, statusBarHeight }) => {
       ? options.title
       : scene.route.name;
 
+  const [loaded] = useFonts({
+    MontserratLight: require("../../../../assets/fonts/Montserrat-Light.ttf"),
+    MontserratBold: require("../../../../assets/fonts/Montserrat-Bold.ttf"),
+    PoppinsMedium: require("../../../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsBold: require("../../../../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsLight: require("../../../../assets/fonts/Poppins-Light.ttf"),
+    PoppinsThin: require("../../../../assets/fonts/Poppins-Thin.ttf"),
+    PoppinsRegular: require("../../../../assets/fonts/Poppins-Regular.ttf"),
+  });
+  if (!loaded) {
+    return null;
+  }
   return (
     <Appbar.Header statusBarHeight={statusBarHeight} style={{ elevation: 4 }}>
       <StatusBar style={theme.dark ? "light" : "dark"} />
@@ -35,11 +48,16 @@ const HeaderComponent = ({ scene, previous, navigation, statusBarHeight }) => {
       )}
       <Appbar.Content
         title={title}
+        titleStyle={{
+          fontFamily: "PoppinsMedium",
+          fontSize: 19,
+          bottom: -2,
+        }}
         color={theme.dark ? theme.colors.primary : theme.colors.onPrimary}
       />
       <Image
         resizeMode="contain"
-        style={{ width: 150, height: 80, left: 20 }}
+        style={{ width: 148, height: 80, left: 20 }}
         source={
           theme.dark
             ? require("../../../../assets/images/cover_dark.png")

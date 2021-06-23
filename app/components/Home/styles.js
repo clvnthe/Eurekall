@@ -2,98 +2,62 @@ import EStyleSheet from "react-native-extended-stylesheet";
 
 export default EStyleSheet.create({
   title: {
-    fontFamily: "sans-serif-light",
     fontSize: "38rem",
     lineHeight: "39rem",
-    paddingTop: "20rem",
-    left: "105rem",
-    width: "273rem",
+    padding: "20rem",
   },
-  firstContainer: {
-    height: "111rem",
-    width: "275rem",
-    left: "105rem",
-    elevation: 10,
-    backgroundColor: "#F5587B",
+  progressContainer: {
+    top: "30rem",
+    width: "340rem",
+    alignSelf: "center",
     justifyContent: "center",
   },
-  firstContainerText: {
-    left: "12rem",
-    color: "#ffffff",
-    fontSize: "17rem",
+  tierView: {
+    flexDirection: "row",
+    paddingBottom: "10rem",
   },
-  secondContainer: {
-    height: "190rem",
-    width: "275rem",
-    left: "105rem",
-    elevation: 8,
-    backgroundColor: "#FF8A5C",
+  tierTextView: {
+    padding: "10rem",
+    justifyContent: "space-around",
+    height: "55rem",
   },
-  secondContainerText: {
-    width: "135rem",
-    left: "12rem",
-    top: "33rem",
-    color: "#ffffff",
-    fontSize: "19rem",
+  tierTextBold: {
+    fontSize: "22rem",
+    fontFamily: "PoppinsBold",
   },
-  secondContainerImage: {
-    height: "190rem",
-    width: "160rem",
-    transform: [{ scaleX: -1 }],
-    alignSelf: "flex-end",
-    bottom: "85rem",
-    left: "40rem",
+  tierTextLight: {
+    fontSize: "13rem",
+    fontFamily: "PoppinsLight",
   },
-  thirdContainer: {
-    height: "150rem",
-    width: "275rem",
-    left: "105rem",
-    elevation: 6,
-    backgroundColor: "#FFF591",
+  progressTextView: {
+    flexDirection: "row",
+    alignSelf: "center",
+    width: "96%",
+    justifyContent: "space-between",
   },
-  thirdContainerText1: {
-    left: "12rem",
-    top: "35rem",
-    fontWeight: "bold",
-    fontSize: "30rem",
+  progressbarView: {
+    width: "330rem",
+    alignSelf: "center",
   },
-  thirdContainerText2: {
-    left: "12rem",
-    top: "30rem",
-    fontSize: "16rem",
-    fontWeight: "bold",
+  progressbar: { height: "10rem", borderRadius: "20rem" },
+  decksContainer: { top: "60rem", alignSelf: "center" },
+  decksSurface: {
+    height: "280rem",
+    width: "330rem",
+    elevation: "6rem",
+    borderRadius: "20rem",
+    justifyContent: "center",
+    opacity: "0.9rem",
+    borderWidth: "1rem",
   },
-  thirdContainerImage: {
-    height: "120rem",
-    width: "120rem",
-    alignSelf: "flex-end",
-    bottom: "50rem",
+  decksText: {
+    fontFamily: "PoppinsRegular",
+    fontSize: "32rem",
+    alignSelf: "center",
   },
-  bubble1: {
-    position: "absolute",
-    height: "460rem",
-    width: "460rem",
-    left: "-380rem",
-  },
-  bubble2: {
-    position: "absolute",
-    height: "50rem",
-    width: "52rem",
-    left: "40rem",
-    top: "350rem",
-  },
-  bubble3: {
-    position: "absolute",
-    height: "41rem",
-    width: "42rem",
-    left: "10rem",
-    top: "400rem",
-  },
-  bubble4: {
-    position: "absolute",
-    height: "67rem",
-    width: "69rem",
-    left: "25rem",
-    top: "450rem",
+  decksCaption: {
+    fontSize: "18rem",
+    fontFamily: "PoppinsLight",
+    alignSelf: "center",
   },
 });

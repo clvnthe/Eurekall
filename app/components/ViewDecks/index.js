@@ -10,6 +10,7 @@ import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 import { useIsFocused } from "@react-navigation/core";
 import styles from "./styles";
+import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebase from "firebase";
 
@@ -159,6 +160,20 @@ function DeckComponent(props) {
     />
   );
 
+  const [loaded] = useFonts({
+    MontserratLight: require("../../../assets/fonts/Montserrat-Light.ttf"),
+    MontserratBold: require("../../../assets/fonts/Montserrat-Bold.ttf"),
+    PoppinsMedium: require("../../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsBold: require("../../../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsLight: require("../../../assets/fonts/Poppins-Light.ttf"),
+    PoppinsThin: require("../../../assets/fonts/Poppins-Thin.ttf"),
+    PoppinsRegular: require("../../../assets/fonts/Poppins-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <SafeAreaView
       style={{
@@ -215,11 +230,11 @@ function DeckComponent(props) {
               styles.title,
               {
                 color: theme.colors.text,
+                fontFamily: "PoppinsLight",
               },
             ]}
           >
-            hmm it seems there are no decks added yet, create a deck by pressing
-            this button!
+            Create a deck by pressing this button!
           </Text>
         </View>
       ) : (

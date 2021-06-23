@@ -24,6 +24,7 @@ import {
   TAB_NAVIGATOR,
 } from "../../constants/routeNames";
 import { useDispatch } from "react-redux";
+import { useFonts } from "expo-font";
 import * as Decks from "../../../store/slices/deckSlice";
 import firebase from "firebase";
 
@@ -78,6 +79,20 @@ function DrawerContent(props) {
 
   const theme = useTheme();
 
+  const [loaded] = useFonts({
+    MontserratLight: require("../../../assets/fonts/Montserrat-Light.ttf"),
+    MontserratBold: require("../../../assets/fonts/Montserrat-Bold.ttf"),
+    PoppinsMedium: require("../../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsBold: require("../../../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsLight: require("../../../assets/fonts/Poppins-Light.ttf"),
+    PoppinsThin: require("../../../assets/fonts/Poppins-Thin.ttf"),
+    PoppinsRegular: require("../../../assets/fonts/Poppins-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <View
       style={{
@@ -107,6 +122,7 @@ function DrawerContent(props) {
                         color: theme.dark
                           ? theme.colors.primary
                           : theme.colors.text,
+                        fontFamily: "PoppinsBold",
                       },
                     ]}
                   >
@@ -114,7 +130,11 @@ function DrawerContent(props) {
                   </Title>
                 </View>
                 <View style={styles.section}>
-                  <Caption style={styles.caption}>@{userInfo[2]}</Caption>
+                  <Caption
+                    style={[styles.caption, { fontFamily: "PoppinsMedium" }]}
+                  >
+                    @{userInfo[2]}
+                  </Caption>
                 </View>
               </View>
             </Drawer.Section>
@@ -125,6 +145,7 @@ function DrawerContent(props) {
                 <Icon name="home-outline" color={color} size={size} />
               )}
               label="Home"
+              labelStyle={{ fontFamily: "PoppinsRegular" }}
               onPress={() => {
                 props.navigation.navigate(TAB_NAVIGATOR);
               }}
@@ -134,6 +155,7 @@ function DrawerContent(props) {
                 <Icon name="account-outline" color={color} size={size} />
               )}
               label="Profile"
+              labelStyle={{ fontFamily: "PoppinsRegular" }}
               onPress={() => {
                 props.navigation.navigate(PROFILE_NAVIGATOR);
               }}
@@ -143,6 +165,7 @@ function DrawerContent(props) {
                 <Icon name="cog-outline" color={color} size={size} />
               )}
               label="Settings"
+              labelStyle={{ fontFamily: "PoppinsRegular" }}
               onPress={() => {
                 props.navigation.navigate(SETTINGS_NAVIGATOR);
               }}
@@ -151,7 +174,9 @@ function DrawerContent(props) {
           <Drawer.Section title="Preferences">
             <TouchableRipple onPress={() => toggleTheme()}>
               <View style={styles.preference}>
-                <Text style={{ alignSelf: "center" }}>
+                <Text
+                  style={{ alignSelf: "center", fontFamily: "PoppinsRegular" }}
+                >
                   {theme.dark ? "Dark Theme" : "Light Theme"}
                 </Text>
                 <View style={{ flexDirection: "row" }} pointerEvents="none">
@@ -178,6 +203,7 @@ function DrawerContent(props) {
             <Icon name="exit-to-app" color={color} size={size} />
           )}
           label="Sign Out"
+          labelStyle={{ fontFamily: "PoppinsRegular" }}
           onPress={() => {
             dispatch(Decks.resetDeckState());
             signOut();
@@ -199,11 +225,11 @@ const styles = EStyleSheet.create({
   title: {
     fontSize: "25rem",
     marginTop: "3rem",
-    fontWeight: "bold",
+    //fontWeight: "bold",
   },
   caption: {
     fontSize: "15rem",
-    lineHeight: "15rem",
+    lineHeight: "17rem",
   },
   row: {
     marginTop: "20rem",
