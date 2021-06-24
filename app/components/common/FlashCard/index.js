@@ -24,24 +24,29 @@ function Shape({ bg, words, isFront, state }) {
     <MotiView
       state={state}
       from={{
-        opacity: 0,
-        scale: 0.5,
+        opacity: 1,
+        rotateY: "-90deg",
       }}
       animate={{
         opacity: 1,
-        scale: 1,
+        rotateY: "0deg",
       }}
       exit={{
-        opacity: 0,
-        scale: 0.9,
+        opacity: 1,
+        rotateY: "90deg",
+        perspective: 1000,
+      }}
+      transition={{
+        type: "timing",
+        duration: 300,
       }}
       exitTransition={{
         type: "timing",
-        duration: 0,
+        duration: 300,
       }}
       style={[styles.shape, { backgroundColor: bg }]}
     >
-      <Text style={styles.QA}>{isFront ? "Q" : "A"}</Text>
+      <Text style={styles.QA}>{isFront ? "Q." : "A."}</Text>
       <Text style={styles.cardText}>{words}</Text>
     </MotiView>
   );
