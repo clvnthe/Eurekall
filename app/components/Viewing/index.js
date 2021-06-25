@@ -125,6 +125,7 @@ function ViewingComponent({ route }) {
           data={decks[index].cards}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          ListFooterComponent={<View style={styles.footer} />}
         />
       )}
     </SafeAreaView>
@@ -156,6 +157,9 @@ const styles = EStyleSheet.create({
     marginHorizontal: "4rem",
     marginVertical: "6rem",
     elevation: "24rem",
+  },
+  footer: {
+    height: "100rem",
   },
 });
 

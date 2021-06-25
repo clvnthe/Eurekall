@@ -242,7 +242,7 @@ function DeckComponent(props) {
           data={decks}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
-          onEndReachedThreshold={500}
+          ListFooterComponent={<View style={styles.footer} />}
         />
       )}
     </SafeAreaView>
