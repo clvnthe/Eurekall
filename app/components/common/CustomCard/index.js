@@ -71,9 +71,13 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
                 style={{ backgroundColor: "transparent", alignSelf: "center" }}
               >
                 {decks[index].studydeck.length ? (
-                  <Entypo name="bell" size={24} color="black" />
+                  <Entypo name="bell" size={24} color={theme.colors.text} />
                 ) : (
-                  <MaterialIcons name="done-all" size={24} color="black" />
+                  <MaterialIcons
+                    name="done-all"
+                    size={24}
+                    color={theme.colors.text}
+                  />
                 )}
               </Badge>
               <Menu
