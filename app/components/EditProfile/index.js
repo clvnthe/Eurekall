@@ -1,12 +1,10 @@
 import { useTheme } from "@react-navigation/native";
 import React, { useEffect, useState } from "react";
 import {
-  Keyboard,
   StyleSheet,
   TouchableOpacity,
   View,
   ImageBackground,
-  Platform,
 } from "react-native";
 import { Title, Text, Divider, TextInput } from "react-native-paper";
 import BottomSheet from "reanimated-bottom-sheet";
@@ -17,22 +15,21 @@ import * as ImagePicker from "expo-image-picker";
 import { Camera } from "expo-camera";
 import CustomButton from "../common/CustomButton";
 import firebase from "firebase";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
-    authDomain: "eurekall.firebaseapp.com",
-    projectId: "eurekall",
-    storageBucket: "eurekall.appspot.com",
-    messagingSenderId: "132679568347",
-    appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
-    measurementId: "G-H1N45TFCSX",
+  apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+  authDomain: "eurekall.firebaseapp.com",
+  projectId: "eurekall",
+  storageBucket: "eurekall.appspot.com",
+  messagingSenderId: "132679568347",
+  appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+  measurementId: "G-H1N45TFCSX",
 };
 
 if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
+  firebase.initializeApp(firebaseConfig);
 } else {
-    firebase.app(); // if already initialized, use that one
+  firebase.app(); // if already initialized, use that one
 }
 
 const firestore = firebase.firestore();
@@ -44,48 +41,51 @@ function EditProfileComponent(props) {
   const [image, setImage] = useState(
     "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8"
   );
-  const [name,setName] = useState([]);
+  const [name, setName] = useState([]);
 
   const updateUserInfo = async () => {
-      const userId = String(fireauth.currentUser.email);
-      const updateUserInfoRef = firestore.collection('users').doc(userId)
-      try {
-          await updateUserInfoRef.update({
-              "name": name
-          })
-      } catch (error){
-          console.log(error);
-      }
-  }
+    const userId = String(fireauth.currentUser.email);
+    const updateUserInfoRef = firestore.collection("users").doc(userId);
+    try {
+      await updateUserInfoRef.update({
+        name: name,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const userEmail = String(fireauth.currentUser.email);
 
-
-  useEffect( () =>{
-      const loadImage = fireBucket.ref().child('images/' + userEmail).getDownloadURL()
-          .then((url) => {
-              setImage(url);
-          }).catch((error) => {
-              console.log(error);
-          });
-  });
+  useEffect(() => {
+    fireBucket
+      .ref()
+      .child("images/" + userEmail)
+      .getDownloadURL()
+      .then((url) => {
+        setImage(url);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   const uploadImage = async (imageuri) => {
-      const blob = await new Promise((resolve, reject) => {
-          const xhr = new XMLHttpRequest();
-          xhr.onload = function() {
-              resolve(xhr.response);
-          };
-          xhr.onerror = function() {
-              reject(new TypeError('Network request failed'));
-          };
-          xhr.responseType = 'blob';
-          xhr.open('GET', imageuri, true);
-          xhr.send(null);
-      });
-      const ref = fireBucket.ref().child("images/" + userEmail);
-      return ref.put(blob);
-  }
+    const blob = await new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.onload = function () {
+        resolve(xhr.response);
+      };
+      xhr.onerror = function () {
+        reject(new TypeError("Network request failed"));
+      };
+      xhr.responseType = "blob";
+      xhr.open("GET", imageuri, true);
+      xhr.send(null);
+    });
+    const ref = fireBucket.ref().child("images/" + userEmail);
+    return ref.put(blob);
+  };
 
   const selectPicture = async () => {
     let permissions = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -97,7 +97,13 @@ function EditProfileComponent(props) {
         quality: 1,
       });
       if (!result.cancelled) {
-        uploadImage(result.uri).then(() => {console.log('passed')}).catch((error) => {console.log(error)});
+        uploadImage(result.uri)
+          .then(() => {
+            console.log("passed");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
         setImage(result.uri);
       }
     } else {
@@ -112,9 +118,14 @@ function EditProfileComponent(props) {
         allowsEditing: false,
       });
       if (!cancelled) {
-          setImage(uri);
-        uploadImage(uri).then(() => {console.log('passed')}).catch((error) => {console.log(error)});
-
+        setImage(uri);
+        uploadImage(uri)
+          .then(() => {
+            console.log("passed");
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     } else {
       alert("Sorry, we need camera access permissions to make this work!");
@@ -308,8 +319,8 @@ function EditProfileComponent(props) {
             title="Submit changes"
             width={336}
             onPress={() => {
-                console.log("pressed");
-                updateUserInfo();
+              console.log("pressed");
+              updateUserInfo();
             }}
           />
         </View>
