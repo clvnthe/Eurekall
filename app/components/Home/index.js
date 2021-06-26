@@ -7,10 +7,30 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Decks from "../../../store/slices/deckSlice";
 import { useSelector } from "react-redux";
 import styles from "./styles";
+import firebase from 'firebase';
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+    authDomain: "eurekall.firebaseapp.com",
+    projectId: "eurekall",
+    storageBucket: "eurekall.appspot.com",
+    messagingSenderId: "132679568347",
+    appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+    measurementId: "G-H1N45TFCSX"
+}
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}else {
+    firebase.app(); // if already initialized, use that one
+}
+const firestore = firebase.firestore();
+const fireauth = firebase.auth();
 
 function HomeComponent(props) {
   const theme = useTheme();
   const [userInfo, setUserInfo] = React.useState([]);
+  const [userNumDeck, setUserNumDeck] = React.useState([]);
+  const [numDeckComparator, setNumDeckComparator] = React.useState([]);
   const numOfDecks = useSelector(Decks.getDecks).length;
 
   useEffect(() => {
@@ -27,6 +47,35 @@ function HomeComponent(props) {
       setUserInfo(user);
     }, 0);
   }, []);
+
+
+  useEffect( () => {
+      setTimeout(async () => {
+          let deckCount;
+          deckCount = null;
+          try {
+              fireauth.onAuthStateChanged((user) =>{
+                  if (user){
+                      const userEmail = user.email;
+                      const retrieveDeckRef = firestore.collection("users")
+                          .doc(userEmail).collection("decks");
+                      retrieveDeckRef.get().then(numDecks => {
+                          deckCount = numDecks.size
+                          // console.log(deckCount)
+                          setUserNumDeck(deckCount);
+                          setNumDeckComparator(numOfDecks);
+                      });
+                  } else {
+                      console.log('loading')
+                  }
+              })
+          } catch (err) {
+              console.log(err);
+          }
+        console.log(userNumDeck);
+      },0);
+  },[]);
+
 
   const { navigate } = useNavigation();
 
@@ -107,7 +156,7 @@ function HomeComponent(props) {
               },
             ]}
           >
-            {numOfDecks} decks
+            {numDeckComparator === numOfDecks ? userNumDeck: numOfDecks} decks
           </Text>
           <Image
             style={styles.thirdContainerImage}

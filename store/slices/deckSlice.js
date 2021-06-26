@@ -1,4 +1,37 @@
 import { createSelector, createSlice } from "@reduxjs/toolkit";
+import firebase from 'firebase';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+  authDomain: "eurekall.firebaseapp.com",
+  projectId: "eurekall",
+  storageBucket: "eurekall.appspot.com",
+  messagingSenderId: "132679568347",
+  appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+  measurementId: "G-H1N45TFCSX"
+}
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}else {
+  firebase.app(); // if already initialized, use that one
+}
+const firestore = firebase.firestore();
+const fireauth = firebase.auth();
+const currentDate = String(new Date().getFullYear()) + '/' + String(new Date().getMonth() + 1) + '/' + String(new Date().getDate());
+
+const updateCard = async (deckId,cardId,boxTypeValue,dateValue) => {
+  const userId = String(fireauth.currentUser.email);
+  const updateCardRef = firestore.collection('users').doc(userId).collection('decks')
+      .doc(deckId).collection('cards').doc(cardId);
+  try {
+    await updateCardRef.update({
+      "boxType": boxTypeValue,
+      "date": dateValue
+    })
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 const slice = createSlice({
   name: "decks",
@@ -42,13 +75,20 @@ const slice = createSlice({
       const index = state.content[action.payload.index].cards.findIndex(
         (curCard) => curCard.id === card.id
       );
+      const boxTypeValue = ++state.content[action.payload.index].cards[index].boxType
       state.content[action.payload.index].cards[index] = {
         ...state.content[action.payload.index].cards[index],
-        boxType: ++state.content[action.payload.index].cards[index].boxType,
+        boxType: boxTypeValue,
+        date: currentDate
       };
+      const cardId = state.content[action.payload.index].cards[index].id;
+      const deckId = state.content[action.payload.index].id;
+      updateCard(deckId,cardId,boxTypeValue,currentDate);
       console.log(
         "Boxtype:",
-        state.content[action.payload.index].cards[index].boxType
+        state.content[action.payload.index].cards[index].boxType,
+        "date:",
+            state.content[action.payload.index].cards[index].date
       );
     },
     studydeckShiftCardToFront: (state, action) => {
@@ -59,11 +99,14 @@ const slice = createSlice({
       state.content[action.payload.index].cards[index] = {
         ...state.content[action.payload.index].cards[index],
         boxType: 1,
+        date: currentDate
       };
       state.content[action.payload.index].studydeck.unshift(card);
       console.log(
         "Boxtype:",
-        state.content[action.payload.index].cards[index].boxType
+        state.content[action.payload.index].cards[index].boxType,
+        "date:",
+          state.content[action.payload.index].cards[index].date
       );
     },
   },

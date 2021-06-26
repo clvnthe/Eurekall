@@ -48,7 +48,6 @@ function DeckComponent(props) {
   }
 
   const createDeckHandler = (title, subtitle,id = nanoid(), loadStatus = false) => {
-    console.log(id);
     if (loadStatus){
       dispatch(Decks.createDeck(id, title, subtitle, [], []));
       setVisible(false);
@@ -56,7 +55,6 @@ function DeckComponent(props) {
         setEmpty(false);
       }
     } else {
-      console.log(id);
       dispatch(Decks.createDeck(id, title, subtitle, [], []));
       createDeckDatabase(title,subtitle,id);
       setVisible(false);
@@ -66,18 +64,62 @@ function DeckComponent(props) {
     }
   };
 
-  const loadDeckDatabase = async() => {
-    const userEmail = String(await fireauth.currentUser.email);
-    const retrieveDeckRef = firestore.collection('users').doc(userEmail).collection('decks');
-    const deckRetrieve = await retrieveDeckRef.get();
-    if (deckRetrieve.empty) {
-      console.log('no decks');
+  const loadCardDatabaseForDeck = async (deckID,userEmail,indexer) => {
+    const retrieveCardRef = firestore.collection("users")
+        .doc(userEmail).collection("decks")
+        .doc(deckID).collection("cards");
+    const retrieveCards = await retrieveCardRef.get();
+    if (retrieveCards.empty) {
+      console.log("no cards");
     } else {
-      deckRetrieve.forEach(doc => {
-        createDeckHandler(doc.data()["title"],doc.data()["subtitle"],doc.data()["id"],true)
+      retrieveCards.forEach((doc) => {
+        // console.log(doc.data());
+        createFlashcardHandler(
+            doc.data()["question"],
+            doc.data()["answer"],
+            doc.data()["boxType"],
+            doc.data()["id"],
+            doc.data()["date"],
+            indexer,
+            true
+        )
       })
     }
   }
+
+  const loadDeckDatabase = (deckRetrieve,userEmail) => {
+    var indexer = 0;
+    deckRetrieve.forEach((doc) => {
+      createDeckHandler(
+          doc.data()["title"],
+          doc.data()["subtitle"],
+          doc.data()["id"],
+          true
+      );
+      loadCardDatabaseForDeck(doc.data()["id"],userEmail,indexer);
+      indexer++;
+    });
+  };
+
+  useEffect(() => {
+    setTimeout(async () => {
+      const userEmail = String(await fireauth.currentUser.email);
+      const retrieveDeckRef = firestore
+          .collection("users")
+          .doc(userEmail)
+          .collection("decks");
+
+      const deckRetrieve = await retrieveDeckRef.get()
+      if (!deckRetrieve.empty) {
+        if (decks.length === 0) {
+          loadDeckDatabase(deckRetrieve,userEmail);
+        }
+        console.log("Decks already loaded");
+      } else {
+        console.log("No decks");
+      }
+    },0);
+  },[]);
 
   const isFocused = useIsFocused();
 
@@ -94,16 +136,65 @@ function DeckComponent(props) {
   };
   const hideAddCardModal = () => setVisibleAddCardModal(false);
 
-  const createFlashcardHandler = (question, answer) => {
-    const card = {
-      id: nanoid(),
-      question,
-      answer,
+  const dateComparator = (inputDate) => {
+    const currentDateTemp = String(new Date().getFullYear()) + '/' + String(new Date().getMonth() + 1) + '/' + String(new Date().getDate());
+    const currentDate = new Date(currentDateTemp);
+    const inputDateActual = new Date(inputDate);
+    const dateDiffMilSec = Math.abs(inputDateActual-currentDate)
+    const dateDays = dateDiffMilSec/(1000 * 60 * 60 * 24);
+    return dateDays;
+  }
+
+  const currentDate = String(new Date().getFullYear()) + '/' + String(new Date().getMonth() + 1) + '/' + String(new Date().getDate());
+
+
+  const createCardDatabase = async (question,answer,id,cardId,currentDate) => {
+    const userEmail = String(await fireauth.currentUser.email);
+    const deckRef = firestore.collection('users').doc(userEmail).
+    collection('decks').doc(id).collection('cards').doc(cardId);
+    await deckRef.set({
+      question: question,
+      answer: answer,
       boxType: 1,
-    };
-    dispatch(Decks.createFlashcard(index, card));
-    dispatch(Decks.pushOntoStudydeck(index, card));
-    setVisibleAddCardModal(false);
+      id: cardId,
+      date: currentDate
+    })
+  }
+
+  const createFlashcardHandler = (question, answer,boxType = 1 , id = nanoid(),inputDate = currentDate,cardtoDeckIndex = 0,loadStatus = false) => {
+    if (loadStatus) {
+      const card = {
+        id: id,
+        question,
+        answer,
+        boxType: boxType,
+      };
+      const index = cardtoDeckIndex;
+      dispatch(Decks.createFlashcard(index, card));
+      const cardDays = dateComparator(inputDate)
+      if (boxType === 1) {
+        dispatch(Decks.pushOntoStudydeck(index, card));
+      } else if (boxType === 2 &&  cardDays >= 2) {
+        dispatch(Decks.pushOntoStudydeck(index, card));
+      } else if (boxType === 3 &&  cardDays >= 7) {
+        dispatch(Decks.pushOntoStudydeck(index, card));
+      } else if (boxType === 4 &&  cardDays >= 14) {
+        dispatch(Decks.pushOntoStudydeck(index, card));
+      }
+      setVisibleAddCardModal(false);
+    } else {
+      const card = {
+        id: id,
+        question,
+        answer,
+        boxType: boxType,
+        date: inputDate
+      };
+      createCardDatabase(question,answer,decks[index]["id"],id,inputDate);
+      dispatch(Decks.createFlashcard(index, card));
+      dispatch(Decks.pushOntoStudydeck(index, card));
+      setVisibleAddCardModal(false);
+    }
   };
 
   const deleteDeckDatabase = async (id) => {
