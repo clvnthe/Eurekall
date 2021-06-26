@@ -8,10 +8,20 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { Card, Divider, IconButton, Menu, useTheme } from "react-native-paper";
+import {
+  Card,
+  Divider,
+  IconButton,
+  Menu,
+  useTheme,
+  Badge,
+} from "react-native-paper";
 import { useSelector } from "react-redux";
 import { QUESTION, VIEWING } from "../../../constants/routeNames";
 import * as Decks from "../../../../store/slices/deckSlice";
+import { Entypo } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 
 function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
   const theme = useTheme();
@@ -26,27 +36,69 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
 
   const index = decks.findIndex((deck) => deck.id === id);
 
+  const [loaded] = useFonts({
+    MontserratLight: require("../../../../assets/fonts/Montserrat-Light.ttf"),
+    MontserratBold: require("../../../../assets/fonts/Montserrat-Bold.ttf"),
+    PoppinsMedium: require("../../../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsBold: require("../../../../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsLight: require("../../../../assets/fonts/Poppins-Light.ttf"),
+    PoppinsThin: require("../../../../assets/fonts/Poppins-Thin.ttf"),
+    PoppinsRegular: require("../../../../assets/fonts/Poppins-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <View style={{ backgroundColor: theme.colors.background }}>
       <Card style={{ margin: 10, elevation: 8 }}>
         <Card.Title
           title={title}
+          titleStyle={{ fontFamily: "PoppinsMedium" }}
           titleNumberOfLines={100}
           subtitle={subtitle}
+          subtitleStyle={{ fontFamily: "PoppinsRegular" }}
           subtitleNumberOfLines={100}
           right={() => (
-            <Menu
-              visible={visible}
-              onDismiss={closeMenu}
-              anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
+            <View
+              style={{
+                flexDirection: "row",
+              }}
             >
-              <Menu.Item
-                onPress={() => {
-                  deleteCard(id);
-                }}
-                title="Delete Deck"
-              />
-            </Menu>
+              {decks[index].studydeck.length ? (
+                <Badge
+                  size={30}
+                  style={{
+                    alignSelf: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ fontFamily: "PoppinsMedium" }}>
+                    {decks[index].studydeck.length}
+                  </Text>
+                </Badge>
+              ) : (
+                <MaterialIcons
+                  name="done-all"
+                  size={24}
+                  color={theme.colors.text}
+                  style={{ alignSelf: "center" }}
+                />
+              )}
+              <Menu
+                visible={visible}
+                onDismiss={closeMenu}
+                anchor={<IconButton icon="dots-vertical" onPress={openMenu} />}
+              >
+                <Menu.Item
+                  onPress={() => {
+                    deleteCard(id);
+                  }}
+                  title="Delete Deck"
+                />
+              </Menu>
+            </View>
           )}
         />
         <Card.Content>
@@ -77,7 +129,11 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
                 source={require("../../../../assets/images/vector2.png")}
                 style={styles.bottomVector}
               ></Image>
-              <Text style={{ fontWeight: "bold", position: "absolute" }}>
+              <Text
+                style={{
+                  fontFamily: "PoppinsBold",
+                }}
+              >
                 Study
               </Text>
             </TouchableOpacity>
@@ -97,7 +153,7 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
                 source={require("../../../../assets/images/vector4.png")}
                 style={styles.bottomVector}
               ></Image>
-              <Text style={{ fontWeight: "bold" }}>View</Text>
+              <Text style={{ fontFamily: "PoppinsBold" }}>View</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={styles.touchableButton}
@@ -114,7 +170,7 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
                 source={require("../../../../assets/images/vector6.png")}
                 style={styles.bottomVector}
               ></Image>
-              <Text style={{ fontWeight: "bold" }}>Add Card</Text>
+              <Text style={{ fontFamily: "PoppinsBold" }}>Add Card</Text>
             </TouchableOpacity>
           </View>
         </Card.Content>

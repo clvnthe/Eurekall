@@ -26,4 +26,7 @@ export default EStyleSheet.create({
     marginVertical: "6rem",
     elevation: "24rem",
   },
+  footer: {
+    height: "100rem",
+  },
 });

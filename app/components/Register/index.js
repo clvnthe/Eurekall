@@ -12,6 +12,7 @@ import colors from "../../../assets/theme/colors";
 import { useTheme } from "@react-navigation/native";
 import { StatusBar } from "expo-status-bar";
 import firebase from "firebase";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
   authDomain: "eurekall.firebaseapp.com",
@@ -63,9 +64,13 @@ function RegisterComponent() {
       });
       setIsSignInHelperTextVisible(false);
       setLoading(false);
+      setName(""); //reset fields
+      setUsername(""); //reset fields
+      setEmail(""); //reset fields
+      setPassword(""); //reset fields
       console.log("successful signup");
       alert("please verify your account from your email");
-      navigate(LOGIN);
+      navigate(CONFIRM_REGISTRATION);
     } catch (error) {
       setIsSignInHelperTextVisible(true);
       console.log("error signing up:", error);
@@ -302,6 +307,10 @@ function RegisterComponent() {
         </Text>
         <TouchableOpacity
           onPress={() => {
+            setName(""); //reset fields
+            setUsername(""); //reset fields
+            setEmail(""); //reset fields
+            setPassword(""); //reset fields
             navigate(LOGIN);
           }}
         >

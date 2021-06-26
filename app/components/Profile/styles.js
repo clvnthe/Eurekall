@@ -8,9 +8,8 @@ export default EStyleSheet.create({
     justifyContent: "center",
   },
   editProfileButton: {
-    alignSelf: "flex-end",
-    right: "10rem",
-    top: "135rem",
+    alignSelf: "center",
+    paddingTop: "10rem",
   },
   editProfileButtonContainer: {
     height: "42rem",
@@ -18,29 +17,25 @@ export default EStyleSheet.create({
     justifyContent: "center",
     elevation: 4,
     borderRadius: "10rem",
+    alignItems: "center",
+    flexDirection: "row",
   },
   editProfileButtonText: {
-    left: "25rem",
     color: "#ffffff",
-    fontWeight: "bold",
   },
   profilePic: { top: "20rem", elevation: 8, alignSelf: "center" },
   name: {
     fontSize: "26rem",
-    fontWeight: "bold",
-    fontFamily: "sans-serif",
     alignSelf: "center",
     top: "20rem",
   },
   username: {
     textAlign: "center",
-    fontFamily: "sans-serif-light",
     top: "10rem",
   },
   title: {
     alignSelf: "center",
     fontSize: "26rem",
-    fontFamily: "sans-serif-thin",
     top: "32rem",
   },
   dividerContainer: {
@@ -60,13 +55,13 @@ export default EStyleSheet.create({
     borderRightWidth: "1rem",
   },
   rank: { height: "85rem", width: "64rem" },
-  rankText: { fontFamily: "sans-serif-light", fontSize: "25rem" },
+  rankText: { fontSize: "25rem" },
   pointsContainer: {
     width: "50%",
     alignItems: "center",
   },
   points: { height: "86rem", width: "63rem" },
-  pointsText: { fontFamily: "sans-serif-light", fontSize: "25rem" },
+  pointsText: { fontSize: "25rem" },
   bottomCoverPic: {
     position: "absolute",
     width: "100%",

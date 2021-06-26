@@ -10,8 +10,9 @@ import "react-native-get-random-values";
 import { nanoid } from "nanoid";
 import { useIsFocused } from "@react-navigation/core";
 import styles from "./styles";
+import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import firebase from 'firebase';
+import firebase from "firebase";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -20,11 +21,11 @@ const firebaseConfig = {
   storageBucket: "eurekall.appspot.com",
   messagingSenderId: "132679568347",
   appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
-  measurementId: "G-H1N45TFCSX"
-}
+  measurementId: "G-H1N45TFCSX",
+};
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
-}else {
+} else {
   firebase.app(); // if already initialized, use that one
 }
 const firestore = firebase.firestore();
@@ -36,16 +37,19 @@ function DeckComponent(props) {
   const [empty, setEmpty] = useState(!decks.length);
   const [index, setIndex] = useState("");
 
-  const createDeckDatabase = async (title,subtitle,id) => {
+  const createDeckDatabase = async (title, subtitle, id) => {
     const userEmail = String(await fireauth.currentUser.email);
-    const deckRef = firestore.collection('users').doc(userEmail).
-    collection('decks').doc(id);
+    const deckRef = firestore
+      .collection("users")
+      .doc(userEmail)
+      .collection("decks")
+      .doc(id);
     await deckRef.set({
       title: title,
       subtitle: subtitle,
-      id: id
-    })
-  }
+      id: id,
+    });
+  };
 
   const createDeckHandler = (title, subtitle,id = nanoid(), loadStatus = false) => {
     if (loadStatus){
@@ -55,8 +59,9 @@ function DeckComponent(props) {
         setEmpty(false);
       }
     } else {
+      console.log(id);
       dispatch(Decks.createDeck(id, title, subtitle, [], []));
-      createDeckDatabase(title,subtitle,id);
+      createDeckDatabase(title, subtitle, id);
       setVisible(false);
       if (decks.length === 0) {
         setEmpty(false);
@@ -199,9 +204,13 @@ function DeckComponent(props) {
 
   const deleteDeckDatabase = async (id) => {
     const userEmail = String(await fireauth.currentUser.email);
-    await firestore.collection('users').doc(userEmail)
-        .collection('decks').doc(id).delete();
-  }
+    await firestore
+      .collection("users")
+      .doc(userEmail)
+      .collection("decks")
+      .doc(id)
+      .delete();
+  };
 
   const deleteDeckHandler = (id) => {
     deleteDeckDatabase(id);
@@ -220,6 +229,20 @@ function DeckComponent(props) {
       id={deck.item.id}
     />
   );
+
+  const [loaded] = useFonts({
+    MontserratLight: require("../../../assets/fonts/Montserrat-Light.ttf"),
+    MontserratBold: require("../../../assets/fonts/Montserrat-Bold.ttf"),
+    PoppinsMedium: require("../../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsBold: require("../../../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsLight: require("../../../assets/fonts/Poppins-Light.ttf"),
+    PoppinsThin: require("../../../assets/fonts/Poppins-Thin.ttf"),
+    PoppinsRegular: require("../../../assets/fonts/Poppins-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <SafeAreaView
@@ -277,11 +300,11 @@ function DeckComponent(props) {
               styles.title,
               {
                 color: theme.colors.text,
+                fontFamily: "PoppinsLight",
               },
             ]}
           >
-            hmm it seems there are no decks added yet, create a deck by pressing
-            this button!
+            Create a deck by pressing this button!
           </Text>
         </View>
       ) : (
@@ -289,7 +312,7 @@ function DeckComponent(props) {
           data={decks}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
-          onEndReachedThreshold={500}
+          ListFooterComponent={<View style={styles.footer} />}
         />
       )}
     </SafeAreaView>

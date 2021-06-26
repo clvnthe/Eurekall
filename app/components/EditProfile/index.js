@@ -288,9 +288,8 @@ function EditProfileComponent(props) {
         <TextInput
           theme={{ roundness: 20 }}
           mode="flat"
-          label="Email"
-          placeholder="e.g., abc@xyz.com"
-          keyboardType="email-address"
+          label="Username"
+          placeholder="e.g., TheLegend27"
           style={{
             width: 336,
             marginTop: 10,
@@ -299,7 +298,7 @@ function EditProfileComponent(props) {
           autoCapitalize="none"
           left={
             <TextInput.Icon
-              name="at"
+              name="face-profile"
               color={true ? theme.colors.primary : theme.colors.text}
             />
           }

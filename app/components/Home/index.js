@@ -1,12 +1,15 @@
 import React, { useEffect } from "react";
 import { Image, TouchableOpacity, View } from "react-native";
 import { useNavigation, useTheme } from "@react-navigation/native";
-import { Surface, Title, Text } from "react-native-paper";
+import { Surface, Title, Text, ProgressBar, Badge } from "react-native-paper";
 import { DECKS } from "../../constants/routeNames";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Decks from "../../../store/slices/deckSlice";
 import { useSelector } from "react-redux";
 import styles from "./styles";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
+import { useFonts } from "expo-font";
 import firebase from 'firebase';
 
 const firebaseConfig = {
@@ -79,80 +82,85 @@ function HomeComponent(props) {
 
   const { navigate } = useNavigation();
 
+  const [loaded] = useFonts({
+    MontserratLight: require("../../../assets/fonts/Montserrat-Light.ttf"),
+    MontserratBold: require("../../../assets/fonts/Montserrat-Bold.ttf"),
+    PoppinsMedium: require("../../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsBold: require("../../../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsLight: require("../../../assets/fonts/Poppins-Light.ttf"),
+    PoppinsThin: require("../../../assets/fonts/Poppins-Thin.ttf"),
+    PoppinsRegular: require("../../../assets/fonts/Poppins-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <View>
       <Title style={styles.title}>
-        <Text style={{ fontFamily: "sans-serif-thin" }}>hi </Text>
-        <Text style={{ fontWeight: "bold" }}>{userInfo[1]}</Text>
-        <Text style={{ fontFamily: "sans-serif-thin" }}>, welcome home!</Text>
+        <Text style={{ fontFamily: "PoppinsThin" }}>hi </Text>
+        <Text style={{ fontFamily: "PoppinsMedium" }}>{userInfo[1]}</Text>
+        <Text style={{ fontFamily: "PoppinsThin" }}>, welcome home!</Text>
       </Title>
-      <Surface style={styles.firstContainer}>
-        <Text
+      <View style={styles.progressContainer}>
+        <View style={styles.tierView}>
+          <Badge size={50} style={{ backgroundColor: "#c68856" }}>
+            <MaterialCommunityIcons name="gold" size={24} color="white" />
+          </Badge>
+          <View style={styles.tierTextView}>
+            <Text style={styles.tierTextBold}>Your tier is Bronze!</Text>
+            <Text style={styles.tierTextLight}>
+              Earn more points to progress!
+            </Text>
+          </View>
+        </View>
+        <View style={styles.progressTextView}>
+          <Text style={{ fontFamily: "PoppinsLight" }}>Level 1</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Text style={{ fontFamily: "PoppinsLight" }}>300/500</Text>
+            <MaterialCommunityIcons
+              name="diamond-stone"
+              size={20}
+              color={theme.colors.text}
+            />
+          </View>
+        </View>
+        <View style={styles.progressbarView}>
+          <ProgressBar
+            progress={0.7}
+            color={theme.colors.primary}
+            style={styles.progressbar}
+          />
+        </View>
+      </View>
+      <TouchableOpacity
+        onPress={() => navigate(DECKS)}
+        style={styles.decksContainer}
+      >
+        <Surface
           style={[
-            styles.firstContainerText,
+            styles.decksSurface,
             {
-              fontFamily: "sans-serif",
+              backgroundColor: theme.dark ? "#4d4b50" : "#F0FFF0",
+              borderColor: theme.dark ? "#030200" : "#f1f9ec",
             },
           ]}
         >
-          POINTS
-        </Text>
-        <Text
-          style={[
-            styles.firstContainerText,
-            {
-              fontFamily: "sans-serif-light",
-            },
-          ]}
-        >
-          800,000
-        </Text>
-      </Surface>
-      <Surface style={styles.secondContainer}>
-        <Text
-          style={[
-            styles.secondContainerText,
-            {
-              fontFamily: "sans-serif",
-              fontWeight: "bold",
-            },
-          ]}
-        >
-          #dailyadvice
-        </Text>
-        <Text
-          style={[
-            styles.secondContainerText,
-            {
-              fontFamily: "sans-serif",
-            },
-          ]}
-        >
-          the secret to getting ahead is getting started
-        </Text>
-        <Image
-          style={styles.secondContainerImage}
-          source={require("../../../assets/images/study_tip.png")}
-        ></Image>
-      </Surface>
-      <TouchableOpacity onPress={() => navigate(DECKS)}>
-        <Surface style={styles.thirdContainer}>
-          <Text
-            style={[
-              styles.thirdContainerText1,
-              { fontFamily: "sans-serif", color: "#333333" },
-            ]}
-          >
+          <AntDesign
+            name="book"
+            size={50}
+            color={theme.colors.text}
+            style={{ alignSelf: "center" }}
+          />
+          <Text style={[styles.decksText, { color: theme.colors.text }]}>
             My Decks
           </Text>
           <Text
             style={[
-              styles.thirdContainerText2,
+              styles.decksCaption,
               {
-                fontSize: 16,
-                color: "#767676",
-                top: 26,
-                fontFamily: "sans-serif-light",
+                color: theme.dark ? "#edeeef" : "#767676",
               },
             ]}
           >

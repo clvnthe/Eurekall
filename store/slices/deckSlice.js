@@ -33,11 +33,13 @@ const updateCard = async (deckId,cardId,boxTypeValue,dateValue) => {
   }
 }
 
+const initialState = {
+  content: [],
+};
+
 const slice = createSlice({
   name: "decks",
-  initialState: {
-    content: [],
-  },
+  initialState,
   reducers: {
     deckCreated: (state, action) => {
       state.content.push(action.payload);
@@ -47,6 +49,7 @@ const slice = createSlice({
         (deck) => deck.id !== action.payload.id
       );
     },
+    deckStateResetted: () => initialState,
     flashcardCreated: (state, action) => {
       state.content[action.payload.index].cards.push({
         id: action.payload.card.id,
@@ -117,6 +120,7 @@ export default slice.reducer;
 const {
   deckCreated,
   deckDeleted,
+  deckStateResetted,
   flashcardCreated,
   flashcardDeleted,
   pushedOntoStudydeck,
@@ -128,6 +132,8 @@ export const createDeck = (id, title, subtitle, cards, studydeck) =>
   deckCreated({ id, title, subtitle, cards, studydeck });
 
 export const deleteDeck = (id) => deckDeleted({ id });
+
+export const resetDeckState = () => deckStateResetted();
 
 export const createFlashcard = (index, card) =>
   flashcardCreated({ index, card });

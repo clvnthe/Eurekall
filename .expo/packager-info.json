@@ -1,5 +1,10 @@
 {
   "expoServerPort": 19000,
+  "devToolsPort": 19002,
   "packagerPort": 19000,
-  "devToolsPort": 19002
+  "expoServerNgrokUrl": "https://4w-qhv.anonymous.eurekall-github.exp.direct",
+  "packagerNgrokUrl": "https://packager.4w-qhv.anonymous.eurekall-github.exp.direct",
+  "ngrokPid": 14320,
+  "packagerPid": null,
+  "webpackServerPort": null
 }

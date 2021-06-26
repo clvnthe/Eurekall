@@ -9,6 +9,7 @@ import { nanoid } from "nanoid";
 import { useIsFocused } from "@react-navigation/core";
 import * as Decks from "../../../store/slices/deckSlice";
 import EStyleSheet from "react-native-extended-stylesheet";
+import { useFonts } from "expo-font";
 import firebase from 'firebase';
 
 const firebaseConfig = {
@@ -102,6 +103,20 @@ function ViewingComponent({ route }) {
     />
   );
 
+  const [loaded] = useFonts({
+    MontserratLight: require("../../../assets/fonts/Montserrat-Light.ttf"),
+    MontserratBold: require("../../../assets/fonts/Montserrat-Bold.ttf"),
+    PoppinsMedium: require("../../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsBold: require("../../../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsLight: require("../../../assets/fonts/Poppins-Light.ttf"),
+    PoppinsThin: require("../../../assets/fonts/Poppins-Thin.ttf"),
+    PoppinsRegular: require("../../../assets/fonts/Poppins-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <SafeAreaView>
       <Portal>
@@ -142,11 +157,11 @@ function ViewingComponent({ route }) {
               styles.title,
               {
                 color: theme.colors.text,
+                fontFamily: "PoppinsLight",
               },
             ]}
           >
-            hmm it seems there are no cards added yet, create a card by pressing
-            this button!
+            Create a card by pressing this button!
           </Text>
         </View>
       ) : (
@@ -154,6 +169,7 @@ function ViewingComponent({ route }) {
           data={decks[index].cards}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
+          ListFooterComponent={<View style={styles.footer} />}
         />
       )}
     </SafeAreaView>
@@ -185,6 +201,9 @@ const styles = EStyleSheet.create({
     marginHorizontal: "4rem",
     marginVertical: "6rem",
     elevation: "24rem",
+  },
+  footer: {
+    height: "100rem",
   },
 });
 
