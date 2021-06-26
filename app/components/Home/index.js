@@ -96,104 +96,80 @@ function HomeComponent(props) {
     return null;
   }
 
-  return (
-    <View>
-      <Title style={styles.title}>
-        <Text style={{ fontFamily: "PoppinsThin" }}>hi </Text>
-        <Text style={{ fontFamily: "PoppinsMedium" }}>{userInfo[1]}</Text>
-        <Text style={{ fontFamily: "PoppinsThin" }}>, welcome home!</Text>
-      </Title>
-      <View style={styles.progressContainer}>
-        <View style={styles.tierView}>
-          <Badge size={50} style={{ backgroundColor: "#c68856" }}>
-            <MaterialCommunityIcons name="gold" size={24} color="white" />
-          </Badge>
-          <View style={styles.tierTextView}>
-            <Text style={styles.tierTextBold}>Your tier is Bronze!</Text>
-            <Text style={styles.tierTextLight}>
-              Earn more points to progress!
-            </Text>
-          </View>
+    return (
+        <View>
+            <Title style={styles.title}>
+                <Text style={{ fontFamily: "PoppinsThin" }}>hi </Text>
+                <Text style={{ fontFamily: "PoppinsMedium" }}>{userInfo[1]}</Text>
+                <Text style={{ fontFamily: "PoppinsThin" }}>, welcome home!</Text>
+            </Title>
+            <View style={styles.progressContainer}>
+                <View style={styles.tierView}>
+                    <Badge size={50} style={{ backgroundColor: "#c68856" }}>
+                        <MaterialCommunityIcons name="gold" size={24} color="white" />
+                    </Badge>
+                    <View style={styles.tierTextView}>
+                        <Text style={styles.tierTextBold}>Your tier is Bronze!</Text>
+                        <Text style={styles.tierTextLight}>
+                            Earn more points to progress!
+                        </Text>
+                    </View>
+                </View>
+                <View style={styles.progressTextView}>
+                    <Text style={{ fontFamily: "PoppinsLight" }}>Level 1</Text>
+                    <View style={{ flexDirection: "row" }}>
+                        <Text style={{ fontFamily: "PoppinsLight" }}>300/500</Text>
+                        <MaterialCommunityIcons
+                            name="diamond-stone"
+                            size={20}
+                            color={theme.colors.text}
+                        />
+                    </View>
+                </View>
+                <View style={styles.progressbarView}>
+                    <ProgressBar
+                        progress={0.7}
+                        color={theme.colors.primary}
+                        style={styles.progressbar}
+                    />
+                </View>
+            </View>
+            <TouchableOpacity
+                onPress={() => navigate(DECKS)}
+                style={styles.decksContainer}
+            >
+                <Surface
+                    style={[
+                        styles.decksSurface,
+                        {
+                            backgroundColor: theme.dark ? "#4d4b50" : "#F0FFF0",
+                            borderColor: theme.dark ? "#030200" : "#f1f9ec",
+                        },
+                    ]}
+                >
+                    <AntDesign
+                        name="book"
+                        size={50}
+                        color={theme.colors.text}
+                        style={{ alignSelf: "center" }}
+                    />
+                    <Text style={[styles.decksText, { color: theme.colors.text }]}>
+                        My Decks
+                    </Text>
+                    <Text
+                        style={[
+                            styles.decksCaption,
+                            {
+                                color: theme.dark ? "#edeeef" : "#767676",
+                            },
+                        ]}
+                    >
+                        {numDeckComparator === numOfDecks ? userNumDeck: numOfDecks} decks
+                    </Text>
+                </Surface>
+            </TouchableOpacity>
         </View>
-        <View style={styles.progressTextView}>
-          <Text style={{ fontFamily: "PoppinsLight" }}>Level 1</Text>
-          <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontFamily: "PoppinsLight" }}>300/500</Text>
-            <MaterialCommunityIcons
-              name="diamond-stone"
-              size={20}
-              color={theme.colors.text}
-            />
-          </View>
-        </View>
-        <View style={styles.progressbarView}>
-          <ProgressBar
-            progress={0.7}
-            color={theme.colors.primary}
-            style={styles.progressbar}
-          />
-        </View>
-      </View>
-      <TouchableOpacity
-        onPress={() => navigate(DECKS)}
-        style={styles.decksContainer}
-      >
-        <Surface
-          style={[
-            styles.decksSurface,
-            {
-              backgroundColor: theme.dark ? "#4d4b50" : "#F0FFF0",
-              borderColor: theme.dark ? "#030200" : "#f1f9ec",
-            },
-          ]}
-        >
-          <AntDesign
-            name="book"
-            size={50}
-            color={theme.colors.text}
-            style={{ alignSelf: "center" }}
-          />
-          <Text style={[styles.decksText, { color: theme.colors.text }]}>
-            My Decks
-          </Text>
-          <Text
-            style={[
-              styles.decksCaption,
-              {
-                color: theme.dark ? "#edeeef" : "#767676",
-              },
-            ]}
-          >
-            {numDeckComparator === numOfDecks ? userNumDeck: numOfDecks} decks
-          </Text>
-          <Image
-            style={styles.thirdContainerImage}
-            resizeMode="contain"
-            source={require("../../../assets/images/deckIcon.png")}
-          ></Image>
-        </Surface>
-      </TouchableOpacity>
-      <Image
-        style={styles.bubble1}
-        source={require("../../../assets/images/bubble1.png")}
-      ></Image>
-      <Image
-        style={styles.bubble2}
-        resizeMode="contain"
-        source={require("../../../assets/images/bubble2.png")}
-      ></Image>
-      <Image
-        style={styles.bubble3}
-        resizeMode="contain"
-        source={require("../../../assets/images/bubble3.png")}
-      ></Image>
-      <Image
-        style={styles.bubble4}
-        resizeMode="contain"
-        source={require("../../../assets/images/bubble4.png")}
-      ></Image>
-    </View>
-  );
+    );
 }
 
 export default HomeComponent;
