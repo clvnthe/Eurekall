@@ -124,9 +124,9 @@ function FlipCard({ front, back, deleteCard, id }) {
           )}
           {!visible && (
             <Shape
-              bg="darkseagreen"
+              bg="#f3cf7a"
               words={back}
-              key="darkseagreen"
+              key="#f3cf7a"
               state={animationState}
             />
           )}

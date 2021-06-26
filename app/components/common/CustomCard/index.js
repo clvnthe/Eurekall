@@ -66,20 +66,26 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
                 flexDirection: "row",
               }}
             >
-              <Badge
-                size={30}
-                style={{ backgroundColor: "transparent", alignSelf: "center" }}
-              >
-                {decks[index].studydeck.length ? (
-                  <Entypo name="bell" size={24} color={theme.colors.text} />
-                ) : (
-                  <MaterialIcons
-                    name="done-all"
-                    size={24}
-                    color={theme.colors.text}
-                  />
-                )}
-              </Badge>
+              {decks[index].studydeck.length ? (
+                <Badge
+                  size={30}
+                  style={{
+                    alignSelf: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Text style={{ fontFamily: "PoppinsMedium" }}>
+                    {decks[index].studydeck.length}
+                  </Text>
+                </Badge>
+              ) : (
+                <MaterialIcons
+                  name="done-all"
+                  size={24}
+                  color={theme.colors.text}
+                  style={{ alignSelf: "center" }}
+                />
+              )}
               <Menu
                 visible={visible}
                 onDismiss={closeMenu}
