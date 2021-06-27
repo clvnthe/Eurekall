@@ -110,7 +110,6 @@ Project Log: https://docs.google.com/spreadsheets/d/18hRETtVWj3z_cjpHDdBZrfflWWt
 
 <!-- Other Links -->
 ## Links
-Video Link: https://drive.google.com/file/d/1Y0kSC2WbIifJG9zcP9kSJuGG1-8Y5igw/view?usp=sharing
 
 Poster Link: https://drive.google.com/file/d/1-4bGXLaPz5DrI8GOGNXokznidjClZLmC/view?usp=sharing
 
