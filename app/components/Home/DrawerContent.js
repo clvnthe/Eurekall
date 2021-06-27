@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { View } from "react-native";
 import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import {
@@ -45,20 +45,45 @@ if (!firebase.apps.length) {
 
 const fireauth = firebase.auth();
 const fireBucket = firebase.storage();
+const firestore = firebase.firestore();
 
 function DrawerContent(props) {
   const { logOut, toggleTheme } = React.useContext(AuthContext);
   const [userInfo, setUserInfo] = React.useState([]);
+  const [name, setName] = React.useState("");
+  const [username, setUsername] = React.useState("");
   const [image, setImage] = useState(
-      "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8"
+    "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8"
   );
-  const userEmail = userInfo[0];
-  const loadImage = fireBucket.ref().child('images/' + userEmail).getDownloadURL()
+
+  const loadImage = (userEmail) => {
+    fireBucket
+      .ref()
+      .child("images/" + userEmail)
+      .getDownloadURL()
       .then((url) => {
         setImage(url);
-      }).catch((error) => {
+      })
+      .catch((error) => {
         console.log(error);
       });
+  };
+
+  const loadDetails = async (userEmail) => {
+    const userRef = firestore.collection("users");
+    const userData = await userRef.where("email", "==", userEmail).get();
+    const userDetails = userData["docs"][0].data();
+    const nameOfUser = String(userDetails["name"]);
+    const userName = String(userDetails["preferred_username"]);
+    setName(nameOfUser);
+    setUsername(userName);
+  };
+
+  if (userInfo.length !== 0) {
+    loadImage(userInfo[0]);
+    console.log(userInfo);
+    loadDetails(userInfo[0]);
+  }
 
   const dispatch = useDispatch();
 
@@ -74,9 +99,12 @@ function DrawerContent(props) {
         console.log(err);
       }
       setUserInfo(user);
+      setName(user[1]);
+      setUsername(user[2]);
+      loadImage(user[0]);
       console.log(userInfo);
     }, 0);
-  }, []);
+  }, [image]);
 
   async function signOut() {
     try {
@@ -137,14 +165,14 @@ function DrawerContent(props) {
                       },
                     ]}
                   >
-                    {userInfo[1]}
+                    {name}
                   </Title>
                 </View>
                 <View style={styles.section}>
                   <Caption
                     style={[styles.caption, { fontFamily: "PoppinsMedium" }]}
                   >
-                    @{userInfo[2]}
+                    @{username}
                   </Caption>
                 </View>
               </View>

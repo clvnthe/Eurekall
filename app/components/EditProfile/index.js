@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   View,
   ImageBackground,
+  Alert,
 } from "react-native";
 import { Title, Text, Divider, TextInput } from "react-native-paper";
 import BottomSheet from "reanimated-bottom-sheet";
@@ -15,6 +16,7 @@ import * as ImagePicker from "expo-image-picker";
 import { Camera } from "expo-camera";
 import CustomButton from "../common/CustomButton";
 import firebase from "firebase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -41,15 +43,43 @@ function EditProfileComponent(props) {
   const [image, setImage] = useState(
     "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8"
   );
-  const [name, setName] = useState([]);
+  const [userInfo, setUserInfo] = React.useState([]);
+
+  useEffect(() => {
+    setTimeout(async () => {
+      let user;
+      user = null;
+      try {
+        user = await AsyncStorage.getItem("userInfo").then((req) =>
+          JSON.parse(req)
+        );
+      } catch (err) {
+        console.log(err);
+      }
+      setUserInfo(user);
+    }, 0);
+  }, []);
+
+  const [name, setName] = useState(userInfo[1]);
+  const [username, setUsername] = useState(userInfo[2]);
 
   const updateUserInfo = async () => {
     const userId = String(fireauth.currentUser.email);
     const updateUserInfoRef = firestore.collection("users").doc(userId);
+    const name1 = typeof name === "undefined" ? userInfo[1] : name;
+    const username1 = typeof username === "undefined" ? userInfo[2] : username;
     try {
       await updateUserInfoRef.update({
-        name: name,
+        name: name1,
+        preferred_username: username1,
       });
+      await AsyncStorage.setItem(
+        "userInfo",
+        JSON.stringify([userInfo[0], name1, username1])
+      );
+      Alert.alert("Edit Profile", "Changes have been saved.", [
+        { text: "OK", onPress: () => console.log("OK Pressed") },
+      ]);
     } catch (error) {
       console.log(error);
     }
@@ -97,13 +127,6 @@ function EditProfileComponent(props) {
         quality: 1,
       });
       if (!result.cancelled) {
-        uploadImage(result.uri)
-          .then(() => {
-            console.log("passed");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
         setImage(result.uri);
       }
     } else {
@@ -119,13 +142,6 @@ function EditProfileComponent(props) {
       });
       if (!cancelled) {
         setImage(uri);
-        uploadImage(uri)
-          .then(() => {
-            console.log("passed");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
       }
     } else {
       alert("Sorry, we need camera access permissions to make this work!");
@@ -281,9 +297,9 @@ function EditProfileComponent(props) {
         <TextInput
           theme={{ roundness: 20 }}
           mode="flat"
-          label="Name"
+          defaultValue={userInfo[1]}
           onChangeText={setName}
-          placeholder="e.g., Timothy"
+          placeholder="Name"
           style={{
             width: 336,
             alignSelf: "center",
@@ -299,8 +315,9 @@ function EditProfileComponent(props) {
         <TextInput
           theme={{ roundness: 20 }}
           mode="flat"
-          label="Username"
-          placeholder="e.g., TheLegend27"
+          defaultValue={userInfo[2]}
+          onChangeText={setUsername}
+          placeholder="Username"
           style={{
             width: 336,
             marginTop: 10,
@@ -319,7 +336,13 @@ function EditProfileComponent(props) {
             title="Submit changes"
             width={336}
             onPress={() => {
-              console.log("pressed");
+              uploadImage(image)
+                .then(() => {
+                  console.log("passed");
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
               updateUserInfo();
             }}
           />

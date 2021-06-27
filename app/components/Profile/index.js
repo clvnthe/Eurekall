@@ -79,7 +79,7 @@ function ProfileComponent(props) {
       }
       setUserInfo(user);
     }, 0);
-  }, []);
+  }, [isFocused]);
 
   const theme = useTheme();
 
