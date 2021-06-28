@@ -69,17 +69,23 @@ function EditProfileComponent(props) {
     const name1 = typeof name === "undefined" ? userInfo[1] : name;
     const username1 = typeof username === "undefined" ? userInfo[2] : username;
     try {
-      await updateUserInfoRef.update({
-        name: name1,
-        preferred_username: username1,
-      });
-      await AsyncStorage.setItem(
-        "userInfo",
-        JSON.stringify([userInfo[0], name1, username1])
-      );
-      Alert.alert("Edit Profile", "Changes have been saved.", [
-        { text: "OK", onPress: () => console.log("OK Pressed") },
-      ]);
+      if (name1 === "" || username1 === "") {
+        Alert.alert("Edit Profile", "Fields cannot be empty.", [
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ]);
+      } else {
+        await updateUserInfoRef.update({
+          name: name1,
+          preferred_username: username1,
+        });
+        await AsyncStorage.setItem(
+          "userInfo",
+          JSON.stringify([userInfo[0], name1, username1])
+        );
+        Alert.alert("Edit Profile", "Changes have been saved.", [
+          { text: "OK", onPress: () => console.log("OK Pressed") },
+        ]);
+      }
     } catch (error) {
       console.log(error);
     }
