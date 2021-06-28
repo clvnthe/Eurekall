@@ -81,7 +81,7 @@ https://drive.google.com/file/d/1Y7iGjvNWfz7wbK5CLKujRSB_t1-9Fzk_/view?usp=shari
 4. Here you will be able to see all the cards in your deck.
 5. To view the answers for each card simply tap on the card.
 6. To view the questions for the card again, tap on the card again.
-7. To delete a card press and hold on a card. A prompt will appear to confirm your deletion.
+7. To delete a card, press and hold on a card. A prompt will appear to confirm your deletion.
 
 ### Studying cards
 1. To study a card, tap on study on the decks menu.
