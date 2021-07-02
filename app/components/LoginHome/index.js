@@ -21,10 +21,6 @@ function LoginHomeComponent(props) {
         source={require("../../../assets/images/loginbackground.png")}
       >
         <Image
-          style={styles.doodle}
-          source={require("../../../assets/images/loginhomedoodle.png")}
-        ></Image>
-        <Image
           style={styles.logo}
           source={require("../../../assets/images/eurekall_logo.png")}
         ></Image>
@@ -45,6 +41,10 @@ function LoginHomeComponent(props) {
             onPress={() => navigate(LOGIN)}
           ></CustomButton>
         </View>
+        <Image
+          style={styles.doodle}
+          source={require("../../../assets/images/loginhomedoodle.png")}
+        ></Image>
       </ImageBackground>
     </Container>
   );

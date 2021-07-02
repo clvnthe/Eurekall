@@ -81,7 +81,7 @@ function DrawerContent(props) {
 
   if (userInfo.length !== 0) {
     loadImage(userInfo[0]);
-    console.log(userInfo);
+    //console.log(userInfo);
     loadDetails(userInfo[0]);
   }
 

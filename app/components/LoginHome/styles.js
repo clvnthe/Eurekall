@@ -1,40 +1,36 @@
 import EStyleSheet from "react-native-extended-stylesheet";
+import { ScaledSheet } from "react-native-size-matters";
 
-export default EStyleSheet.create({
+export default ScaledSheet.create({
   logo: {
     width: "100%",
-    height: "60rem",
-    top: "200rem",
-    right: "40rem",
-    position: "absolute",
+    height: "60@s",
+    right: "40@s",
+    top: "150@s",
   },
   backgroundImage: {
     width: "100%",
     height: "110%",
   },
   doodle: {
-    width: "200rem",
-    height: "210rem",
+    width: "200@s",
+    height: "210@s",
     position: "absolute",
-    bottom: "60rem",
+    bottom: "50@s",
   },
   title: {
-    width: "80%",
-    top: "270rem",
-    right: "50rem",
-    fontSize: "55rem",
-    lineHeight: "58rem",
-    position: "absolute",
+    fontSize: "55@s",
+    left: "20@s",
+    lineHeight: "58@s",
     fontFamily: "sans-serif-thin",
+    top: "150@s",
   },
   signUpButton: {
-    position: "absolute",
-    top: "45%",
     alignSelf: "center",
+    top: "150@s",
   },
   loginButton: {
-    position: "absolute",
-    top: "52%",
     alignSelf: "center",
+    top: "130@s",
   },
 });

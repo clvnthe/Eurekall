@@ -1,32 +1,32 @@
-import EStyleSheet from "react-native-extended-stylesheet";
+import { ScaledSheet } from "react-native-size-matters";
 
-export default EStyleSheet.create({
+export default ScaledSheet.create({
   title: {
-    fontSize: "38rem",
-    lineHeight: "39rem",
-    padding: "20rem",
+    fontSize: "36@s",
+    lineHeight: "38@s",
+    padding: "18@s",
   },
   progressContainer: {
-    top: "30rem",
-    width: "340rem",
+    top: "20@s",
+    width: "320@s",
     alignSelf: "center",
     justifyContent: "center",
   },
   tierView: {
     flexDirection: "row",
-    paddingBottom: "10rem",
+    paddingBottom: "10@s",
   },
   tierTextView: {
-    padding: "10rem",
+    padding: "10@s",
     justifyContent: "space-around",
-    height: "55rem",
+    height: "55@s",
   },
   tierTextBold: {
-    fontSize: "22rem",
+    fontSize: "21@s",
     fontFamily: "PoppinsBold",
   },
   tierTextLight: {
-    fontSize: "13rem",
+    fontSize: "12@s",
     fontFamily: "PoppinsLight",
   },
   progressTextView: {
@@ -36,27 +36,27 @@ export default EStyleSheet.create({
     justifyContent: "space-between",
   },
   progressbarView: {
-    width: "330rem",
+    width: "310@s",
     alignSelf: "center",
   },
-  progressbar: { height: "10rem", borderRadius: "20rem" },
-  decksContainer: { top: "60rem", alignSelf: "center" },
+  progressbar: { height: "9@s", borderRadius: "20@s" },
+  decksContainer: { top: "40@s", alignSelf: "center" },
   decksSurface: {
-    height: "280rem",
-    width: "330rem",
-    elevation: "6rem",
-    borderRadius: "20rem",
+    height: "270@s",
+    width: "310@s",
+    elevation: "6@s",
+    borderRadius: "20@s",
     justifyContent: "center",
-    opacity: "0.9rem",
-    borderWidth: "1rem",
+    opacity: "0.9@s",
+    borderWidth: "1@s",
   },
   decksText: {
     fontFamily: "PoppinsRegular",
-    fontSize: "32rem",
+    fontSize: "31@s",
     alignSelf: "center",
   },
   decksCaption: {
-    fontSize: "18rem",
+    fontSize: "17@s",
     fontFamily: "PoppinsLight",
     alignSelf: "center",
   },

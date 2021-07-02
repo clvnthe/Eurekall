@@ -71,7 +71,7 @@ function HomeComponent(props) {
               .collection("decks");
             retrieveDeckRef.get().then((numDecks) => {
               deckCount = numDecks.size;
-              // console.log(deckCount)
+              //console.log(deckCount);
               setUserNumDeck(deckCount);
               setNumDeckComparator(numOfDecks);
             });
@@ -170,7 +170,8 @@ function HomeComponent(props) {
               },
             ]}
           >
-            {numDeckComparator === numOfDecks ? userNumDeck : numOfDecks} decks
+            {numDeckComparator === numOfDecks ? userNumDeck : numOfDecks}{" "}
+            {userNumDeck > 1 ? "decks" : "deck"}
           </Text>
         </Surface>
       </TouchableOpacity>

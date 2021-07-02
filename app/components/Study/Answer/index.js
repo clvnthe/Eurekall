@@ -8,12 +8,15 @@ import * as Decks from "../../../../store/slices/deckSlice";
 import { DECKS, QUESTION } from "../../../constants/routeNames";
 import Constants from "expo-constants";
 import EStyleSheet from "react-native-extended-stylesheet";
+import { useFonts } from "expo-font";
+import LottieView from "lottie-react-native";
 
 function AnswerComponent({ route }) {
   const theme = useTheme();
   const decks = useSelector(Decks.getDecks);
   const index = route.params.paramIndex;
   const [studydeck, setStudydeck] = React.useState([""]);
+  const [allDone, setAllDone] = React.useState(false);
   const { navigate } = useNavigation();
   const dispatch = useDispatch();
 
@@ -30,6 +33,38 @@ function AnswerComponent({ route }) {
     }, 0);
   }, []);
 
+  //for animation
+  useEffect(() => {
+    setTimeout(
+      () => (allDone ? navigate(DECKS) : console.log("allDone is false")),
+      3000
+    );
+  }, [allDone]);
+
+  const [loaded] = useFonts({
+    MontserratLight: require("../../../../assets/fonts/Montserrat-Light.ttf"),
+    MontserratBold: require("../../../../assets/fonts/Montserrat-Bold.ttf"),
+    PoppinsMedium: require("../../../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsBold: require("../../../../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsLight: require("../../../../assets/fonts/Poppins-Light.ttf"),
+    PoppinsThin: require("../../../../assets/fonts/Poppins-Thin.ttf"),
+    PoppinsRegular: require("../../../../assets/fonts/Poppins-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
+  if (allDone) {
+    return (
+      <LottieView
+        source={require("../../../../assets/lottieAnimations/676-done.json")}
+        autoPlay
+        loop={false}
+      />
+    );
+  }
+
   return (
     <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
       <Surface
@@ -41,7 +76,10 @@ function AnswerComponent({ route }) {
           <Text
             style={[
               styles.answerText,
-              { color: theme.dark ? theme.colors.onPrimary : "#ffffff" },
+              {
+                color: theme.dark ? theme.colors.onPrimary : "#ffffff",
+                fontFamily: "PoppinsMedium",
+              },
             ]}
           >
             {studydeck.length === 0
@@ -52,8 +90,10 @@ function AnswerComponent({ route }) {
       </Surface>
       <Surface style={styles.userAnswer}>
         <ScrollView>
-          <Text>You wrote:</Text>
-          <Text>{route.params.paramUserAnswer}</Text>
+          <Text style={{ fontFamily: "PoppinsMedium" }}>You wrote:</Text>
+          <Text style={{ fontFamily: "PoppinsRegular" }}>
+            {route.params.paramUserAnswer}
+          </Text>
         </ScrollView>
       </Surface>
       <View style={styles.buttonsContainer}>
@@ -63,7 +103,7 @@ function AnswerComponent({ route }) {
             dispatch(Decks.popStudydeck(index));
             {
               studydeck.length - 1 === 0
-                ? navigate(DECKS)
+                ? setAllDone(true)
                 : navigate(QUESTION, { paramIndex: index });
             }
             console.log("Correct Answer!");

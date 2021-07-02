@@ -17,6 +17,7 @@ import { Camera } from "expo-camera";
 import CustomButton from "../common/CustomButton";
 import firebase from "firebase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -39,6 +40,7 @@ const fireauth = firebase.auth();
 const fireBucket = firebase.storage();
 
 function EditProfileComponent(props) {
+  const [isOpen, setIsOpen] = useState(false);
   const theme = useTheme();
   const [image, setImage] = useState(
     "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8"
@@ -248,112 +250,127 @@ function EditProfileComponent(props) {
         enabledGestureInteraction={true}
         enabledContentGestureInteraction={false}
       />
-      <Animated.View
-        style={{
-          margin: 20,
-          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-        }}
+      <TouchableWithoutFeedback
+        onPress={() =>
+          isOpen
+            ? (bs.current.snapTo(1), setIsOpen(false))
+            : console.log(isOpen)
+        }
       >
-        <View style={{ alignItems: "center", padding: 20 }}>
-          <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
-            <View
-              style={{
-                height: 100,
-                width: 100,
-                borderRadius: 15,
-                justifyContent: "center",
-                alignItems: "center",
+        <Animated.View
+          style={{
+            margin: 20,
+            opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+          }}
+        >
+          <View style={{ alignItems: "center", padding: 20 }}>
+            <TouchableOpacity
+              onPress={() => {
+                bs.current.snapTo(0);
+                setIsOpen(true);
               }}
             >
-              <ImageBackground
-                source={{
-                  uri: image,
+              <View
+                style={{
+                  height: 100,
+                  width: 100,
+                  borderRadius: 15,
+                  justifyContent: "center",
+                  alignItems: "center",
                 }}
-                style={{ height: 100, width: 100 }}
-                imageStyle={{ borderRadius: 15 }}
               >
-                <View
-                  style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
+                <ImageBackground
+                  source={{
+                    uri: image,
                   }}
+                  style={{ height: 100, width: 100 }}
+                  imageStyle={{ borderRadius: 15 }}
                 >
-                  <Icon
-                    name="camera"
-                    size={35}
-                    color="#fff"
+                  <View
                     style={{
-                      opacity: 0.7,
-                      alignItems: "center",
+                      flex: 1,
                       justifyContent: "center",
-                      borderWidth: 1,
-                      borderColor: "#fff",
-                      borderRadius: 10,
+                      alignItems: "center",
                     }}
-                  />
-                </View>
-              </ImageBackground>
-            </View>
-          </TouchableOpacity>
-        </View>
-        <Divider></Divider>
-        <Title style={{ textAlign: "center" }}>Personal info</Title>
-        <Text style={{ color: "grey", padding: 10 }}>Account Information</Text>
-        <TextInput
-          theme={{ roundness: 20 }}
-          mode="flat"
-          defaultValue={userInfo[1]}
-          onChangeText={setName}
-          placeholder="Name"
-          style={{
-            width: 336,
-            alignSelf: "center",
-          }}
-          autoCapitalize="none"
-          left={
-            <TextInput.Icon
-              name="account"
-              color={true ? theme.colors.primary : theme.colors.text}
-            />
-          }
-        />
-        <TextInput
-          theme={{ roundness: 20 }}
-          mode="flat"
-          defaultValue={userInfo[2]}
-          onChangeText={setUsername}
-          placeholder="Username"
-          style={{
-            width: 336,
-            marginTop: 10,
-            alignSelf: "center",
-          }}
-          autoCapitalize="none"
-          left={
-            <TextInput.Icon
-              name="face-profile"
-              color={true ? theme.colors.primary : theme.colors.text}
-            />
-          }
-        />
-        <View style={{ alignItems: "center" }}>
-          <CustomButton
-            title="Submit changes"
-            width={336}
-            onPress={() => {
-              uploadImage(image)
-                .then(() => {
-                  console.log("passed");
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
-              updateUserInfo();
+                  >
+                    <Icon
+                      name="camera"
+                      size={35}
+                      color="#fff"
+                      style={{
+                        opacity: 0.7,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderWidth: 1,
+                        borderColor: "#fff",
+                        borderRadius: 10,
+                      }}
+                    />
+                  </View>
+                </ImageBackground>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <Divider></Divider>
+          <Title style={{ textAlign: "center" }}>Personal info</Title>
+          <Text style={{ color: "grey", padding: 10 }}>
+            Account Information
+          </Text>
+          <TextInput
+            theme={{ roundness: 20 }}
+            mode="flat"
+            defaultValue={userInfo[1]}
+            onChangeText={setName}
+            placeholder="Name"
+            style={{
+              width: 336,
+              alignSelf: "center",
             }}
+            autoCapitalize="none"
+            left={
+              <TextInput.Icon
+                name="account"
+                color={true ? theme.colors.primary : theme.colors.text}
+              />
+            }
           />
-        </View>
-      </Animated.View>
+          <TextInput
+            theme={{ roundness: 20 }}
+            mode="flat"
+            defaultValue={userInfo[2]}
+            onChangeText={setUsername}
+            placeholder="Username"
+            style={{
+              width: 336,
+              marginTop: 10,
+              alignSelf: "center",
+            }}
+            autoCapitalize="none"
+            left={
+              <TextInput.Icon
+                name="face-profile"
+                color={true ? theme.colors.primary : theme.colors.text}
+              />
+            }
+          />
+          <View style={{ alignItems: "center" }}>
+            <CustomButton
+              title="Submit changes"
+              width={336}
+              onPress={() => {
+                uploadImage(image)
+                  .then(() => {
+                    console.log("passed");
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                  });
+                updateUserInfo();
+              }}
+            />
+          </View>
+        </Animated.View>
+      </TouchableWithoutFeedback>
     </Container>
   );
 }

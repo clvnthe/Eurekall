@@ -12,6 +12,7 @@ import CustomButton from "../../common/CustomButton";
 import * as Decks from "../../../../store/slices/deckSlice";
 import Constants from "expo-constants";
 import EStyleSheet from "react-native-extended-stylesheet";
+import { useFonts } from "expo-font";
 
 function QuestionComponent({ route }) {
   const theme = useTheme();
@@ -35,6 +36,20 @@ function QuestionComponent({ route }) {
     }, 0);
   }, [isFocused]);
 
+  const [loaded] = useFonts({
+    MontserratLight: require("../../../../assets/fonts/Montserrat-Light.ttf"),
+    MontserratBold: require("../../../../assets/fonts/Montserrat-Bold.ttf"),
+    PoppinsMedium: require("../../../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsBold: require("../../../../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsLight: require("../../../../assets/fonts/Poppins-Light.ttf"),
+    PoppinsThin: require("../../../../assets/fonts/Poppins-Thin.ttf"),
+    PoppinsRegular: require("../../../../assets/fonts/Poppins-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
       <Surface
@@ -48,6 +63,7 @@ function QuestionComponent({ route }) {
               styles.questionText,
               {
                 color: theme.dark ? theme.colors.onPrimary : "#ffffff",
+                fontFamily: "PoppinsMedium",
               },
             ]}
           >

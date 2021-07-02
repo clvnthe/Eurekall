@@ -3,7 +3,14 @@ import { Portal, Modal, FAB, useTheme } from "react-native-paper";
 import ReviewFormComponent from "../common/reviewForm";
 import FlashCardForm from "../common/flashcardForm";
 import CustomCard from "../common/CustomCard";
-import { FlatList, SafeAreaView, Text, View, Image } from "react-native";
+import {
+  FlatList,
+  SafeAreaView,
+  Text,
+  View,
+  Image,
+  RefreshControl,
+} from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Decks from "../../../store/slices/deckSlice";
 import "react-native-get-random-values";
@@ -36,6 +43,13 @@ function DeckComponent(props) {
   const decks = useSelector(Decks.getDecks);
   const [empty, setEmpty] = useState(!decks.length);
   const [index, setIndex] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshBoolean, setRefreshBoolean] = useState(false);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setRefreshBoolean(() => !refreshBoolean);
+  };
 
   const createDeckDatabase = async (title, subtitle, id) => {
     const userEmail = String(await fireauth.currentUser.email);
@@ -51,8 +65,13 @@ function DeckComponent(props) {
     });
   };
 
-  const createDeckHandler = (title, subtitle,id = nanoid(), loadStatus = false) => {
-    if (loadStatus){
+  const createDeckHandler = (
+    title,
+    subtitle,
+    id = nanoid(),
+    loadStatus = false
+  ) => {
+    if (loadStatus) {
       dispatch(Decks.createDeck(id, title, subtitle, [], []));
       setVisible(false);
       if (decks.length === 0) {
@@ -69,10 +88,13 @@ function DeckComponent(props) {
     }
   };
 
-  const loadCardDatabaseForDeck = async (deckID,userEmail,indexer) => {
-    const retrieveCardRef = firestore.collection("users")
-        .doc(userEmail).collection("decks")
-        .doc(deckID).collection("cards");
+  const loadCardDatabaseForDeck = async (deckID, userEmail, indexer) => {
+    const retrieveCardRef = firestore
+      .collection("users")
+      .doc(userEmail)
+      .collection("decks")
+      .doc(deckID)
+      .collection("cards");
     const retrieveCards = await retrieveCardRef.get();
     if (retrieveCards.empty) {
       console.log("no cards");
@@ -80,28 +102,28 @@ function DeckComponent(props) {
       retrieveCards.forEach((doc) => {
         // console.log(doc.data());
         createFlashcardHandler(
-            doc.data()["question"],
-            doc.data()["answer"],
-            doc.data()["boxType"],
-            doc.data()["id"],
-            doc.data()["date"],
-            indexer,
-            true
-        )
-      })
+          doc.data()["question"],
+          doc.data()["answer"],
+          doc.data()["boxType"],
+          doc.data()["id"],
+          doc.data()["date"],
+          indexer,
+          true
+        );
+      });
     }
-  }
+  };
 
-  const loadDeckDatabase = (deckRetrieve,userEmail) => {
+  const loadDeckDatabase = (deckRetrieve, userEmail) => {
     var indexer = 0;
     deckRetrieve.forEach((doc) => {
       createDeckHandler(
-          doc.data()["title"],
-          doc.data()["subtitle"],
-          doc.data()["id"],
-          true
+        doc.data()["title"],
+        doc.data()["subtitle"],
+        doc.data()["id"],
+        true
       );
-      loadCardDatabaseForDeck(doc.data()["id"],userEmail,indexer);
+      loadCardDatabaseForDeck(doc.data()["id"], userEmail, indexer);
       indexer++;
     });
   };
@@ -110,21 +132,22 @@ function DeckComponent(props) {
     setTimeout(async () => {
       const userEmail = String(await fireauth.currentUser.email);
       const retrieveDeckRef = firestore
-          .collection("users")
-          .doc(userEmail)
-          .collection("decks");
+        .collection("users")
+        .doc(userEmail)
+        .collection("decks");
 
-      const deckRetrieve = await retrieveDeckRef.get()
+      const deckRetrieve = await retrieveDeckRef.get();
       if (!deckRetrieve.empty) {
         if (decks.length === 0) {
-          loadDeckDatabase(deckRetrieve,userEmail);
+          loadDeckDatabase(deckRetrieve, userEmail);
         }
         console.log("Decks already loaded");
       } else {
         console.log("No decks");
       }
-    },0);
-  },[]);
+    }, 0);
+    setRefreshing(false);
+  }, [refreshBoolean]);
 
   const isFocused = useIsFocused();
 
@@ -142,31 +165,59 @@ function DeckComponent(props) {
   const hideAddCardModal = () => setVisibleAddCardModal(false);
 
   const dateComparator = (inputDate) => {
-    const currentDateTemp = String(new Date().getFullYear()) + '/' + String(new Date().getMonth() + 1) + '/' + String(new Date().getDate());
+    const currentDateTemp =
+      String(new Date().getFullYear()) +
+      "/" +
+      String(new Date().getMonth() + 1) +
+      "/" +
+      String(new Date().getDate());
     const currentDate = new Date(currentDateTemp);
     const inputDateActual = new Date(inputDate);
-    const dateDiffMilSec = Math.abs(inputDateActual-currentDate)
-    const dateDays = dateDiffMilSec/(1000 * 60 * 60 * 24);
+    const dateDiffMilSec = Math.abs(inputDateActual - currentDate);
+    const dateDays = dateDiffMilSec / (1000 * 60 * 60 * 24);
     return dateDays;
-  }
+  };
 
-  const currentDate = String(new Date().getFullYear()) + '/' + String(new Date().getMonth() + 1) + '/' + String(new Date().getDate());
+  const currentDate =
+    String(new Date().getFullYear()) +
+    "/" +
+    String(new Date().getMonth() + 1) +
+    "/" +
+    String(new Date().getDate());
 
-
-  const createCardDatabase = async (question,answer,id,cardId,currentDate) => {
+  const createCardDatabase = async (
+    question,
+    answer,
+    id,
+    cardId,
+    currentDate
+  ) => {
     const userEmail = String(await fireauth.currentUser.email);
-    const deckRef = firestore.collection('users').doc(userEmail).
-    collection('decks').doc(id).collection('cards').doc(cardId);
+    const deckRef = firestore
+      .collection("users")
+      .doc(userEmail)
+      .collection("decks")
+      .doc(id)
+      .collection("cards")
+      .doc(cardId);
     await deckRef.set({
       question: question,
       answer: answer,
       boxType: 1,
       id: cardId,
-      date: currentDate
-    })
-  }
+      date: currentDate,
+    });
+  };
 
-  const createFlashcardHandler = (question, answer,boxType = 1 , id = nanoid(),inputDate = currentDate,cardtoDeckIndex = 0,loadStatus = false) => {
+  const createFlashcardHandler = (
+    question,
+    answer,
+    boxType = 1,
+    id = nanoid(),
+    inputDate = currentDate,
+    cardtoDeckIndex = 0,
+    loadStatus = false
+  ) => {
     if (loadStatus) {
       const card = {
         id: id,
@@ -176,14 +227,14 @@ function DeckComponent(props) {
       };
       const index = cardtoDeckIndex;
       dispatch(Decks.createFlashcard(index, card));
-      const cardDays = dateComparator(inputDate)
+      const cardDays = dateComparator(inputDate);
       if (boxType === 1) {
         dispatch(Decks.pushOntoStudydeck(index, card));
-      } else if (boxType === 2 &&  cardDays >= 2) {
+      } else if (boxType === 2 && cardDays >= 2) {
         dispatch(Decks.pushOntoStudydeck(index, card));
-      } else if (boxType === 3 &&  cardDays >= 7) {
+      } else if (boxType === 3 && cardDays >= 7) {
         dispatch(Decks.pushOntoStudydeck(index, card));
-      } else if (boxType === 4 &&  cardDays >= 14) {
+      } else if (boxType === 4 && cardDays >= 14) {
         dispatch(Decks.pushOntoStudydeck(index, card));
       }
       setVisibleAddCardModal(false);
@@ -193,9 +244,9 @@ function DeckComponent(props) {
         question,
         answer,
         boxType: boxType,
-        date: inputDate
+        date: inputDate,
       };
-      createCardDatabase(question,answer,decks[index]["id"],id,inputDate);
+      createCardDatabase(question, answer, decks[index]["id"], id, inputDate);
       dispatch(Decks.createFlashcard(index, card));
       dispatch(Decks.pushOntoStudydeck(index, card));
       setVisibleAddCardModal(false);
@@ -313,6 +364,9 @@ function DeckComponent(props) {
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={styles.footer} />}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
         />
       )}
     </SafeAreaView>
