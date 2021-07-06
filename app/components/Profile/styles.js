@@ -33,9 +33,21 @@ export default ScaledSheet.create({
     textAlign: "center",
     top: "10@s",
   },
+  titleText: {
+    textAlign: "center",
+  },
+  levelText: {
+    textAlign: "center",
+  },
+
   title: {
     alignSelf: "center",
     fontSize: "26@s",
+    top: "32@s",
+  },
+  description: {
+    textAlign: "center",
+    fontSize: "20@s",
     top: "32@s",
   },
   dividerContainer: {

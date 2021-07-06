@@ -21,6 +21,8 @@ import styles from "./styles";
 import { Feather } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import firebase from "firebase";
+import { LinearGradient } from "expo-linear-gradient";
+import { ScrollView } from "moti";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -100,7 +102,7 @@ function ProfileComponent(props) {
   }
 
   return (
-    <Container noPadding>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: "50%" }}>
       <Avatar.Image
         size={120}
         style={styles.profilePic}
@@ -137,9 +139,48 @@ function ProfileComponent(props) {
           </Text>
         </Surface>
       </TouchableOpacity>
-      <Text style={[styles.title, { fontFamily: "PoppinsRegular" }]}>
-        Joined 6 months ago
-      </Text>
+      <View
+        style={{
+          flexDirection: "row",
+          alignSelf: "center",
+        }}
+      >
+        <Title style={[styles.levelText, { fontFamily: "PoppinsMedium" }]}>
+          Level{" "}
+        </Title>
+        <View style={{ justifyContent: "center" }}>
+          <LinearGradient
+            colors={["#ff512f", "#dd2476"]}
+            style={{
+              borderRadius: 15,
+              width: 30,
+              height: 30,
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: theme.colors.background,
+                width: 20,
+                height: 20,
+                borderRadius: 10,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Text style={{ fontFamily: "PoppinsBold" }}>1</Text>
+            </View>
+          </LinearGradient>
+        </View>
+      </View>
+      <Title style={[styles.titleText, { fontFamily: "PoppinsMedium" }]}>
+        Title: Mugger Dog
+      </Title>
+      <Subheading style={[styles.description, { fontFamily: "PoppinsLight" }]}>
+        Hi I’m {userInfo[1]}! I’m a freshman from the National University of
+        Singapore!
+      </Subheading>
       <View style={styles.dividerContainer}>
         <View style={styles.rankContainer}>
           <Badge
@@ -159,11 +200,11 @@ function ProfileComponent(props) {
             color="#4169e1"
           />
           <Text style={[styles.pointsText, { fontFamily: "PoppinsRegular" }]}>
-            800,000
+            300
           </Text>
         </View>
       </View>
-    </Container>
+    </ScrollView>
   );
 }
 

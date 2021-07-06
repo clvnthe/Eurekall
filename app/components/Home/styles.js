@@ -45,11 +45,11 @@ export default ScaledSheet.create({
   },
   progressbar: { height: "9@s", borderRadius: "20@s" },
   objectivesView: {
-    width: "320@s",
+    width: "100%",
     alignSelf: "center",
     paddingTop: "10@s",
     paddingBottom: "10@s",
-    marginLeft: "-10@s",
+    marginLeft: "20@s",
   },
   objectivesText: {
     marginLeft: "10@s",
