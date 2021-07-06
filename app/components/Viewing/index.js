@@ -174,7 +174,7 @@ function ViewingComponent({ route }) {
           <Text
             style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
           >
-            1) To create a card, press on "+" button on the bottom right.
+            1) To create a card, press on the "+" button on the bottom right.
             {"\n"}
             {"\n"}2) To delete a card, press and hold on the card. An alert will
             appear to prompt you of the deletion. {"\n"}

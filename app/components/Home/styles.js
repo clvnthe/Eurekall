@@ -44,7 +44,43 @@ export default ScaledSheet.create({
     alignSelf: "center",
   },
   progressbar: { height: "9@s", borderRadius: "20@s" },
-  decksContainer: { /*top: "40@s",*/ alignSelf: "center" },
+  objectivesView: {
+    width: "320@s",
+    alignSelf: "center",
+    paddingTop: "10@s",
+    paddingBottom: "10@s",
+    marginLeft: "-10@s",
+  },
+  objectivesText: {
+    marginLeft: "10@s",
+  },
+  objectivesFlatListView: {
+    backgroundColor: "orange",
+    height: "160@s",
+    width: "142@s",
+    marginRight: "20@s",
+    marginTop: "10@s",
+    marginBottom: "10@s",
+    marginLeft: "10@s",
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: "20@s",
+    elevation: "6@s",
+  },
+  objectivesFlatListName: {
+    textAlign: "center",
+    padding: "10@s",
+  },
+  decksView: {
+    flex: 3,
+    justifyContent: "center",
+    alignSelf: "center",
+    width: "310@s",
+  },
+  decksTitle: {
+    paddingBottom: "10@s",
+  },
+  decksContainer: { alignSelf: "center" },
   decksSurface: {
     height: "250@s",
     width: "310@s",
@@ -55,7 +91,6 @@ export default ScaledSheet.create({
     borderWidth: "1@s",
   },
   decksText: {
-    fontFamily: "PoppinsRegular",
     fontSize: "31@s",
     alignSelf: "center",
   },

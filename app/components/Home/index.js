@@ -6,6 +6,7 @@ import {
   Dimensions,
   Platform,
   PixelRatio,
+  FlatList,
 } from "react-native";
 import {
   useIsFocused,
@@ -22,6 +23,8 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import firebase from "firebase";
+import { ScrollView } from "moti";
+import { objectivesData } from "../../../assets/data/objectivesData";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -108,6 +111,45 @@ function HomeComponent(props) {
 
   const { navigate } = useNavigation();
 
+  const renderItem = ({ item }) => {
+    return (
+      <Surface
+        style={[
+          styles.objectivesFlatListView,
+          {
+            backgroundColor: theme.dark ? "#4d4b50" : "#F0FFF0",
+            borderColor: theme.dark ? "#030200" : "#f1f9ec",
+          },
+        ]}
+      >
+        <View style={{ height: "50%", padding: 10 }}>
+          <Text
+            style={[
+              { fontFamily: "PoppinsRegular" },
+              styles.objectivesFlatListName,
+            ]}
+          >
+            {item.objectiveName}
+          </Text>
+        </View>
+        <Text
+          style={[
+            { fontFamily: "PoppinsMedium" },
+            styles.objectivesFlatListName,
+          ]}
+        >
+          0/{item.targetAmt}
+        </Text>
+
+        <Text
+          style={[{ fontFamily: "PoppinsBold" }, styles.objectivesFlatListName]}
+        >
+          {item.expAmt} exp
+        </Text>
+      </Surface>
+    );
+  };
+
   const [loaded] = useFonts({
     MontserratLight: require("../../../assets/fonts/Montserrat-Light.ttf"),
     MontserratBold: require("../../../assets/fonts/Montserrat-Bold.ttf"),
@@ -123,7 +165,7 @@ function HomeComponent(props) {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: 10 }}>
       <View style={{ flex: 1 }}>
         <Title style={[styles.title, { fontSize: normalize(40) }]}>
           <Text style={{ fontFamily: "PoppinsThin" }}>hi </Text>
@@ -143,9 +185,7 @@ function HomeComponent(props) {
           </Badge>
           <View style={styles.tierTextView}>
             <Text style={styles.tierTextBold}>Your tier is Bronze!</Text>
-            <Text style={styles.tierTextLight}>
-              Earn more points to progress!
-            </Text>
+            <Text style={styles.tierTextLight}>Earn more exp to progress!</Text>
           </View>
         </View>
         <View style={styles.progressTextView}>
@@ -167,12 +207,21 @@ function HomeComponent(props) {
           />
         </View>
       </View>
-      <View
-        style={{
-          flex: 3,
-          justifyContent: "center",
-        }}
-      >
+      <View style={styles.objectivesView}>
+        <Title style={[{ fontFamily: "PoppinsMedium" }, styles.objectivesText]}>
+          My Objectives
+        </Title>
+        <FlatList
+          data={objectivesData}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          horizontal={true}
+        ></FlatList>
+      </View>
+      <View style={styles.decksView}>
+        <Title style={[{ fontFamily: "PoppinsMedium" }, styles.decksTitle]}>
+          My Decks
+        </Title>
         <TouchableOpacity
           onPress={() => navigate(DECKS)}
           style={styles.decksContainer}
@@ -192,15 +241,10 @@ function HomeComponent(props) {
               color={theme.colors.text}
               style={{ alignSelf: "center" }}
             />
-            <Text style={[styles.decksText, { color: theme.colors.text }]}>
-              My Decks
-            </Text>
             <Text
               style={[
-                styles.decksCaption,
-                {
-                  color: theme.dark ? "#edeeef" : "#767676",
-                },
+                styles.decksText,
+                { color: theme.colors.text, fontFamily: "PoppinsLight" },
               ]}
             >
               {numDeckComparator === numOfDecks ? userNumDeck : numOfDecks}{" "}
@@ -209,7 +253,7 @@ function HomeComponent(props) {
           </Surface>
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
 
