@@ -50,66 +50,132 @@ function QuestionComponent({ route }) {
     return null;
   }
 
-  return (
-    <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
-      <Surface
-        style={[styles.question, { backgroundColor: theme.colors.primary }]}
-      >
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+  if (route.params.studyAll) {
+    const curDeck = decks[route.params.paramIndex];
+    const curCard = curDeck.cards[route.params.cardIndex];
+
+    return (
+      <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
+        <Surface
+          style={[styles.question, { backgroundColor: theme.colors.primary }]}
         >
-          <Text
-            style={[
-              styles.questionText,
-              {
-                color: theme.dark ? theme.colors.onPrimary : "#ffffff",
-                fontFamily: "PoppinsMedium",
-              },
-            ]}
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
           >
-            {studydeck.length === 0
-              ? ""
-              : studydeck[studydeck.length - 1].question}
-          </Text>
-        </ScrollView>
-      </Surface>
-      <Surface style={styles.userAnswer}>
-        <TextInput
-          theme={{ roundness: 20 }}
-          mode="flat"
-          label="Answer"
-          value={userAnswer}
-          onChangeText={setUserAnswer}
-          style={styles.userAnswerTextInput}
-          left={
-            <TextInput.Icon
-              name="alpha-a-box-outline"
-              color={userAnswer ? theme.colors.primary : theme.colors.text}
-            />
-          }
-        ></TextInput>
-      </Surface>
-      <View style={{ alignItems: "center" }}>
-        <CustomButton
-          title="Submit"
-          //width={165}
-          onPress={() => {
-            if (userAnswer !== "") {
-              navigate(ANSWER, {
-                paramIndex: route.params.paramIndex,
-                paramUserAnswer: userAnswer,
-              });
-              setUserAnswer("");
-            } else {
-              Alert.alert("Alert", "Please enter an answer :)", [
-                { text: "OK", onPress: () => console.log("OK Pressed") },
-              ]);
+            <Text
+              style={[
+                styles.questionText,
+                {
+                  color: theme.dark ? theme.colors.onPrimary : "#ffffff",
+                  fontFamily: "PoppinsMedium",
+                },
+              ]}
+            >
+              {curCard.question}
+            </Text>
+          </ScrollView>
+        </Surface>
+        <Surface style={styles.userAnswer}>
+          <TextInput
+            theme={{ roundness: 20 }}
+            mode="flat"
+            label="Answer"
+            value={userAnswer}
+            onChangeText={setUserAnswer}
+            style={styles.userAnswerTextInput}
+            left={
+              <TextInput.Icon
+                name="alpha-a-box-outline"
+                color={userAnswer ? theme.colors.primary : theme.colors.text}
+              />
             }
-          }}
-        ></CustomButton>
-      </View>
-    </ScrollView>
-  );
+          ></TextInput>
+        </Surface>
+        <View style={{ alignItems: "center" }}>
+          <CustomButton
+            title="Submit"
+            //width={165}
+            onPress={() => {
+              if (userAnswer !== "") {
+                navigate(ANSWER, {
+                  paramIndex: route.params.paramIndex,
+                  cardIndex: route.params.cardIndex,
+                  paramUserAnswer: userAnswer,
+                  studyAll: true,
+                });
+                setUserAnswer("");
+              } else {
+                Alert.alert("Alert", "Please enter an answer :)", [
+                  { text: "OK", onPress: () => console.log("OK Pressed") },
+                ]);
+              }
+            }}
+          ></CustomButton>
+        </View>
+      </ScrollView>
+    );
+  } else {
+    return (
+      <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
+        <Surface
+          style={[styles.question, { backgroundColor: theme.colors.primary }]}
+        >
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+          >
+            <Text
+              style={[
+                styles.questionText,
+                {
+                  color: theme.dark ? theme.colors.onPrimary : "#ffffff",
+                  fontFamily: "PoppinsMedium",
+                },
+              ]}
+            >
+              {studydeck.length === 0
+                ? ""
+                : studydeck[studydeck.length - 1].question}
+            </Text>
+          </ScrollView>
+        </Surface>
+        <Surface style={styles.userAnswer}>
+          <TextInput
+            theme={{ roundness: 20 }}
+            mode="flat"
+            label="Answer"
+            value={userAnswer}
+            onChangeText={setUserAnswer}
+            style={styles.userAnswerTextInput}
+            left={
+              <TextInput.Icon
+                name="alpha-a-box-outline"
+                color={userAnswer ? theme.colors.primary : theme.colors.text}
+              />
+            }
+          ></TextInput>
+        </Surface>
+        <View style={{ alignItems: "center" }}>
+          <CustomButton
+            title="Submit"
+            //width={165}
+            onPress={() => {
+              if (userAnswer !== "") {
+                navigate(ANSWER, {
+                  paramIndex: route.params.paramIndex,
+                  paramUserAnswer: userAnswer,
+                });
+                setUserAnswer("");
+              } else {
+                Alert.alert("Alert", "Please enter an answer :)", [
+                  { text: "OK", onPress: () => console.log("OK Pressed") },
+                ]);
+              }
+            }}
+          ></CustomButton>
+        </View>
+      </ScrollView>
+    );
+  }
 }
 
 export default QuestionComponent;

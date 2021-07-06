@@ -4,7 +4,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { Surface, Title } from "react-native-paper";
-import { HOME_MAIN } from "../../../constants/routeNames";
+import { DECKS, HOME_MAIN } from "../../../constants/routeNames";
 import CustomButton from "../../common/CustomButton";
 import LottieView from "lottie-react-native";
 
@@ -108,8 +108,8 @@ function PostStudyComponent(props) {
           title="Return to home"
           onPress={() =>
             reset({
-              index: 0,
-              routes: [{ name: HOME_MAIN }],
+              index: 1,
+              routes: [{ name: HOME_MAIN }, { name: DECKS }],
             })
           }
         />

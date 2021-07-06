@@ -19,9 +19,9 @@ import {
 import { useSelector } from "react-redux";
 import { QUESTION, VIEWING } from "../../../constants/routeNames";
 import * as Decks from "../../../../store/slices/deckSlice";
-import { Entypo } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
   const theme = useTheme();
@@ -173,6 +173,26 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
               <Text style={{ fontFamily: "PoppinsBold" }}>Add Card</Text>
             </TouchableOpacity>
           </View>
+          <View>
+            <TouchableOpacity
+              style={styles.studyAllButton}
+              onPress={() =>
+                navigate(QUESTION, {
+                  paramIndex: index,
+                  cardIndex: 0,
+                  studyAll: true,
+                })
+              }
+            >
+              <MaterialCommunityIcons
+                name="cards-outline"
+                size={30}
+                color="black"
+                style={{ paddingRight: 4 }}
+              />
+              <Text style={{ fontFamily: "PoppinsBold" }}>Study All Cards</Text>
+            </TouchableOpacity>
+          </View>
         </Card.Content>
       </Card>
       <Divider />
@@ -189,6 +209,17 @@ const styles = StyleSheet.create({
     elevation: 2,
     alignItems: "center",
     justifyContent: "center",
+  },
+  studyAllButton: {
+    height: 50,
+    width: "100%",
+    marginTop: 10,
+    borderRadius: 10,
+    backgroundColor: "#FBF4E2",
+    elevation: 2,
+    alignItems: "center",
+    justifyContent: "center",
+    flexDirection: "row",
   },
   topVector: { top: 5, height: 32, width: 32, position: "absolute" },
   bottomVector: { bottom: 5, height: 32, width: 32, position: "absolute" },

@@ -72,75 +72,154 @@ function AnswerComponent({ route }) {
     );
   }
 
-  return (
-    <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
-      <Surface
-        style={[styles.answer, { backgroundColor: theme.colors.primary }]}
-      >
-        <ScrollView
-          contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+  if (route.params.studyAll) {
+    const curDeck = decks[route.params.paramIndex];
+    const curCard = curDeck.cards[route.params.cardIndex];
+
+    return (
+      <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
+        <Surface
+          style={[styles.answer, { backgroundColor: theme.colors.primary }]}
         >
-          <Text
-            style={[
-              styles.answerText,
-              {
-                color: theme.dark ? theme.colors.onPrimary : "#ffffff",
-                fontFamily: "PoppinsMedium",
-              },
-            ]}
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
           >
-            {studydeck.length === 0
-              ? ""
-              : studydeck[studydeck.length - 1].answer}
-          </Text>
-        </ScrollView>
-      </Surface>
-      <Surface style={styles.userAnswer}>
-        <ScrollView>
-          <Text style={{ fontFamily: "PoppinsMedium" }}>You wrote:</Text>
-          <Text style={{ fontFamily: "PoppinsRegular" }}>
-            {route.params.paramUserAnswer}
-          </Text>
-        </ScrollView>
-      </Surface>
-      <View style={styles.buttonsContainer}>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: theme.colors.primary }]}
-          onPress={() => {
-            dispatch(Decks.popStudydeck(index));
-            {
-              studydeck.length - 1 === 0
-                ? setAllDone(true)
-                : navigate(QUESTION, { paramIndex: index });
-            }
-            console.log("Correct Answer!");
-          }}
+            <Text
+              style={[
+                styles.answerText,
+                {
+                  color: theme.dark ? theme.colors.onPrimary : "#ffffff",
+                  fontFamily: "PoppinsMedium",
+                },
+              ]}
+            >
+              {curCard.answer}
+            </Text>
+          </ScrollView>
+        </Surface>
+        <Surface style={styles.userAnswer}>
+          <ScrollView>
+            <Text style={{ fontFamily: "PoppinsMedium" }}>You wrote:</Text>
+            <Text style={{ fontFamily: "PoppinsRegular" }}>
+              {route.params.paramUserAnswer}
+            </Text>
+          </ScrollView>
+        </Surface>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: theme.colors.primary }]}
+            onPress={() => {
+              {
+                curDeck.cards.length - 1 === route.params.cardIndex
+                  ? setAllDone(true)
+                  : navigate(QUESTION, {
+                      paramIndex: index,
+                      cardIndex: route.params.cardIndex + 1,
+                      studyAll: true,
+                    });
+              }
+              console.log("Correct Answer!");
+            }}
+          >
+            <Icon
+              name="check-outline"
+              color={theme.dark ? theme.colors.onPrimary : "#ffffff"}
+              style={{ alignSelf: "center" }}
+              size={40}
+            ></Icon>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: "#F26C68" }]}
+            onPress={() => {
+              navigate(QUESTION, {
+                paramIndex: index,
+                cardIndex: route.params.cardIndex,
+                studyAll: true,
+              });
+              console.log("Wrong Answer!");
+            }}
+          >
+            <Icon
+              name="close-outline"
+              color={theme.dark ? theme.colors.onPrimary : "#ffffff"}
+              style={{ alignSelf: "center" }}
+              size={40}
+            ></Icon>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  } else {
+    return (
+      <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
+        <Surface
+          style={[styles.answer, { backgroundColor: theme.colors.primary }]}
         >
-          <Icon
-            name="check-outline"
-            color={theme.dark ? theme.colors.onPrimary : "#ffffff"}
-            style={{ alignSelf: "center" }}
-            size={40}
-          ></Icon>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.button, { backgroundColor: "#F26C68" }]}
-          onPress={() => {
-            dispatch(Decks.shiftItemToFrontStudydeck(index));
-            navigate(QUESTION, { paramIndex: index });
-            console.log("Wrong Answer!");
-          }}
-        >
-          <Icon
-            name="close-outline"
-            color={theme.dark ? theme.colors.onPrimary : "#ffffff"}
-            style={{ alignSelf: "center" }}
-            size={40}
-          ></Icon>
-        </TouchableOpacity>
-      </View>
-    </ScrollView>
-  );
+          <ScrollView
+            contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+          >
+            <Text
+              style={[
+                styles.answerText,
+                {
+                  color: theme.dark ? theme.colors.onPrimary : "#ffffff",
+                  fontFamily: "PoppinsMedium",
+                },
+              ]}
+            >
+              {studydeck.length === 0
+                ? ""
+                : studydeck[studydeck.length - 1].answer}
+            </Text>
+          </ScrollView>
+        </Surface>
+        <Surface style={styles.userAnswer}>
+          <ScrollView>
+            <Text style={{ fontFamily: "PoppinsMedium" }}>You wrote:</Text>
+            <Text style={{ fontFamily: "PoppinsRegular" }}>
+              {route.params.paramUserAnswer}
+            </Text>
+          </ScrollView>
+        </Surface>
+        <View style={styles.buttonsContainer}>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: theme.colors.primary }]}
+            onPress={() => {
+              dispatch(Decks.popStudydeck(index));
+              {
+                studydeck.length - 1 === 0
+                  ? setAllDone(true)
+                  : navigate(QUESTION, { paramIndex: index });
+              }
+              console.log("Correct Answer!");
+            }}
+          >
+            <Icon
+              name="check-outline"
+              color={theme.dark ? theme.colors.onPrimary : "#ffffff"}
+              style={{ alignSelf: "center" }}
+              size={40}
+            ></Icon>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={[styles.button, { backgroundColor: "#F26C68" }]}
+            onPress={() => {
+              dispatch(Decks.shiftItemToFrontStudydeck(index));
+              navigate(QUESTION, { paramIndex: index });
+              console.log("Wrong Answer!");
+            }}
+          >
+            <Icon
+              name="close-outline"
+              color={theme.dark ? theme.colors.onPrimary : "#ffffff"}
+              style={{ alignSelf: "center" }}
+              size={40}
+            ></Icon>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    );
+  }
 }
 
 export default AnswerComponent;
