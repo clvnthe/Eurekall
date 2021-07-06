@@ -4,6 +4,7 @@ import Constants from "expo-constants";
 
 import {
   Keyboard,
+  KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
   TouchableWithoutFeedback,
@@ -18,19 +19,20 @@ export default (props, backgroundColor) => {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <ScrollView
           contentContainerStyle={{
-            paddingBottom: "200%",
+            paddingBottom: "50%",
+            flexGrow: 1,
           }}
           //keyboardShouldPersistTaps="always"
           style={{
             paddingTop: Constants.statusBarHeight,
             backgroundColor: { backgroundColor },
-            height: "100%",
+            //height: "100%",
+            //flex: 1,
             ...props.style,
           }}
           {...props}
         >
           <StatusBar style={theme.dark ? "light" : "dark"} />
-
           {props.children}
         </ScrollView>
       </TouchableWithoutFeedback>
@@ -41,7 +43,8 @@ export default (props, backgroundColor) => {
         <SafeAreaView
           style={{
             backgroundColor: { backgroundColor },
-            height: "100%",
+            //height: "100%",
+            flex: 1,
             ...props.style,
           }}
           {...props}
@@ -58,7 +61,7 @@ export default (props, backgroundColor) => {
           style={{
             paddingTop: Constants.statusBarHeight,
             backgroundColor: { backgroundColor },
-            height: "100%",
+            flex: 1,
             ...props.style,
           }}
           {...props}

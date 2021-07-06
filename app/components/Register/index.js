@@ -134,157 +134,182 @@ function RegisterComponent() {
 
   return (
     <Container scrollable backgroundColor={theme.colors.background}>
-      <Image
-        style={styles.logo}
-        source={
-          theme.dark
-            ? require("../../../assets/images/eurekall_whitelogo.png")
-            : require("../../../assets/images/eurekall_logo.png")
-        }
-      ></Image>
-      <Image
-        style={styles.doodle}
-        source={require("../../../assets/images/registerdoodle.png")}
-      ></Image>
-      <Text
-        style={[
-          styles.title,
-          {
-            color: theme.colors.text,
-          },
-        ]}
-      >
-        Register here
-      </Text>
-      <TextInput
-        theme={{ roundness: 20 }}
-        mode="flat"
-        label="Your name"
-        placeholder="Enter your name"
-        style={styles.nameTextInput}
-        value={name}
-        onChangeText={setName}
-        autoCapitalize="words"
-        returnKeyType="next"
-        onSubmitEditing={() => emailTextInput.current.focus()}
-        blurOnSubmit={false}
-        left={
-          <TextInput.Icon
-            name="account"
-            color={name ? theme.colors.primary : theme.colors.text}
-          />
-        }
-        error={isHelperTextVisible ? hasErrors(name) : false}
-      />
-      <HelperText
-        style={styles.nameHelperText}
-        type="error"
-        visible={isHelperTextVisible ? hasErrors(name) : false}
-      >
-        {getNameErrorMessage()}
-      </HelperText>
-      <TextInput
-        ref={emailTextInput}
-        theme={{ roundness: 20 }}
-        mode="flat"
-        label="Email address"
-        placeholder="e.g., abc@xyz.com"
-        keyboardType="email-address"
-        style={styles.emailTextInput}
-        value={email}
-        onChangeText={setEmail}
-        autoCapitalize="none"
-        returnKeyType="next"
-        onSubmitEditing={() => usernameTextInput.current.focus()}
-        blurOnSubmit={false}
-        left={
-          <TextInput.Icon
-            name="at"
-            color={email ? theme.colors.primary : theme.colors.text}
-          />
-        }
-        error={isHelperTextVisible ? emailHasErrors(email) : false}
-      />
-      <HelperText
-        style={styles.emailHelperText}
-        type="error"
-        visible={isHelperTextVisible ? emailHasErrors(email) : false}
-      >
-        {getEmailErrorMessage(email)}
-      </HelperText>
-      <HelperText
-        style={styles.emailHelperText}
-        type="error"
-        visible={!emailHasErrors(email) ? isSignInHelperTextVisible : false}
-      >
-        Email already exists! You can try logging in with this email.
-      </HelperText>
-      <TextInput
-        ref={usernameTextInput}
-        theme={{ roundness: 20 }}
-        mode="flat"
-        label="Username"
-        placeholder="Enter username"
-        style={styles.usernameTextInput}
-        value={username}
-        onChangeText={setUsername}
-        autoCapitalize="none"
-        returnKeyType="next"
-        onSubmitEditing={() => passwordTextInput.current.focus()}
-        blurOnSubmit={false}
-        left={
-          <TextInput.Icon
-            name="face-profile"
-            color={username ? theme.colors.primary : theme.colors.text}
-          />
-        }
-        error={isHelperTextVisible ? hasErrors(username) : false}
-      />
-      <HelperText
-        style={styles.usernameHelperText}
-        type="error"
-        visible={isHelperTextVisible ? hasErrors(username) : false}
-      >
-        {getUsernameErrorMessage()}
-      </HelperText>
-      <TextInput
-        ref={passwordTextInput}
-        theme={{ roundness: 20 }}
-        mode="flat"
-        label="Password"
-        placeholder="Enter password"
-        style={styles.passwordTextInput}
-        value={password}
-        onChangeText={setPassword}
-        left={
-          <TextInput.Icon
-            name="form-textbox-password"
-            color={password ? theme.colors.primary : theme.colors.text}
-          />
-        }
-        secureTextEntry={!isPasswordVisible}
-        autoCapitalize="none"
-        right={
-          <TextInput.Icon
-            name={isPasswordVisible ? "eye-off" : "eye"}
-            onPress={() => setIsPasswordVisible((state) => !state)}
-          />
-        }
-        error={isHelperTextVisible ? passwordHasErrors(password) : false}
-      />
-      <HelperText
-        style={styles.passwordHelperText}
-        visible={hasText(password) ? !isHelperTextVisible : false}
-      >
-        Password requires at least 6 characters.
-      </HelperText>
-      <HelperText
-        style={styles.passwordHelperText}
-        type="error"
-        visible={isHelperTextVisible ? passwordHasErrors(password) : false}
-      >
-        {getPasswordErrorMessage(password)}
-      </HelperText>
+      <View style={styles.logoView}>
+        <Image
+          style={styles.logo}
+          source={
+            theme.dark
+              ? require("../../../assets/images/eurekall_whitelogo_cropped.png")
+              : require("../../../assets/images/eurekall_logo_cropped.png")
+          }
+          resizeMode="contain"
+        ></Image>
+      </View>
+      <View style={styles.titleView}>
+        <Text
+          style={[
+            styles.title,
+            {
+              color: theme.colors.text,
+              fontFamily:
+                Platform.OS === "android"
+                  ? "sans-serif-thin"
+                  : "HelveticaNeue-Thin",
+            },
+          ]}
+        >
+          Register here
+        </Text>
+        <Image
+          style={styles.doodle}
+          source={require("../../../assets/images/registerdoodle.png")}
+        ></Image>
+      </View>
+      <View style={styles.inputView}>
+        <TextInput
+          theme={{ roundness: 20 }}
+          mode="flat"
+          label="Your name"
+          placeholder="Enter your name"
+          style={styles.nameTextInput}
+          value={name}
+          onChangeText={setName}
+          autoCapitalize="words"
+          returnKeyType="next"
+          onSubmitEditing={() => emailTextInput.current.focus()}
+          blurOnSubmit={false}
+          left={
+            <TextInput.Icon
+              name="account"
+              color={name ? theme.colors.primary : theme.colors.text}
+            />
+          }
+          error={isHelperTextVisible ? hasErrors(name) : false}
+        />
+        <HelperText
+          style={styles.nameHelperText}
+          type="error"
+          visible={isHelperTextVisible ? hasErrors(name) : false}
+        >
+          {getNameErrorMessage()}
+        </HelperText>
+        <TextInput
+          ref={emailTextInput}
+          theme={{ roundness: 20 }}
+          mode="flat"
+          label="Email address"
+          placeholder="e.g., abc@xyz.com"
+          keyboardType="email-address"
+          style={styles.emailTextInput}
+          value={email}
+          onChangeText={setEmail}
+          autoCapitalize="none"
+          returnKeyType="next"
+          onSubmitEditing={() => usernameTextInput.current.focus()}
+          blurOnSubmit={false}
+          left={
+            <TextInput.Icon
+              name="at"
+              color={email ? theme.colors.primary : theme.colors.text}
+            />
+          }
+          error={isHelperTextVisible ? emailHasErrors(email) : false}
+        />
+        <View
+          style={{
+            height: "7%",
+            width: "100%",
+          }}
+        >
+          <HelperText
+            style={styles.emailHelperText}
+            type="error"
+            visible={isHelperTextVisible ? emailHasErrors(email) : false}
+          >
+            {getEmailErrorMessage(email)}
+          </HelperText>
+          <HelperText
+            style={styles.emailHelperText}
+            type="error"
+            visible={!emailHasErrors(email) ? isSignInHelperTextVisible : false}
+          >
+            Email already exists!
+          </HelperText>
+        </View>
+        <TextInput
+          ref={usernameTextInput}
+          theme={{ roundness: 20 }}
+          mode="flat"
+          label="Username"
+          placeholder="Enter username"
+          style={styles.usernameTextInput}
+          value={username}
+          onChangeText={setUsername}
+          autoCapitalize="none"
+          returnKeyType="next"
+          onSubmitEditing={() => passwordTextInput.current.focus()}
+          blurOnSubmit={false}
+          left={
+            <TextInput.Icon
+              name="face-profile"
+              color={username ? theme.colors.primary : theme.colors.text}
+            />
+          }
+          error={isHelperTextVisible ? hasErrors(username) : false}
+        />
+        <HelperText
+          style={styles.usernameHelperText}
+          type="error"
+          visible={isHelperTextVisible ? hasErrors(username) : false}
+        >
+          {getUsernameErrorMessage()}
+        </HelperText>
+        <TextInput
+          ref={passwordTextInput}
+          theme={{ roundness: 20 }}
+          mode="flat"
+          label="Password"
+          placeholder="Enter password"
+          style={styles.passwordTextInput}
+          value={password}
+          onChangeText={setPassword}
+          left={
+            <TextInput.Icon
+              name="form-textbox-password"
+              color={password ? theme.colors.primary : theme.colors.text}
+            />
+          }
+          secureTextEntry={!isPasswordVisible}
+          autoCapitalize="none"
+          right={
+            <TextInput.Icon
+              name={isPasswordVisible ? "eye-off" : "eye"}
+              onPress={() => setIsPasswordVisible((state) => !state)}
+            />
+          }
+          error={isHelperTextVisible ? passwordHasErrors(password) : false}
+        />
+        <View
+          style={{
+            height: "7%",
+            width: "100%",
+          }}
+        >
+          <HelperText
+            style={styles.passwordHelperText}
+            visible={hasText(password) ? !isHelperTextVisible : false}
+          >
+            Password requires at least 6 characters.
+          </HelperText>
+          <HelperText
+            style={styles.passwordHelperText}
+            type="error"
+            visible={isHelperTextVisible ? passwordHasErrors(password) : false}
+          >
+            {getPasswordErrorMessage(password)}
+          </HelperText>
+        </View>
+      </View>
       <View style={styles.buttonView}>
         <CustomButton
           title="Sign Up"

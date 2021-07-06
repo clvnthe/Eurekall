@@ -2,15 +2,19 @@ import { ScaledSheet } from "react-native-size-matters";
 
 export default ScaledSheet.create({
   title: {
-    fontSize: "36@s",
-    lineHeight: "38@s",
+    //fontSize: "36@s",
+    //height: "100%",
+    //lineHeight: "38@s",
     padding: "18@s",
   },
+  welcomeHomeView: {
+    marginTop: "-25@s",
+  },
   progressContainer: {
-    top: "20@s",
+    //top: "20@s",
     width: "320@s",
     alignSelf: "center",
-    justifyContent: "center",
+    flex: 1,
   },
   tierView: {
     flexDirection: "row",
@@ -40,9 +44,9 @@ export default ScaledSheet.create({
     alignSelf: "center",
   },
   progressbar: { height: "9@s", borderRadius: "20@s" },
-  decksContainer: { top: "40@s", alignSelf: "center" },
+  decksContainer: { /*top: "40@s",*/ alignSelf: "center" },
   decksSurface: {
-    height: "270@s",
+    height: "250@s",
     width: "310@s",
     elevation: "6@s",
     borderRadius: "20@s",

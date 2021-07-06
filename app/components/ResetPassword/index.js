@@ -42,7 +42,18 @@ function ResetPasswordComponent() {
             : require("../../../assets/images/eurekall_logo.png")
         }
       ></Image>
-      <Text style={[styles.title, { color: theme.colors.text }]}>
+      <Text
+        style={[
+          styles.title,
+          {
+            color: theme.colors.text,
+            fontFamily:
+              Platform.OS === "android"
+                ? "sans-serif-thin"
+                : "HelveticaNeue-Thin",
+          },
+        ]}
+      >
         Please check your email to reset your password!
       </Text>
       <View style={styles.loginButtonView}>

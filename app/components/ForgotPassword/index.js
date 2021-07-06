@@ -86,6 +86,10 @@ function ForgotPasswordComponent() {
           styles.title,
           {
             color: theme.colors.text,
+            fontFamily:
+              Platform.OS === "android"
+                ? "sans-serif-thin"
+                : "HelveticaNeue-Thin",
           },
         ]}
       >

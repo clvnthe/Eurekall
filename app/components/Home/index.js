@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Image, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  TouchableOpacity,
+  View,
+  Dimensions,
+  Platform,
+  PixelRatio,
+} from "react-native";
 import {
   useIsFocused,
   useNavigation,
@@ -32,6 +39,19 @@ if (!firebase.apps.length) {
 }
 const firestore = firebase.firestore();
 const fireauth = firebase.auth();
+
+const { width: SCREEN_WIDTH, height: SCREEN_HEIGHT } = Dimensions.get("window");
+
+const scale = SCREEN_WIDTH / 375;
+
+function normalize(size) {
+  const newSize = size * scale;
+  if (Platform.OS === "ios") {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize));
+  } else {
+    return Math.round(PixelRatio.roundToNearestPixel(newSize)) - 2;
+  }
+}
 
 function HomeComponent(props) {
   const theme = useTheme();
@@ -103,12 +123,19 @@ function HomeComponent(props) {
   }
 
   return (
-    <View>
-      <Title style={styles.title}>
-        <Text style={{ fontFamily: "PoppinsThin" }}>hi </Text>
-        <Text style={{ fontFamily: "PoppinsMedium" }}>{userInfo[1]}</Text>
-        <Text style={{ fontFamily: "PoppinsThin" }}>, welcome home!</Text>
-      </Title>
+    <View style={{ flex: 1 }}>
+      <View style={{ flex: 1 }}>
+        <Title style={[styles.title, { fontSize: normalize(40) }]}>
+          <Text style={{ fontFamily: "PoppinsThin" }}>hi </Text>
+          <Text style={{ fontFamily: "PoppinsMedium" }}>{userInfo[1]}</Text>
+          <Text style={{ fontFamily: "PoppinsThin" }}>,</Text>
+        </Title>
+        <View style={styles.welcomeHomeView}>
+          <Title style={[styles.title, { fontSize: normalize(40) }]}>
+            <Text style={{ fontFamily: "PoppinsThin" }}>welcome home!</Text>
+          </Title>
+        </View>
+      </View>
       <View style={styles.progressContainer}>
         <View style={styles.tierView}>
           <Badge size={50} style={{ backgroundColor: "#c68856" }}>
@@ -140,41 +167,48 @@ function HomeComponent(props) {
           />
         </View>
       </View>
-      <TouchableOpacity
-        onPress={() => navigate(DECKS)}
-        style={styles.decksContainer}
+      <View
+        style={{
+          flex: 3,
+          justifyContent: "center",
+        }}
       >
-        <Surface
-          style={[
-            styles.decksSurface,
-            {
-              backgroundColor: theme.dark ? "#4d4b50" : "#F0FFF0",
-              borderColor: theme.dark ? "#030200" : "#f1f9ec",
-            },
-          ]}
+        <TouchableOpacity
+          onPress={() => navigate(DECKS)}
+          style={styles.decksContainer}
         >
-          <AntDesign
-            name="book"
-            size={50}
-            color={theme.colors.text}
-            style={{ alignSelf: "center" }}
-          />
-          <Text style={[styles.decksText, { color: theme.colors.text }]}>
-            My Decks
-          </Text>
-          <Text
+          <Surface
             style={[
-              styles.decksCaption,
+              styles.decksSurface,
               {
-                color: theme.dark ? "#edeeef" : "#767676",
+                backgroundColor: theme.dark ? "#4d4b50" : "#F0FFF0",
+                borderColor: theme.dark ? "#030200" : "#f1f9ec",
               },
             ]}
           >
-            {numDeckComparator === numOfDecks ? userNumDeck : numOfDecks}{" "}
-            {userNumDeck > 1 ? "decks" : "deck"}
-          </Text>
-        </Surface>
-      </TouchableOpacity>
+            <AntDesign
+              name="book"
+              size={50}
+              color={theme.colors.text}
+              style={{ alignSelf: "center" }}
+            />
+            <Text style={[styles.decksText, { color: theme.colors.text }]}>
+              My Decks
+            </Text>
+            <Text
+              style={[
+                styles.decksCaption,
+                {
+                  color: theme.dark ? "#edeeef" : "#767676",
+                },
+              ]}
+            >
+              {numDeckComparator === numOfDecks ? userNumDeck : numOfDecks}{" "}
+              {userNumDeck > 1 ? "decks" : "deck"}
+            </Text>
+          </Surface>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }

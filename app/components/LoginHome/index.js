@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { Image, View, Text, ImageBackground } from "react-native";
+import { Image, View, Text, ImageBackground, Platform } from "react-native";
 
 import styles from "./styles";
 import Container from "../common/Container";
@@ -16,24 +16,37 @@ function LoginHomeComponent(props) {
     <Container noPadding>
       <ImageBackground
         style={styles.backgroundImage}
-        blurRadius={1}
+        blurRadius={Platform.OS === "android" ? 1 : 10}
         resizeMode="cover"
         source={require("../../../assets/images/loginbackground.png")}
       >
-        <Image
-          style={styles.logo}
-          source={require("../../../assets/images/eurekall_logo.png")}
-        ></Image>
-        <Text style={styles.title}>Start your journey here</Text>
-        <View style={styles.signUpButton}>
+        <View style={styles.logoView}>
+          <Image
+            style={styles.logo}
+            source={require("../../../assets/images/eurekall_logo_cropped.png")}
+            resizeMode="contain"
+          ></Image>
+          <Text
+            style={[
+              styles.title,
+              {
+                fontFamily:
+                  Platform.OS === "android"
+                    ? "sans-serif-thin"
+                    : "HelveticaNeue-Thin",
+              },
+            ]}
+          >
+            Start your journey here
+          </Text>
+        </View>
+        <View style={styles.buttonView}>
           <CustomButton
             bgColor={theme.colors.primary}
             title="Sign Up"
             //width={343}
             onPress={() => navigate(REGISTER)}
           ></CustomButton>
-        </View>
-        <View style={styles.loginButton}>
           <CustomButton
             bgColor={theme.colors.primaryVariant}
             title="Log In"
@@ -41,10 +54,13 @@ function LoginHomeComponent(props) {
             onPress={() => navigate(LOGIN)}
           ></CustomButton>
         </View>
-        <Image
-          style={styles.doodle}
-          source={require("../../../assets/images/loginhomedoodle.png")}
-        ></Image>
+        <View style={styles.doodleView}>
+          <Image
+            style={styles.doodle}
+            source={require("../../../assets/images/loginhomedoodle.png")}
+            resizeMode="contain"
+          ></Image>
+        </View>
       </ImageBackground>
     </Container>
   );

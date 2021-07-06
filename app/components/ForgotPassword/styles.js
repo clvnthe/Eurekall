@@ -21,7 +21,6 @@ export default ScaledSheet.create({
     top: "180@s",
     left: "20@s",
     fontSize: "45@s",
-    fontFamily: "sans-serif-thin",
   },
   emailTextInput: {
     width: "310@s",

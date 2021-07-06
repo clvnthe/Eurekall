@@ -1,17 +1,20 @@
 import { ScaledSheet } from "react-native-size-matters";
 
 export default ScaledSheet.create({
-  doodle: { top: "300@s", width: "275@s", height: "380@s" },
+  doodle: {
+    width: "275@s",
+    top: "15%",
+    flex: 1,
+  },
   title: {
-    fontFamily: "sans-serif-thin",
     fontSize: "39@s",
     textAlign: "center",
-    bottom: "230@s",
+    //bottom: "230@s",
   },
   fab: {
     alignSelf: "flex-end",
-    top: "560@s",
-    right: "17@s",
+    top: "80%",
+    right: "5%",
     elevation: 6,
   },
   modal: {

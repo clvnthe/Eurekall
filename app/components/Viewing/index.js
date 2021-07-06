@@ -137,7 +137,7 @@ function ViewingComponent({ route }) {
   }
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <Portal>
         <Modal
           visible={visible}
@@ -152,36 +152,50 @@ function ViewingComponent({ route }) {
         >
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
         </Modal>
-        <FAB
-          visible={isFocused}
-          style={[
-            styles.fab,
-            {
-              backgroundColor: theme.colors.secondary,
-            },
-          ]}
-          icon="plus"
-          color={theme.colors.onPrimary}
-          onPress={showModal}
-        />
       </Portal>
+      <FAB
+        visible={isFocused}
+        style={[
+          styles.fab,
+          {
+            backgroundColor: theme.colors.secondary,
+          },
+        ]}
+        icon="plus"
+        color={theme.colors.onPrimary}
+        onPress={showModal}
+      />
       {empty ? (
-        <View style={{ flex: 1 }}>
-          <Image
-            source={require("../../../assets/images/emptydoodle.png")}
-            style={styles.doodle}
-          ></Image>
-          <Text
-            style={[
-              styles.title,
-              {
-                color: theme.colors.text,
-                fontFamily: "PoppinsLight",
-              },
-            ]}
+        <View
+          style={{
+            flex: 1,
+          }}
+        >
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            <Text
+              style={[
+                styles.title,
+                {
+                  color: theme.colors.text,
+                  fontFamily: "PoppinsLight",
+                },
+              ]}
+            >
+              Create a card by pressing this button!
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "flex-end",
+            }}
           >
-            Create a card by pressing this button!
-          </Text>
+            <Image
+              source={require("../../../assets/images/emptydoodle_cropped.png")}
+              style={styles.doodle}
+              resizeMode="contain"
+            ></Image>
+          </View>
         </View>
       ) : (
         <FlatList
@@ -196,17 +210,22 @@ function ViewingComponent({ route }) {
 }
 
 const styles = ScaledSheet.create({
-  doodle: { top: "300@s", width: "275@s", height: "380@s" },
+  doodle: {
+    //top: "300@s",
+    width: "275@s",
+    //height: "290@s",
+    top: "15%",
+    flex: 1,
+  },
   title: {
-    fontFamily: "sans-serif-thin",
     fontSize: "39@s",
     textAlign: "center",
-    bottom: "230@s",
+    //bottom: "230@s",
   },
   fab: {
     alignSelf: "flex-end",
-    top: "560@s",
-    right: "17@s",
+    top: "85%",
+    right: "5%",
     elevation: 6,
   },
   modal: {

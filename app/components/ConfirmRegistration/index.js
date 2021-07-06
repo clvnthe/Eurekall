@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/core";
 import React from "react";
-import { Image, View, Text, TouchableOpacity } from "react-native";
+import { Image, View, Text, TouchableOpacity, Platform } from "react-native";
 
 import { LOGIN } from "../../constants/routeNames";
 import CustomButton from "../common/CustomButton";
@@ -70,7 +70,18 @@ function ConfirmRegistrationComponent() {
             : require("../../../assets/images/eurekall_logo.png")
         }
       ></Image>
-      <Text style={[styles.title, { color: theme.colors.text }]}>
+      <Text
+        style={[
+          styles.title,
+          {
+            color: theme.colors.text,
+            fontFamily:
+              Platform.OS === "android"
+                ? "sans-serif-thin"
+                : "HelveticaNeue-Thin",
+          },
+        ]}
+      >
         Please check your email to verify your account!
       </Text>
       <View style={styles.loginButtonView}>

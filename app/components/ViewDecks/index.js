@@ -299,6 +299,7 @@ function DeckComponent(props) {
     <SafeAreaView
       style={{
         backgroundColor: theme.colors.background,
+        flex: 1,
         ...props.style,
       }}
       {...props}
@@ -342,21 +343,31 @@ function DeckComponent(props) {
       </Portal>
       {empty ? (
         <View style={{ flex: 1 }}>
-          <Image
-            source={require("../../../assets/images/emptydoodle.png")}
-            style={styles.doodle}
-          ></Image>
-          <Text
-            style={[
-              styles.title,
-              {
-                color: theme.colors.text,
-                fontFamily: "PoppinsLight",
-              },
-            ]}
+          <View style={{ flex: 1, justifyContent: "center" }}>
+            <Text
+              style={[
+                styles.title,
+                {
+                  color: theme.colors.text,
+                  fontFamily: "PoppinsLight",
+                },
+              ]}
+            >
+              Create a deck by pressing this button!
+            </Text>
+          </View>
+          <View
+            style={{
+              flex: 1,
+              justifyContent: "flex-end",
+            }}
           >
-            Create a deck by pressing this button!
-          </Text>
+            <Image
+              source={require("../../../assets/images/emptydoodle_cropped.png")}
+              style={styles.doodle}
+              resizeMode="contain"
+            ></Image>
+          </View>
         </View>
       ) : (
         <FlatList

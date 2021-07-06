@@ -10,7 +10,7 @@ export default EStyleSheet.create({
     width: "340rem",
   },
   inputContainer: {
-    paddingVertical: 10,
+    //paddingVertical: 10,
     paddingLeft: 10,
     paddingRight: 10,
   },

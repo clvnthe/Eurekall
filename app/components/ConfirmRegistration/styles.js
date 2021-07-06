@@ -21,7 +21,6 @@ export default ScaledSheet.create({
     top: "180@s",
     left: "20@s",
     fontSize: "38@s",
-    fontFamily: "sans-serif-thin",
   },
   loginButtonView: {
     position: "absolute",
