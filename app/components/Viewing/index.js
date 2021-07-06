@@ -1,6 +1,20 @@
 import React, { useState } from "react";
-import { FlatList, SafeAreaView, View, Image, Text } from "react-native";
-import { FAB, Modal, Portal, useTheme } from "react-native-paper";
+import {
+  FlatList,
+  SafeAreaView,
+  View,
+  Image,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import {
+  Avatar,
+  FAB,
+  Modal,
+  Portal,
+  useTheme,
+  Title,
+} from "react-native-paper";
 import FlashCard from "../common/FlashCard";
 import FlashCardForm from "../common/flashcardForm";
 import { useDispatch, useSelector } from "react-redux";
@@ -113,6 +127,12 @@ function ViewingComponent({ route }) {
   };
   const hideModal = () => setVisible(false);
 
+  const [visibleHelp, setVisibleHelp] = React.useState(false);
+  const showHelpModal = () => {
+    setVisibleHelp(true);
+  };
+  const hideHelpModal = () => setVisibleHelp(false);
+
   const renderItem = (flashcard) => (
     <FlashCard
       question={flashcard.item.question}
@@ -140,6 +160,28 @@ function ViewingComponent({ route }) {
     <SafeAreaView style={{ flex: 1 }}>
       <Portal>
         <Modal
+          visible={visibleHelp}
+          onDismiss={hideHelpModal}
+          contentContainerStyle={[
+            styles.modal,
+            {
+              backgroundColor: theme.colors.background,
+              borderColor: theme.colors.surface,
+            },
+          ]}
+        >
+          <Title style={{ fontFamily: "PoppinsBold" }}>Help</Title>
+          <Text
+            style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+          >
+            1) To create a card, press on "+" button on the bottom right.
+            {"\n"}
+            {"\n"}2) To delete a card, press and hold on the card. An alert will
+            appear to prompt you of the deletion. {"\n"}
+            {"\n"}3) To flip a card, simply tap on the card.{"\n"}
+          </Text>
+        </Modal>
+        <Modal
           visible={visible}
           onDismiss={hideModal}
           contentContainerStyle={[
@@ -152,19 +194,24 @@ function ViewingComponent({ route }) {
         >
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
         </Modal>
+        <FAB
+          visible={!visibleHelp && !visible && isFocused}
+          style={[
+            styles.fab,
+            {
+              backgroundColor: theme.colors.secondary,
+            },
+          ]}
+          icon="plus"
+          color={theme.colors.onPrimary}
+          onPress={showModal}
+        />
       </Portal>
-      <FAB
-        visible={isFocused}
-        style={[
-          styles.fab,
-          {
-            backgroundColor: theme.colors.secondary,
-          },
-        ]}
-        icon="plus"
-        color={theme.colors.onPrimary}
-        onPress={showModal}
-      />
+      <View style={styles.helpIconView}>
+        <TouchableOpacity onPress={showHelpModal}>
+          <Avatar.Icon icon="account-question" size={26} />
+        </TouchableOpacity>
+      </View>
       {empty ? (
         <View
           style={{
@@ -210,6 +257,13 @@ function ViewingComponent({ route }) {
 }
 
 const styles = ScaledSheet.create({
+  helpIconView: {
+    height: "5%",
+    alignSelf: "flex-end",
+    justifyContent: "center",
+    marginRight: "5%",
+    marginTop: "2%",
+  },
   doodle: {
     //top: "300@s",
     width: "275@s",
@@ -224,7 +278,7 @@ const styles = ScaledSheet.create({
   },
   fab: {
     alignSelf: "flex-end",
-    top: "85%",
+    top: "80%",
     right: "5%",
     elevation: 6,
   },

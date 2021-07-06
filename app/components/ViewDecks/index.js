@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Portal, Modal, FAB, useTheme } from "react-native-paper";
+import {
+  Portal,
+  Modal,
+  FAB,
+  useTheme,
+  Title,
+  Avatar,
+} from "react-native-paper";
 import ReviewFormComponent from "../common/reviewForm";
 import FlashCardForm from "../common/flashcardForm";
 import CustomCard from "../common/CustomCard";
@@ -10,6 +17,7 @@ import {
   View,
   Image,
   RefreshControl,
+  TouchableOpacity,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Decks from "../../../store/slices/deckSlice";
@@ -164,6 +172,12 @@ function DeckComponent(props) {
   };
   const hideAddCardModal = () => setVisibleAddCardModal(false);
 
+  const [visibleHelp, setVisibleHelp] = React.useState(false);
+  const showHelpModal = () => {
+    setVisibleHelp(true);
+  };
+  const hideHelpModal = () => setVisibleHelp(false);
+
   const dateComparator = (inputDate) => {
     const currentDateTemp =
       String(new Date().getFullYear()) +
@@ -306,6 +320,35 @@ function DeckComponent(props) {
     >
       <Portal>
         <Modal
+          visible={visibleHelp}
+          onDismiss={hideHelpModal}
+          contentContainerStyle={[
+            styles.modal,
+            {
+              backgroundColor: theme.colors.background,
+              borderColor: theme.colors.surface,
+            },
+          ]}
+        >
+          <Title style={{ fontFamily: "PoppinsBold" }}>Help</Title>
+          <Text
+            style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+          >
+            1) To create a deck, press on the "+" button on the bottom right.
+            {"\n"}
+            {"\n"}2) To delete a deck, press on the "⋮" icon on the top right of
+            that deck. A "delete deck" button will appear. Press on that button
+            to proceed with the deletion of the deck. {"\n"}
+            {"\n"}3) To study your cards, press on the left button titled
+            "Study". An alert will appear if there are currently no cards to be
+            studied.{"\n"}
+            {"\n"}4) To view cards in your deck, press on the middle button
+            titled "View".{"\n"}
+            {"\n"}5) To add a card to your deck, press on the right button
+            titled "Add Card".{"\n"}
+          </Text>
+        </Modal>
+        <Modal
           visible={visible}
           onDismiss={hideModal}
           style={{
@@ -334,13 +377,20 @@ function DeckComponent(props) {
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
         </Modal>
         <FAB
-          visible={isFocused}
+          visible={
+            !visibleHelp && !visible && !visibleAddCardModal && isFocused
+          }
           style={[styles.fab, { backgroundColor: theme.colors.secondary }]}
           icon="plus"
           color={theme.colors.onPrimary}
           onPress={showModal}
         />
       </Portal>
+      <View style={styles.helpIconView}>
+        <TouchableOpacity onPress={showHelpModal}>
+          <Avatar.Icon icon="account-question" size={26} />
+        </TouchableOpacity>
+      </View>
       {empty ? (
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1, justifyContent: "center" }}>

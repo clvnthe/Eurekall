@@ -1,6 +1,13 @@
 import { ScaledSheet } from "react-native-size-matters";
 
 export default ScaledSheet.create({
+  helpIconView: {
+    height: "5%",
+    alignSelf: "flex-end",
+    justifyContent: "center",
+    marginRight: "5%",
+    marginTop: "2%",
+  },
   doodle: {
     width: "275@s",
     top: "15%",

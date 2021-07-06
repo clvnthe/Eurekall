@@ -18,6 +18,7 @@ import CustomButton from "../common/CustomButton";
 import firebase from "firebase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { useFonts } from "expo-font";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -238,6 +239,20 @@ function EditProfileComponent(props) {
     </View>
   );
 
+  const [loaded] = useFonts({
+    MontserratLight: require("../../../assets/fonts/Montserrat-Light.ttf"),
+    MontserratBold: require("../../../assets/fonts/Montserrat-Bold.ttf"),
+    PoppinsMedium: require("../../../assets/fonts/Poppins-Medium.ttf"),
+    PoppinsBold: require("../../../assets/fonts/Poppins-Bold.ttf"),
+    PoppinsLight: require("../../../assets/fonts/Poppins-Light.ttf"),
+    PoppinsThin: require("../../../assets/fonts/Poppins-Thin.ttf"),
+    PoppinsRegular: require("../../../assets/fonts/Poppins-Regular.ttf"),
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <Container noPadding>
       <BottomSheet
@@ -312,47 +327,67 @@ function EditProfileComponent(props) {
             </TouchableOpacity>
           </View>
           <Divider></Divider>
-          <Title style={{ textAlign: "center" }}>Personal info</Title>
-          <Text style={{ color: "grey", padding: 10 }}>
+          <Title style={{ alignSelf: "center", fontFamily: "PoppinsBold" }}>
             Account Information
+          </Title>
+          <Text
+            style={{
+              color: "grey",
+              paddingBottom: 10,
+              fontFamily: "PoppinsMedium",
+              textDecorationLine: "underline",
+            }}
+          >
+            General
           </Text>
-          <TextInput
-            theme={{ roundness: 20 }}
-            mode="flat"
-            defaultValue={userInfo[1]}
-            onChangeText={setName}
-            placeholder="Name"
+          <View
             style={{
-              width: 336,
-              alignSelf: "center",
+              height: "40%",
             }}
-            autoCapitalize="none"
-            left={
-              <TextInput.Icon
-                name="account"
-                color={true ? theme.colors.primary : theme.colors.text}
+          >
+            <View style={{ height: "50%" }}>
+              <Text style={{ fontFamily: "PoppinsRegular" }}>Name</Text>
+              <TextInput
+                theme={{ roundness: 20 }}
+                mode="flat"
+                defaultValue={userInfo[1]}
+                onChangeText={setName}
+                placeholder="Name"
+                style={{
+                  width: 336,
+                  alignSelf: "center",
+                }}
+                autoCapitalize="none"
+                left={
+                  <TextInput.Icon
+                    name="account"
+                    color={true ? theme.colors.primary : theme.colors.text}
+                  />
+                }
               />
-            }
-          />
-          <TextInput
-            theme={{ roundness: 20 }}
-            mode="flat"
-            defaultValue={userInfo[2]}
-            onChangeText={setUsername}
-            placeholder="Username"
-            style={{
-              width: 336,
-              marginTop: 10,
-              alignSelf: "center",
-            }}
-            autoCapitalize="none"
-            left={
-              <TextInput.Icon
-                name="face-profile"
-                color={true ? theme.colors.primary : theme.colors.text}
+            </View>
+            <View style={{ height: "50%" }}>
+              <Text style={{ fontFamily: "PoppinsRegular" }}>Username</Text>
+              <TextInput
+                theme={{ roundness: 20 }}
+                mode="flat"
+                defaultValue={userInfo[2]}
+                onChangeText={setUsername}
+                placeholder="Username"
+                style={{
+                  width: 336,
+                  alignSelf: "center",
+                }}
+                autoCapitalize="none"
+                left={
+                  <TextInput.Icon
+                    name="face-profile"
+                    color={true ? theme.colors.primary : theme.colors.text}
+                  />
+                }
               />
-            }
-          />
+            </View>
+          </View>
           <View style={{ alignItems: "center" }}>
             <CustomButton
               title="Submit changes"
