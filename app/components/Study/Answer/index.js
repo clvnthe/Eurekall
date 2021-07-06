@@ -5,7 +5,7 @@ import { Surface, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useDispatch, useSelector } from "react-redux";
 import * as Decks from "../../../../store/slices/deckSlice";
-import { DECKS, QUESTION } from "../../../constants/routeNames";
+import { POST_STUDY, QUESTION } from "../../../constants/routeNames";
 import Constants from "expo-constants";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { useFonts } from "expo-font";
@@ -18,6 +18,7 @@ function AnswerComponent({ route }) {
   const [studydeck, setStudydeck] = React.useState([""]);
   const [allDone, setAllDone] = React.useState(false);
   const { navigate } = useNavigation();
+  const { reset } = useNavigation();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -36,8 +37,14 @@ function AnswerComponent({ route }) {
   //for animation
   useEffect(() => {
     setTimeout(
-      () => (allDone ? navigate(DECKS) : console.log("allDone is false")),
-      3000
+      () =>
+        allDone
+          ? reset({
+              index: 0,
+              routes: [{ name: POST_STUDY }],
+            })
+          : console.log("allDone is false"),
+      1000
     );
   }, [allDone]);
 
@@ -58,7 +65,7 @@ function AnswerComponent({ route }) {
   if (allDone) {
     return (
       <LottieView
-        source={require("../../../../assets/lottieAnimations/676-done.json")}
+        source={require("../../../../assets/lottieAnimations/1798-check-animation.json")}
         autoPlay
         loop={false}
       />

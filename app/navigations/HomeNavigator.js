@@ -6,6 +6,7 @@ import {
   ANSWER,
   DECKS,
   HOME_MAIN,
+  POST_STUDY,
   QUESTION,
   STUDY_NAVIGATOR,
   VIEWING,
@@ -15,6 +16,7 @@ import ViewScreen from "../screens/Home/ViewScreen";
 import DeckScreen from "../screens/Home/DeckScreen";
 import QuestionScreen from "../screens/Home/StudyScreens/QuestionScreen";
 import AnswerScreen from "../screens/Home/StudyScreens/AnswerScreen";
+import PostStudyScreen from "../screens/Home/StudyScreens/PostStudyScreen";
 
 const HomeNavigator = () => {
   const HomeStack = createStackNavigator();
@@ -51,6 +53,11 @@ const HomeNavigator = () => {
         name={ANSWER}
         component={AnswerScreen}
         options={{ headerTitle: "Answer" }}
+      ></HomeStack.Screen>
+      <HomeStack.Screen
+        name={POST_STUDY}
+        component={PostStudyScreen}
+        options={{ headerTitle: "Stats" }}
       ></HomeStack.Screen>
       <HomeStack.Screen
         name={VIEWING}
