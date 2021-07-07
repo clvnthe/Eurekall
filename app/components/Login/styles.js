@@ -56,8 +56,12 @@ export default ScaledSheet.create({
     //top: "410@s",
     //position: "absolute",
   },
+  passwordHelperTextView: {
+    width: "310@s",
+    height: "100@s",
+  },
   passwordHelperText: {
-    //position: "absolute",
+    position: "absolute",
     //top: "470@s",
     //left: "9@s",
     alignSelf: "flex-start",

@@ -27,6 +27,7 @@ import * as Decks from "../../../store/slices/deckSlice";
 import { useFonts } from "expo-font";
 import firebase from "firebase";
 import { ScaledSheet } from "react-native-size-matters";
+import { LinearGradient } from "expo-linear-gradient";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -147,6 +148,12 @@ function ViewingComponent({ route }) {
   };
   const hideModal = () => setVisible(false);
 
+  const [visibleInformation, setVisibleInformation] = React.useState(false);
+  const showInformationModal = () => {
+    setVisibleInformation(true);
+  };
+  const hideInformationModal = () => setVisibleInformation(false);
+
   const [visibleHelp, setVisibleHelp] = React.useState(false);
   const showHelpModal = () => {
     setVisibleHelp(true);
@@ -183,6 +190,56 @@ function ViewingComponent({ route }) {
     >
       <Portal>
         <Modal
+          visible={visibleInformation}
+          onDismiss={hideInformationModal}
+          contentContainerStyle={[
+            styles.modal,
+            {
+              backgroundColor: theme.colors.background,
+              borderColor: theme.colors.surface,
+              alignItems: "center",
+            },
+          ]}
+        >
+          <Title style={{ fontFamily: "PoppinsBold" }}>Card Colours</Title>
+          <Text
+            style={{
+              fontFamily: "PoppinsRegular",
+              color: theme.colors.text,
+            }}
+          >
+            Box Type 1:
+          </Text>
+          <View style={[styles.boxShape, { backgroundColor: "#CCCFBC" }]} />
+          <Text
+            style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+          >
+            Box Type 2:
+          </Text>
+          <View style={[styles.boxShape, { backgroundColor: "#ff9f68" }]} />
+          <Text
+            style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+          >
+            Box Type 3:
+          </Text>
+          <View style={[styles.boxShape, { backgroundColor: "#FF7F7F" }]} />
+          <Text
+            style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+          >
+            Box Type 4:
+          </Text>
+          <View style={[styles.boxShape, { backgroundColor: "#96f7d2" }]} />
+          <Text
+            style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+          >
+            Box Type 5:
+          </Text>
+          <LinearGradient
+            style={styles.boxShape}
+            colors={["#86E3CE", "#D0E6A5", "#FFDD94", "#FA897B", "#CCABD8"]}
+          />
+        </Modal>
+        <Modal
           visible={visibleHelp}
           onDismiss={hideHelpModal}
           contentContainerStyle={[
@@ -218,7 +275,13 @@ function ViewingComponent({ route }) {
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
         </Modal>
         <FAB
-          visible={!keyboardIsActive && !visibleHelp && !visible && isFocused}
+          visible={
+            !visibleInformation &&
+            !keyboardIsActive &&
+            !visibleHelp &&
+            !visible &&
+            isFocused
+          }
           style={[
             styles.fab,
             {
@@ -231,7 +294,7 @@ function ViewingComponent({ route }) {
         />
       </Portal>
       <View style={styles.helpIconView}>
-        <View style={{ flex: 1, justifyContent: "center" }}>
+        <View style={styles.searchbarView}>
           <Searchbar
             placeholder="Search"
             onChangeText={onChangeSearch}
@@ -241,6 +304,12 @@ function ViewingComponent({ route }) {
             onBlur={() => setKeyboardIsActive(false)}
           ></Searchbar>
         </View>
+        <TouchableOpacity
+          onPress={showInformationModal}
+          style={{ justifyContent: "center" }}
+        >
+          <Avatar.Icon icon="information-variant" size={26} />
+        </TouchableOpacity>
         <TouchableOpacity
           onPress={showHelpModal}
           style={{ justifyContent: "center" }}
@@ -296,17 +365,26 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 const styles = ScaledSheet.create({
+  searchbarView: {
+    height: (windowHeight * 7) / 100,
+    width: windowWidth * 0.78,
+    justifyContent: "center",
+  },
   helpIconView: {
     height: (windowHeight * 7) / 100,
     width: (windowWidth * 95) / 100,
     alignSelf: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-around",
     marginTop: (windowHeight * 2) / 100,
     flexDirection: "row",
   },
   searchbar: {
-    width: windowWidth * 0.85,
+    width: windowWidth * 0.78,
     height: windowHeight * 0.05,
+  },
+  boxShape: {
+    width: windowWidth * 0.8,
+    height: windowHeight * 0.1,
   },
   doodle: {
     width: (windowWidth * 70) / 100,

@@ -348,18 +348,21 @@ function DeckComponent(props) {
           <Text
             style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
           >
-            1) To create a deck, press on the "+" button on the bottom right.
+            1) To create a deck, press on the "+" button located on the bottom
+            right.
             {"\n"}
-            {"\n"}2) To delete a deck, press on the "⋮" icon on the top right of
-            that deck. A "delete deck" button will appear. Press on that button
-            to proceed with the deletion of the deck. {"\n"}
-            {"\n"}3) To study your cards, press on the left button titled
-            "Study". An alert will appear if there are currently no cards to be
-            studied.{"\n"}
-            {"\n"}4) To view cards in your deck, press on the middle button
-            titled "View".{"\n"}
-            {"\n"}5) To add a card to your deck, press on the right button
-            titled "Add Card".{"\n"}
+            {"\n"}2) To delete a deck, press on the "⋮" icon located on the top
+            right of that deck. A "delete deck" button will appear. Press on
+            that button to proceed with the deletion of the deck. {"\n"}
+            {"\n"}3) To study your cards, press on the left button of that deck
+            titled "Study". An alert will appear if there are currently no cards
+            to be studied.{"\n"}
+            {"\n"}4) To view cards in your deck, press on the middle button of
+            that deck titled "View".{"\n"}
+            {"\n"}5) To add a card to your deck, press on the right button of
+            that deck titled "Add Card".{"\n"}
+            {"\n"}6) To study all the cards in a deck, press on the bottom
+            button titled "Study All Cards" of that deck.{"\n"}
           </Text>
         </Modal>
         <Modal

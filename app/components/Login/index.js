@@ -177,25 +177,27 @@ function LoginComponent(props) {
           }
           error={isHelperTextVisible ? passwordHasErrors(password) : false}
         />
-        <HelperText
-          style={styles.passwordHelperText}
-          type="error"
-          visible={isHelperTextVisible ? passwordHasErrors(password) : false}
-        >
-          {getPasswordErrorMessage(password)}
-        </HelperText>
-        <HelperText
-          style={styles.passwordHelperText}
-          type="error"
-          visible={
-            !emailHasErrors(email) && !passwordHasErrors(password)
-              ? isSignInHelperTextVisible
-              : false
-          }
-        >
-          Please enter a correct email and password. Note that both fields may
-          be case-sensitive.
-        </HelperText>
+        <View style={styles.passwordHelperTextView}>
+          <HelperText
+            style={styles.passwordHelperText}
+            type="error"
+            visible={isHelperTextVisible ? passwordHasErrors(password) : false}
+          >
+            {getPasswordErrorMessage(password)}
+          </HelperText>
+          <HelperText
+            style={styles.passwordHelperText}
+            type="error"
+            visible={
+              !emailHasErrors(email) && !passwordHasErrors(password)
+                ? isSignInHelperTextVisible
+                : false
+            }
+          >
+            Please enter a correct email and password. Note that both fields may
+            be case-sensitive.
+          </HelperText>
+        </View>
       </View>
       <View style={styles.loginButtonView}>
         <CustomButton
