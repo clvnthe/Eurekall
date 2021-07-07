@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
   SafeAreaView,
@@ -14,6 +14,7 @@ import {
   Portal,
   useTheme,
   Title,
+  Searchbar,
 } from "react-native-paper";
 import FlashCard from "../common/FlashCard";
 import FlashCardForm from "../common/flashcardForm";
@@ -48,11 +49,29 @@ function ViewingComponent({ route }) {
   const index = route.params.paramIndex;
 
   const decks = useSelector(Decks.getDecks);
+  const [filteredCards, setFilteredCards] = useState([]);
   const [empty, setEmpty] = useState(!decks[index].cards.length);
+
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [keyboardIsActive, setKeyboardIsActive] = useState(false);
+  const onChangeSearch = (query) => setSearchQuery(query);
 
   const theme = useTheme();
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setFilteredCards(
+      decks[index].cards.filter((card) =>
+        card.question.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [searchQuery]);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setRefreshBoolean(() => !refreshBoolean);
+  };
 
   const createCardDatabase = async (
     question,
@@ -137,6 +156,7 @@ function ViewingComponent({ route }) {
     <FlashCard
       question={flashcard.item.question}
       answer={flashcard.item.answer}
+      boxType={flashcard.item.boxType}
       id={flashcard.item.id}
       deleteCard={deleteFlashcardHandler}
     />
@@ -208,7 +228,20 @@ function ViewingComponent({ route }) {
         />
       </Portal>
       <View style={styles.helpIconView}>
-        <TouchableOpacity onPress={showHelpModal}>
+        <View style={{ flex: 1, justifyContent: "center" }}>
+          <Searchbar
+            placeholder="Search"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+            style={{ width: 280, height: 30 }}
+            onFocus={() => setKeyboardIsActive(true)}
+            onBlur={() => setKeyboardIsActive(false)}
+          ></Searchbar>
+        </View>
+        <TouchableOpacity
+          onPress={showHelpModal}
+          style={{ justifyContent: "center" }}
+        >
           <Avatar.Icon icon="account-question" size={26} />
         </TouchableOpacity>
       </View>
@@ -246,7 +279,7 @@ function ViewingComponent({ route }) {
         </View>
       ) : (
         <FlatList
-          data={decks[index].cards}
+          data={searchQuery === "" ? decks[index].cards : filteredCards}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={styles.footer} />}
@@ -258,11 +291,12 @@ function ViewingComponent({ route }) {
 
 const styles = ScaledSheet.create({
   helpIconView: {
-    height: "5%",
-    alignSelf: "flex-end",
-    justifyContent: "center",
-    marginRight: "5%",
+    height: "7%",
+    width: "90%",
+    alignSelf: "center",
+    justifyContent: "space-between",
     marginTop: "2%",
+    flexDirection: "row",
   },
   doodle: {
     //top: "300@s",

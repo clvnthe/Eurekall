@@ -6,6 +6,7 @@ import {
   useTheme,
   Title,
   Avatar,
+  Searchbar,
 } from "react-native-paper";
 import ReviewFormComponent from "../common/reviewForm";
 import FlashCardForm from "../common/flashcardForm";
@@ -49,10 +50,22 @@ const fireauth = firebase.auth();
 function DeckComponent(props) {
   const dispatch = useDispatch();
   const decks = useSelector(Decks.getDecks);
+  const [filteredDecks, setFilteredDecks] = useState([]);
   const [empty, setEmpty] = useState(!decks.length);
   const [index, setIndex] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const [refreshBoolean, setRefreshBoolean] = useState(false);
+  const [searchQuery, setSearchQuery] = React.useState("");
+  const [keyboardIsActive, setKeyboardIsActive] = useState(false);
+  const onChangeSearch = (query) => setSearchQuery(query);
+
+  useEffect(() => {
+    setFilteredDecks(
+      decks.filter((deck) =>
+        deck.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [searchQuery]);
 
   const onRefresh = () => {
     setRefreshing(true);
@@ -378,7 +391,11 @@ function DeckComponent(props) {
         </Modal>
         <FAB
           visible={
-            !visibleHelp && !visible && !visibleAddCardModal && isFocused
+            !keyboardIsActive &&
+            !visibleHelp &&
+            !visible &&
+            !visibleAddCardModal &&
+            isFocused
           }
           style={[styles.fab, { backgroundColor: theme.colors.secondary }]}
           icon="plus"
@@ -387,7 +404,20 @@ function DeckComponent(props) {
         />
       </Portal>
       <View style={styles.helpIconView}>
-        <TouchableOpacity onPress={showHelpModal}>
+        <View style={{ flex: 1, justifyContent: "center" }}>
+          <Searchbar
+            placeholder="Search"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+            style={{ width: 300, height: 30 }}
+            onFocus={() => setKeyboardIsActive(true)}
+            onBlur={() => setKeyboardIsActive(false)}
+          ></Searchbar>
+        </View>
+        <TouchableOpacity
+          onPress={showHelpModal}
+          style={{ justifyContent: "center" }}
+        >
           <Avatar.Icon icon="account-question" size={26} />
         </TouchableOpacity>
       </View>
@@ -421,7 +451,7 @@ function DeckComponent(props) {
         </View>
       ) : (
         <FlatList
-          data={decks}
+          data={searchQuery === "" ? decks : filteredDecks}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           ListFooterComponent={<View style={styles.footer} />}

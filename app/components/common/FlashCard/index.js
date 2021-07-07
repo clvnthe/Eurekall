@@ -5,6 +5,7 @@ import { Text } from "react-native";
 import { View as MotiView, AnimatePresence, useAnimationState } from "moti";
 import { useFonts } from "expo-font";
 import EStyleSheet from "react-native-extended-stylesheet";
+import { LinearGradient } from "expo-linear-gradient";
 
 function Shape({ bg, words, isFront, state }) {
   const [loaded] = useFonts({
@@ -44,16 +45,35 @@ function Shape({ bg, words, isFront, state }) {
         type: "timing",
         duration: 300,
       }}
-      style={[styles.shape, { backgroundColor: bg }]}
     >
-      <Text style={styles.QA}>{isFront ? "Q." : "A."}</Text>
-      <Text style={styles.cardText}>{words}</Text>
+      <LinearGradient
+        style={styles.shape}
+        colors={bg.length === 5 ? bg : [bg, bg]}
+      >
+        <Text style={styles.QA}>{isFront ? "Q." : "A."}</Text>
+        <Text style={styles.cardText}>{words}</Text>
+      </LinearGradient>
     </MotiView>
   );
 }
 
-function FlipCard({ front, back, deleteCard, id }) {
+function FlipCard({ front, back, deleteCard, id, boxType }) {
   const [visible, toggle] = React.useReducer((s) => !s, true);
+
+  const determineBgColour = (boxType) => {
+    console.log("hi");
+    if (boxType === 0 || boxType === 1) {
+      return "#CCCFBC";
+    } else if (boxType === 2) {
+      return "#ff9f68";
+    } else if (boxType === 3) {
+      return "#FF7F7F";
+    } else if (boxType === 4) {
+      return "#96f7d2";
+    } else {
+      return ["#86E3CE", "#D0E6A5", "#FFDD94", "#FA897B", "#CCABD8"];
+    }
+  };
   const determineHeight = () => {
     if (front.length > back.length) {
       if (front.length < 110) {
@@ -115,10 +135,10 @@ function FlipCard({ front, back, deleteCard, id }) {
         <AnimatePresence exitBeforeEnter>
           {visible && (
             <Shape
-              bg="#CCCFBC"
+              bg={determineBgColour(boxType)}
               words={front}
               isFront={true}
-              key="#CCCFBC"
+              key={determineBgColour(boxType)}
               state={animationState}
             />
           )}
@@ -136,7 +156,7 @@ function FlipCard({ front, back, deleteCard, id }) {
   );
 }
 
-function FlashCard({ id, question, answer, deleteCard }) {
+function FlashCard({ id, question, answer, deleteCard, boxType }) {
   return (
     <View>
       <FlipCard
@@ -144,6 +164,7 @@ function FlashCard({ id, question, answer, deleteCard }) {
         back={answer}
         deleteCard={deleteCard}
         id={id}
+        boxType={boxType}
       />
       <Divider />
     </View>
