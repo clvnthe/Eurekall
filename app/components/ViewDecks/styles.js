@@ -1,17 +1,26 @@
+import { Dimensions } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 
 export default ScaledSheet.create({
   helpIconView: {
-    height: "7%",
-    width: "95%",
+    height: (windowHeight * 7) / 100,
+    width: (windowWidth * 95) / 100,
     alignSelf: "center",
     justifyContent: "space-between",
-    marginTop: "2%",
+    marginTop: (windowHeight * 2) / 100,
     flexDirection: "row",
   },
+  searchbar: {
+    width: windowWidth * 0.85,
+    height: windowHeight * 0.05,
+  },
   doodle: {
-    width: "275@s",
-    top: "15%",
+    width: (windowWidth * 70) / 100,
+    bottom: (windowHeight * 8) / 100,
+    marginLeft: (windowWidth * 8) / 100,
     flex: 1,
   },
   title: {
@@ -21,8 +30,8 @@ export default ScaledSheet.create({
   },
   fab: {
     alignSelf: "flex-end",
-    top: "80%",
-    right: "5%",
+    top: windowHeight * 0.82,
+    right: windowWidth * 0.05,
     elevation: 6,
   },
   modal: {
@@ -38,6 +47,6 @@ export default ScaledSheet.create({
     elevation: "24@s",
   },
   footer: {
-    height: "130@s",
+    height: windowHeight * 0.45,
   },
 });

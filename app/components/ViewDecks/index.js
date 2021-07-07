@@ -19,6 +19,7 @@ import {
   Image,
   RefreshControl,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Decks from "../../../store/slices/deckSlice";
@@ -326,7 +327,7 @@ function DeckComponent(props) {
     <SafeAreaView
       style={{
         backgroundColor: theme.colors.background,
-        flex: 1,
+        minHeight: Math.round(Dimensions.get("window").height),
         ...props.style,
       }}
       {...props}
@@ -409,7 +410,7 @@ function DeckComponent(props) {
             placeholder="Search"
             onChangeText={onChangeSearch}
             value={searchQuery}
-            style={{ width: 300, height: 30 }}
+            style={styles.searchbar}
             onFocus={() => setKeyboardIsActive(true)}
             onBlur={() => setKeyboardIsActive(false)}
           ></Searchbar>

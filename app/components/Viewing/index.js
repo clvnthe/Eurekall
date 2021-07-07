@@ -6,6 +6,7 @@ import {
   Image,
   Text,
   TouchableOpacity,
+  Dimensions,
 } from "react-native";
 import {
   Avatar,
@@ -177,7 +178,9 @@ function ViewingComponent({ route }) {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView
+      style={{ minHeight: Math.round(Dimensions.get("window").height) }}
+    >
       <Portal>
         <Modal
           visible={visibleHelp}
@@ -233,7 +236,7 @@ function ViewingComponent({ route }) {
             placeholder="Search"
             onChangeText={onChangeSearch}
             value={searchQuery}
-            style={{ width: 280, height: 30 }}
+            style={styles.searchbar}
             onFocus={() => setKeyboardIsActive(true)}
             onBlur={() => setKeyboardIsActive(false)}
           ></Searchbar>
@@ -289,20 +292,26 @@ function ViewingComponent({ route }) {
   );
 }
 
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
+
 const styles = ScaledSheet.create({
   helpIconView: {
-    height: "7%",
-    width: "90%",
+    height: (windowHeight * 7) / 100,
+    width: (windowWidth * 95) / 100,
     alignSelf: "center",
     justifyContent: "space-between",
-    marginTop: "2%",
+    marginTop: (windowHeight * 2) / 100,
     flexDirection: "row",
   },
+  searchbar: {
+    width: windowWidth * 0.85,
+    height: windowHeight * 0.05,
+  },
   doodle: {
-    //top: "300@s",
-    width: "275@s",
-    //height: "290@s",
-    top: "15%",
+    width: (windowWidth * 70) / 100,
+    bottom: (windowHeight * 8) / 100,
+    marginLeft: (windowWidth * 8) / 100,
     flex: 1,
   },
   title: {
@@ -329,7 +338,7 @@ const styles = ScaledSheet.create({
     elevation: "24@s",
   },
   footer: {
-    height: "130@s",
+    height: windowHeight * 0.45,
   },
 });
 
