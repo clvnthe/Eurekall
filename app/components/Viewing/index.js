@@ -215,7 +215,7 @@ function ViewingComponent({ route }) {
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
         </Modal>
         <FAB
-          visible={!visibleHelp && !visible && isFocused}
+          visible={!keyboardIsActive && !visibleHelp && !visible && isFocused}
           style={[
             styles.fab,
             {
