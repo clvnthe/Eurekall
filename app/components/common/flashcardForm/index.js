@@ -40,7 +40,7 @@ function FlashCardForm({ createFlashcardHandler }) {
               label="Flashcard Answer"
               multiline={true}
               numberOfLines={10}
-              keyboardType="visible-password"
+              maxLength={500}
               textAlignVertical="top"
               style={{
                 maxHeight: 300,
@@ -51,6 +51,11 @@ function FlashCardForm({ createFlashcardHandler }) {
               onChangeText={props.handleChange("answer")}
               value={props.values.answer}
               left={<TextInput.Icon name="alpha-a-box" />}
+              right={
+                <TextInput.Affix
+                  text={props.values.answer.trim().length + "/500"}
+                />
+              }
             ></TextInput>
             <View
               style={{

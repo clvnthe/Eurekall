@@ -24,30 +24,16 @@ function Shape({ bg, words, isFront, state }) {
   return (
     <MotiView
       state={state}
-      from={{
-        opacity: 1,
-        rotateY: "-90deg",
-      }}
-      animate={{
-        opacity: 1,
-        rotateY: "0deg",
-      }}
-      exit={{
-        opacity: 1,
-        rotateY: "90deg",
-        perspective: 1000,
-      }}
-      transition={{
-        type: "timing",
-        duration: 300,
-      }}
-      exitTransition={{
-        type: "timing",
-        duration: 300,
-      }}
+      exitTransition={{ type: "timing" }}
+      exit={{ opacity: 0, scale: 0.3 }}
     >
       <LinearGradient
-        style={styles.shape}
+        style={[
+          styles.shape,
+          {
+            transform: [!isFront ? { rotateY: "180deg" } : { rotateY: "0deg" }],
+          },
+        ]}
         colors={bg.length === 5 ? bg : [bg, bg]}
       >
         <Text style={styles.QA}>{isFront ? "Q." : "A."}</Text>
@@ -59,9 +45,9 @@ function Shape({ bg, words, isFront, state }) {
 
 function FlipCard({ front, back, deleteCard, id, boxType }) {
   const [visible, toggle] = React.useReducer((s) => !s, true);
+  const [isDeleted, setIsDeleted] = React.useState(false);
 
   const determineBgColour = (boxType) => {
-    console.log("hi");
     if (boxType === 0 || boxType === 1) {
       return "#CCCFBC";
     } else if (boxType === 2) {
@@ -74,37 +60,34 @@ function FlipCard({ front, back, deleteCard, id, boxType }) {
       return ["#86E3CE", "#D0E6A5", "#FFDD94", "#FA897B", "#CCABD8"];
     }
   };
-  const determineHeight = () => {
-    if (front.length > back.length) {
-      if (front.length < 110) {
-        return 150;
-      } else {
-        return front.length * 1.5;
-      }
-    } else {
-      if (back.length < 110) {
-        return 150;
-      } else {
-        return back.length * 1.5;
-      }
-    }
-  };
 
-  //for deletion animation
-  const animationState = useAnimationState({
+  const flipState = useAnimationState({
     from: {
-      opacity: 0,
-      translateX: -400,
+      opacity: 1,
+      rotateY: "180deg",
     },
     to: {
       opacity: 1,
-      translateX: 0,
+      rotateY: "0deg",
+    },
+    exit: {
+      opacity: 0,
+      translateX: -400,
     },
   });
 
   return (
     <TouchableOpacity
-      onPress={toggle}
+      onPress={() => {
+        toggle();
+        flipState.transitionTo((state) => {
+          if (state === "from") {
+            return "to";
+          } else {
+            return "from";
+          }
+        });
+      }}
       onLongPress={() =>
         Alert.alert("Delete card", "Do you want to delete this card?", [
           {
@@ -117,12 +100,9 @@ function FlipCard({ front, back, deleteCard, id, boxType }) {
           {
             text: "Yes",
             onPress: () => {
-              animationState.transitionTo((state) => {
-                if (state === "from") {
-                  return "to";
-                } else {
-                  return "from";
-                }
+              setIsDeleted(true);
+              flipState.transitionTo(() => {
+                return "exit";
               });
               setTimeout(() => deleteCard(id), 300);
             },
@@ -131,25 +111,24 @@ function FlipCard({ front, back, deleteCard, id, boxType }) {
       }
       style={styles.shapeView}
     >
-      <View style={{ height: determineHeight(), justifyContent: "center" }}>
+      <View
+        style={{
+          justifyContent: "center",
+          marginBottom: 10,
+          marginTop: 10,
+        }}
+      >
         <AnimatePresence exitBeforeEnter>
-          {visible && (
+          {!isDeleted && (
             <Shape
               bg={determineBgColour(boxType)}
-              words={front}
-              isFront={true}
+              words={visible ? front : back}
+              isFront={visible ? true : false}
               key={determineBgColour(boxType)}
-              state={animationState}
+              state={flipState}
             />
           )}
-          {!visible && (
-            <Shape
-              bg="#f3cf7a"
-              words={back}
-              key="#f3cf7a"
-              state={animationState}
-            />
-          )}
+          {isDeleted && <View />}
         </AnimatePresence>
       </View>
     </TouchableOpacity>
@@ -158,7 +137,7 @@ function FlipCard({ front, back, deleteCard, id, boxType }) {
 
 function FlashCard({ id, question, answer, deleteCard, boxType }) {
   return (
-    <View>
+    <View style={{}}>
       <FlipCard
         front={question}
         back={answer}

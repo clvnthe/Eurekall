@@ -248,7 +248,7 @@ function HomeComponent(props) {
               ]}
             >
               {numDeckComparator === numOfDecks ? userNumDeck : numOfDecks}{" "}
-              {userNumDeck > 1 ? "decks" : "deck"}
+              {numOfDecks === 1 ? "deck" : "decks"}
             </Text>
           </Surface>
         </TouchableOpacity>

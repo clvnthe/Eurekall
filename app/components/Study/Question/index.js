@@ -203,7 +203,7 @@ const styles = EStyleSheet.create({
   },
   questionText: {
     textAlign: "center",
-    fontSize: "35rem",
+    fontSize: "25rem",
   },
   userAnswerTextInput: { width: "320rem", alignSelf: "center" },
 });

@@ -255,7 +255,7 @@ const styles = EStyleSheet.create({
   },
   answerText: {
     textAlign: "center",
-    fontSize: "35rem",
+    fontSize: "25rem",
     color: "#ffffff",
   },
   buttonsContainer: {
