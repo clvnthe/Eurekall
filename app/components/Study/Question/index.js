@@ -51,8 +51,11 @@ function QuestionComponent({ route }) {
   }
 
   if (route.params.studyAll) {
-    const curDeck = decks[route.params.paramIndex];
-    const curCard = curDeck.cards[route.params.cardIndex];
+    const curDeck =
+      typeof route.params.curDeck !== "undefined"
+        ? route.params.curDeck
+        : decks[route.params.paramIndex];
+    const curCard = curDeck.cards[curDeck.cards.length - 1];
 
     return (
       <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
@@ -99,8 +102,9 @@ function QuestionComponent({ route }) {
               if (userAnswer !== "") {
                 navigate(ANSWER, {
                   paramIndex: route.params.paramIndex,
-                  cardIndex: route.params.cardIndex,
+                  //cardIndex: route.params.cardIndex,
                   paramUserAnswer: userAnswer,
+                  curDeck: curDeck,
                   studyAll: true,
                 });
                 setUserAnswer("");

@@ -73,8 +73,8 @@ function AnswerComponent({ route }) {
   }
 
   if (route.params.studyAll) {
-    const curDeck = decks[route.params.paramIndex];
-    const curCard = curDeck.cards[route.params.cardIndex];
+    const curDeck = route.params.curDeck;
+    const curCard = curDeck.cards[curDeck.cards.length - 1];
 
     return (
       <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
@@ -109,15 +109,17 @@ function AnswerComponent({ route }) {
           <TouchableOpacity
             style={[styles.button, { backgroundColor: theme.colors.primary }]}
             onPress={() => {
-              {
-                curDeck.cards.length - 1 === route.params.cardIndex
-                  ? setAllDone(true)
-                  : navigate(QUESTION, {
-                      paramIndex: index,
-                      cardIndex: route.params.cardIndex + 1,
-                      studyAll: true,
-                    });
-              }
+              const tempDeck = {
+                cards: curDeck.cards.slice(0, curDeck.cards.length - 1),
+              };
+              tempDeck.cards.length === 0
+                ? setAllDone(true)
+                : navigate(QUESTION, {
+                    paramIndex: index,
+                    //cardIndex: route.params.cardIndex + 1,
+                    curDeck: tempDeck,
+                    studyAll: true,
+                  });
               console.log("Correct Answer!");
             }}
           >
@@ -131,9 +133,18 @@ function AnswerComponent({ route }) {
           <TouchableOpacity
             style={[styles.button, { backgroundColor: "#F26C68" }]}
             onPress={() => {
+              const tempDeck = {
+                cards: [curDeck.cards[curDeck.cards.length - 1]].concat(
+                  curDeck.cards.filter(
+                    (card) => card !== curDeck.cards[curDeck.cards.length - 1]
+                  )
+                ),
+              };
+              console.log(tempDeck.cards);
               navigate(QUESTION, {
                 paramIndex: index,
-                cardIndex: route.params.cardIndex,
+                //cardIndex: route.params.cardIndex,
+                curDeck: tempDeck,
                 studyAll: true,
               });
               console.log("Wrong Answer!");

@@ -19,7 +19,7 @@ import {
   Image,
   RefreshControl,
   TouchableOpacity,
-  Dimensions,
+  useWindowDimensions,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import * as Decks from "../../../store/slices/deckSlice";
@@ -30,6 +30,7 @@ import styles from "./styles";
 import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebase from "firebase";
+import { Ionicons } from "@expo/vector-icons";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -59,6 +60,7 @@ function DeckComponent(props) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [keyboardIsActive, setKeyboardIsActive] = useState(false);
   const onChangeSearch = (query) => setSearchQuery(query);
+  const windowHeight = useWindowDimensions().height;
 
   useEffect(() => {
     setFilteredDecks(
@@ -327,7 +329,7 @@ function DeckComponent(props) {
     <SafeAreaView
       style={{
         backgroundColor: theme.colors.background,
-        minHeight: Math.round(Dimensions.get("window").height),
+        minHeight: Math.round(windowHeight),
         ...props.style,
       }}
       {...props}
@@ -344,7 +346,17 @@ function DeckComponent(props) {
             },
           ]}
         >
-          <Title style={{ fontFamily: "PoppinsBold" }}>Help</Title>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Title style={{ fontFamily: "PoppinsBold" }}>Help</Title>
+            <TouchableOpacity onPress={hideHelpModal}>
+              <Ionicons name="ios-close-outline" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
           <Text
             style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
           >

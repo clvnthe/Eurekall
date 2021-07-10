@@ -103,7 +103,7 @@ function ForgotPasswordComponent() {
         keyboardType="email-address"
         style={styles.emailTextInput}
         value={email}
-        onChangeText={setEmail}
+        onChangeText={(email) => setEmail(email.trim())}
         autoCapitalize="none"
         left={
           <TextInput.Icon

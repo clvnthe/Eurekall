@@ -133,7 +133,7 @@ function LoginComponent(props) {
           keyboardType="email-address"
           style={styles.emailAddressTextInput}
           value={email}
-          onChangeText={setEmail}
+          onChangeText={(email) => setEmail(email.trim())}
           returnKeyType="next"
           onSubmitEditing={() => passwordTextInput.current.focus()}
           autoCapitalize="none"
@@ -160,7 +160,7 @@ function LoginComponent(props) {
           placeholder="Enter password"
           style={styles.passwordTextInput}
           value={password}
-          onChangeText={setPassword}
+          onChangeText={(password) => setPassword(password.trim())}
           left={
             <TextInput.Icon
               name="form-textbox-password"
@@ -173,6 +173,7 @@ function LoginComponent(props) {
             <TextInput.Icon
               name={isPasswordVisible ? "eye-off" : "eye"}
               onPress={() => setIsPasswordVisible((state) => !state)}
+              forceTextInputFocus={false}
             />
           }
           error={isHelperTextVisible ? passwordHasErrors(password) : false}

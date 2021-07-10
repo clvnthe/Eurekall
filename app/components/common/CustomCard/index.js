@@ -176,13 +176,17 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
           <View>
             <TouchableOpacity
               style={styles.studyAllButton}
-              onPress={() =>
-                navigate(QUESTION, {
-                  paramIndex: index,
-                  cardIndex: 0,
-                  studyAll: true,
-                })
-              }
+              onPress={() => {
+                decks[index].cards.length
+                  ? navigate(QUESTION, {
+                      paramIndex: index,
+                      cardIndex: 0,
+                      studyAll: true,
+                    })
+                  : Alert.alert("Alert", "There are no cards to be studied", [
+                      { text: "OK", onPress: () => console.log("OK Pressed") },
+                    ]);
+              }}
             >
               <MaterialCommunityIcons
                 name="cards-outline"

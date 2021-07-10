@@ -84,7 +84,7 @@ function RegisterComponent() {
     React.useState(false);
 
   const hasErrors = (text) => {
-    if (text.length === 0) {
+    if (text.trim().length === 0) {
       return true;
     } else {
       return false;
@@ -202,7 +202,7 @@ function RegisterComponent() {
           keyboardType="email-address"
           style={styles.emailTextInput}
           value={email}
-          onChangeText={setEmail}
+          onChangeText={(email) => setEmail(email.trim())}
           autoCapitalize="none"
           returnKeyType="next"
           onSubmitEditing={() => usernameTextInput.current.focus()}
@@ -244,7 +244,7 @@ function RegisterComponent() {
           placeholder="Enter username"
           style={styles.usernameTextInput}
           value={username}
-          onChangeText={setUsername}
+          onChangeText={(username) => setUsername(username.trim())}
           autoCapitalize="none"
           returnKeyType="next"
           onSubmitEditing={() => passwordTextInput.current.focus()}
@@ -272,7 +272,7 @@ function RegisterComponent() {
           placeholder="Enter password"
           style={styles.passwordTextInput}
           value={password}
-          onChangeText={setPassword}
+          onChangeText={(password) => setPassword(password.trim())}
           left={
             <TextInput.Icon
               name="form-textbox-password"
@@ -285,6 +285,7 @@ function RegisterComponent() {
             <TextInput.Icon
               name={isPasswordVisible ? "eye-off" : "eye"}
               onPress={() => setIsPasswordVisible((state) => !state)}
+              forceTextInputFocus={false}
             />
           }
           error={isHelperTextVisible ? passwordHasErrors(password) : false}

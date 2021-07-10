@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   Dimensions,
+  useWindowDimensions,
 } from "react-native";
 import {
   Avatar,
@@ -28,6 +29,7 @@ import { useFonts } from "expo-font";
 import firebase from "firebase";
 import { ScaledSheet } from "react-native-size-matters";
 import { LinearGradient } from "expo-linear-gradient";
+import { Ionicons } from "@expo/vector-icons";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -57,6 +59,7 @@ function ViewingComponent({ route }) {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [keyboardIsActive, setKeyboardIsActive] = useState(false);
   const onChangeSearch = (query) => setSearchQuery(query);
+  const windowHeight = useWindowDimensions().height;
 
   const theme = useTheme();
 
@@ -185,9 +188,7 @@ function ViewingComponent({ route }) {
   }
 
   return (
-    <SafeAreaView
-      style={{ minHeight: Math.round(Dimensions.get("window").height) }}
-    >
+    <SafeAreaView style={{ minHeight: Math.round(windowHeight) }}>
       <Portal>
         <Modal
           visible={visibleInformation}
@@ -201,7 +202,24 @@ function ViewingComponent({ route }) {
             },
           ]}
         >
-          <Title style={{ fontFamily: "PoppinsBold" }}>Card Colours</Title>
+          <View
+            style={{
+              flexDirection: "row",
+              width: "70%",
+              alignSelf: "flex-end",
+              justifyContent: "space-between",
+            }}
+          >
+            <Title style={{ fontFamily: "PoppinsBold", alignSelf: "center" }}>
+              Card Colours
+            </Title>
+            <TouchableOpacity
+              style={{ alignItems: "center" }}
+              onPress={hideInformationModal}
+            >
+              <Ionicons name="ios-close-outline" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
           <Text
             style={{
               fontFamily: "PoppinsRegular",
@@ -250,7 +268,17 @@ function ViewingComponent({ route }) {
             },
           ]}
         >
-          <Title style={{ fontFamily: "PoppinsBold" }}>Help</Title>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Title style={{ fontFamily: "PoppinsBold" }}>Help</Title>
+            <TouchableOpacity onPress={hideHelpModal}>
+              <Ionicons name="ios-close-outline" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
           <Text
             style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
           >

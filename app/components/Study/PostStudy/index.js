@@ -105,7 +105,7 @@ function PostStudyComponent(props) {
           <Title>Great Job!</Title>
         </Surface>
         <CustomButton
-          title="Return to home"
+          title="Return back"
           onPress={() =>
             reset({
               index: 1,

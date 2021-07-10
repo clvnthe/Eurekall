@@ -19,7 +19,9 @@ function FlashCardForm({ createFlashcardHandler }) {
             <TextInput
               mode="outlined"
               label="Flashcard Question"
+              maxLength={100}
               style={{
+                //maxHeight: 100,
                 marginTop: -5,
                 padding: 10,
               }}
@@ -27,14 +29,21 @@ function FlashCardForm({ createFlashcardHandler }) {
               onChangeText={props.handleChange("question")}
               value={props.values.question}
               left={<TextInput.Icon name="alpha-q-box" />}
+              right={
+                <TextInput.Affix
+                  text={props.values.question.trim().length + "/100"}
+                />
+              }
             ></TextInput>
             <TextInput
               mode="outlined"
               label="Flashcard Answer"
               multiline={true}
               numberOfLines={10}
+              keyboardType="visible-password"
               textAlignVertical="top"
               style={{
+                maxHeight: 300,
                 marginTop: -10,
                 padding: 10,
               }}
@@ -53,7 +62,8 @@ function FlashCardForm({ createFlashcardHandler }) {
                 bgColor="#28A44B"
                 width={310}
                 onPress={
-                  props.values.question !== "" && props.values.answer !== ""
+                  props.values.question.trim() !== "" &&
+                  props.values.answer.trim() !== ""
                     ? props.handleSubmit
                     : () =>
                         Alert.alert("Alert", "Fields cannot be empty!", [
