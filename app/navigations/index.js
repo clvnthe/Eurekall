@@ -18,7 +18,7 @@ import DrawerNavigator from "./DrawerNavigator";
 import { AuthContext } from "../context/Provider";
 import firebase from "firebase";
 import LottieView from "lottie-react-native";
-import { View } from "react-native";
+import { Image, View } from "react-native";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -169,7 +169,7 @@ const AppNavContainer = () => {
         console.log(err);
       }
       dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
-    }, 2000);
+    }, 3000);
   }, [loginState.isLoading]);
 
   if (loginState.isLoading) {
@@ -179,11 +179,10 @@ const AppNavContainer = () => {
           flex: 1,
           justifyContent: "center",
           alignItems: "center",
-          backgroundColor: "#28A44B",
         }}
       >
         <LottieView
-          source={require("../../assets/lottieAnimations/8714-light-bulb-loader.json")}
+          source={require("../../assets/lottieAnimations/eurekall-animated-loader-withname.json")}
           autoPlay
           loop
         />
