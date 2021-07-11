@@ -1,8 +1,10 @@
 {
   "expoServerNgrokUrl": "https://4w-qhv.tofubean.eurekall-github-1.exp.direct",
   "packagerNgrokUrl": "https://packager.4w-qhv.tofubean.eurekall-github-1.exp.direct",
-  "ngrokPid": 20764,
+  "ngrokPid": 27684,
   "expoServerPort": 19000,
   "devToolsPort": 19002,
-  "packagerPort": 19000
+  "packagerPort": 19000,
+  "packagerPid": null,
+  "webpackServerPort": null
 }

@@ -246,7 +246,10 @@ function ViewingComponent({ route }) {
           >
             Box Type 4:
           </Text>
-          <View style={[styles.boxShape, { backgroundColor: "#96f7d2" }]} />
+          <LinearGradient
+            style={styles.boxShape}
+            colors={["#FCC201", "#EEB609", "#DBA514", "#C69320", "#B78628"]}
+          />
           <Text
             style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
           >

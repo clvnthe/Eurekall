@@ -1,14 +1,14 @@
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import React from "react";
-import { Text, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { Surface, Title } from "react-native-paper";
 import { DECKS, HOME_MAIN } from "../../../constants/routeNames";
 import CustomButton from "../../common/CustomButton";
 import LottieView from "lottie-react-native";
 
-function PostStudyComponent(props) {
+function PostStudyComponent({ route }) {
   const { reset } = useNavigation();
   const theme = useTheme();
 
@@ -25,6 +25,18 @@ function PostStudyComponent(props) {
   if (!loaded) {
     return null;
   }
+
+  const renderStats = (stat) => (
+    <Text
+      style={{
+        color: theme.dark ? theme.colors.onPrimary : "#ffffff",
+        fontFamily: "PoppinsRegular",
+      }}
+    >
+      Card {stat.item.cardNumber}: {stat.item.numOfTries}{" "}
+      {stat.item.numOfTries === "1" ? "try" : "tries"}
+    </Text>
+  );
 
   return (
     <View style={styles.containerWrapper}>
@@ -50,48 +62,14 @@ function PostStudyComponent(props) {
               fontFamily: "PoppinsBold",
             }}
           >
-            Studied: 5 cards
+            Studied: {route.params.statsTracker.length}{" "}
+            {route.params.statsTracker.length === 1 ? "card" : "cards"}
           </Title>
-          <Text
-            style={{
-              color: theme.dark ? theme.colors.onPrimary : "#ffffff",
-              fontFamily: "PoppinsRegular",
-            }}
-          >
-            Card 1: 1 try
-          </Text>
-          <Text
-            style={{
-              color: theme.dark ? theme.colors.onPrimary : "#ffffff",
-              fontFamily: "PoppinsRegular",
-            }}
-          >
-            Card 2: 1 try
-          </Text>
-          <Text
-            style={{
-              color: theme.dark ? theme.colors.onPrimary : "#ffffff",
-              fontFamily: "PoppinsRegular",
-            }}
-          >
-            Card 3: 1 try
-          </Text>
-          <Text
-            style={{
-              color: theme.dark ? theme.colors.onPrimary : "#ffffff",
-              fontFamily: "PoppinsRegular",
-            }}
-          >
-            Card 4: 1 try
-          </Text>
-          <Text
-            style={{
-              color: theme.dark ? theme.colors.onPrimary : "#ffffff",
-              fontFamily: "PoppinsRegular",
-            }}
-          >
-            Card 5: 1 try
-          </Text>
+          <FlatList
+            data={route.params.statsTracker.reverse()}
+            renderItem={renderStats}
+            keyExtractor={(item) => item.id}
+          />
           <Text
             style={{
               color: theme.dark ? theme.colors.onPrimary : "#ffffff",

@@ -41,7 +41,14 @@ function AnswerComponent({ route }) {
         allDone
           ? reset({
               index: 0,
-              routes: [{ name: POST_STUDY }],
+              routes: [
+                {
+                  name: POST_STUDY,
+                  params: {
+                    statsTracker: route.params.statsTracker,
+                  },
+                },
+              ],
             })
           : console.log("allDone is false"),
       1000
@@ -119,6 +126,7 @@ function AnswerComponent({ route }) {
                     //cardIndex: route.params.cardIndex + 1,
                     curDeck: tempDeck,
                     studyAll: true,
+                    statsTracker: route.params.statsTracker,
                   });
               console.log("Correct Answer!");
             }}
@@ -140,12 +148,15 @@ function AnswerComponent({ route }) {
                   )
                 ),
               };
-              console.log(tempDeck.cards);
+              ++route.params.statsTracker[
+                decks[index].cards.findIndex((card) => curCard.id === card.id)
+              ].numOfTries;
               navigate(QUESTION, {
                 paramIndex: index,
                 //cardIndex: route.params.cardIndex,
                 curDeck: tempDeck,
                 studyAll: true,
+                statsTracker: route.params.statsTracker,
               });
               console.log("Wrong Answer!");
             }}
@@ -200,7 +211,11 @@ function AnswerComponent({ route }) {
               {
                 studydeck.length - 1 === 0
                   ? setAllDone(true)
-                  : navigate(QUESTION, { paramIndex: index });
+                  : navigate(QUESTION, {
+                      paramIndex: index,
+                      statsTracker: route.params.statsTracker,
+                      studydeckCopy: route.params.studydeckCopy,
+                    });
               }
               console.log("Correct Answer!");
             }}
@@ -216,7 +231,16 @@ function AnswerComponent({ route }) {
             style={[styles.button, { backgroundColor: "#F26C68" }]}
             onPress={() => {
               dispatch(Decks.shiftItemToFrontStudydeck(index));
-              navigate(QUESTION, { paramIndex: index });
+              ++route.params.statsTracker[
+                route.params.studydeckCopy.findIndex(
+                  (card) => studydeck[studydeck.length - 1].id === card.id
+                )
+              ].numOfTries;
+              navigate(QUESTION, {
+                paramIndex: index,
+                statsTracker: route.params.statsTracker,
+                studydeckCopy: route.params.studydeckCopy,
+              });
               console.log("Wrong Answer!");
             }}
           >

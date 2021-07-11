@@ -51,6 +51,23 @@ function QuestionComponent({ route }) {
   }
 
   if (route.params.studyAll) {
+    const statsTracker =
+      typeof route.params.statsTracker !== "undefined"
+        ? route.params.statsTracker
+        : new Array(decks[route.params.paramIndex].cards.length);
+
+    if (typeof route.params.statsTracker === "undefined") {
+      for (let i = 0; i < decks[route.params.paramIndex].cards.length; i++) {
+        statsTracker[i] = {
+          id: (decks[route.params.paramIndex].cards.length - i).toString(),
+          cardNumber: (
+            decks[route.params.paramIndex].cards.length - i
+          ).toString(),
+          numOfTries: "1",
+        };
+      }
+    }
+
     const curDeck =
       typeof route.params.curDeck !== "undefined"
         ? route.params.curDeck
@@ -106,6 +123,7 @@ function QuestionComponent({ route }) {
                   paramUserAnswer: userAnswer,
                   curDeck: curDeck,
                   studyAll: true,
+                  statsTracker: statsTracker,
                 });
                 setUserAnswer("");
               } else {
@@ -119,6 +137,21 @@ function QuestionComponent({ route }) {
       </ScrollView>
     );
   } else {
+    const statsTracker =
+      typeof route.params.statsTracker !== "undefined"
+        ? route.params.statsTracker
+        : new Array(studydeck.length);
+
+    if (typeof route.params.statsTracker === "undefined") {
+      for (let i = 0; i < studydeck.length; i++) {
+        statsTracker[i] = {
+          id: (studydeck.length - i).toString(),
+          cardNumber: (studydeck.length - i).toString(),
+          numOfTries: "1",
+        };
+      }
+    }
+
     return (
       <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
         <Surface
@@ -167,6 +200,11 @@ function QuestionComponent({ route }) {
                 navigate(ANSWER, {
                   paramIndex: route.params.paramIndex,
                   paramUserAnswer: userAnswer,
+                  statsTracker: statsTracker,
+                  studydeckCopy:
+                    typeof route.params.studydeckCopy === "undefined"
+                      ? studydeck
+                      : route.params.studydeckCopy,
                 });
                 setUserAnswer("");
               } else {

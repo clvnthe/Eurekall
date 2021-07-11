@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from "react";
-import { PreferencesContext } from "../context/PreferencesContext";
 import {
   DefaultTheme as NavigationDefaultTheme,
   DarkTheme as PaperDarkTheme,
@@ -18,7 +17,8 @@ import DrawerNavigator from "./DrawerNavigator";
 
 import { AuthContext } from "../context/Provider";
 import firebase from "firebase";
-import { current } from "@reduxjs/toolkit";
+import LottieView from "lottie-react-native";
+import { View } from "react-native";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -70,12 +70,11 @@ const AppNavContainer = () => {
   };
 
   const [isThemeDark, setIsThemeDark] = React.useState(false);
-  const [userTempDetails, setUserTempDetails] = React.useState("");
 
   let theme = isThemeDark ? CustomDarkTheme : CustomDefaultTheme;
 
   const initialLoginState = {
-    isLoggedIn: false,
+    isLoading: true,
     email: null,
     name: null,
     userName: null,
@@ -88,7 +87,7 @@ const AppNavContainer = () => {
         return {
           ...prevState,
           userToken: action.token,
-          isLoggedIn: false,
+          isLoading: false,
         };
       case "LOGIN":
         return {
@@ -97,7 +96,7 @@ const AppNavContainer = () => {
           name: action.name,
           userName: action.id,
           userToken: action.token,
-          isLoggedIn: true,
+          isLoading: true,
         };
       case "LOGOUT":
         return {
@@ -106,7 +105,7 @@ const AppNavContainer = () => {
           name: null,
           userName: null,
           userToken: null,
-          isLoggedIn: false,
+          isLoading: false,
         };
     }
   };
@@ -170,8 +169,27 @@ const AppNavContainer = () => {
         console.log(err);
       }
       dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
-    }, 0);
-  }, []);
+    }, 2000);
+  }, [loginState.isLoading]);
+
+  if (loginState.isLoading) {
+    return (
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#28A44B",
+        }}
+      >
+        <LottieView
+          source={require("../../assets/lottieAnimations/8714-light-bulb-loader.json")}
+          autoPlay
+          loop
+        />
+      </View>
+    );
+  }
 
   return (
     <AuthContext.Provider value={authContext}>

@@ -55,7 +55,7 @@ function FlipCard({ front, back, deleteCard, id, boxType }) {
     } else if (boxType === 3) {
       return "#FF7F7F";
     } else if (boxType === 4) {
-      return "#96f7d2";
+      return ["#FCC201", "#EEB609", "#DBA514", "#C69320", "#B78628"]; //"#96f7d2";
     } else {
       return ["#86E3CE", "#D0E6A5", "#FFDD94", "#FA897B", "#CCABD8"];
     }
