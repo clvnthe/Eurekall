@@ -179,7 +179,7 @@ function HomeComponent(props) {
         </View>
       </View>
       <View style={styles.progressContainer}>
-        <View style={styles.tierView}>
+        {/*<View style={styles.tierView}>
           <Badge size={50} style={{ backgroundColor: "#c68856" }}>
             <MaterialCommunityIcons name="gold" size={24} color="white" />
           </Badge>
@@ -187,7 +187,7 @@ function HomeComponent(props) {
             <Text style={styles.tierTextBold}>Your tier is Bronze!</Text>
             <Text style={styles.tierTextLight}>Earn more exp to progress!</Text>
           </View>
-        </View>
+        </View>*/}
         <View style={styles.progressTextView}>
           <Text style={{ fontFamily: "PoppinsLight" }}>Level 1</Text>
           <View style={{ flexDirection: "row" }}>

@@ -6,6 +6,7 @@ import {
   View,
   ImageBackground,
   Alert,
+  Dimensions,
 } from "react-native";
 import { Title, Text, Divider, TextInput } from "react-native-paper";
 import BottomSheet from "reanimated-bottom-sheet";
@@ -65,6 +66,10 @@ function EditProfileComponent(props) {
 
   const [name, setName] = useState(userInfo[1]);
   const [username, setUsername] = useState(userInfo[2]);
+  const [description, setDescription] = useState("");
+
+  const windowWidth = Dimensions.get("window").width;
+  const windowHeight = Dimensions.get("window").height;
 
   const updateUserInfo = async () => {
     const userId = String(fireauth.currentUser.email);
@@ -342,16 +347,17 @@ function EditProfileComponent(props) {
           </Text>
           <View
             style={{
-              height: "40%",
+              height: windowHeight * 0.48,
             }}
           >
-            <View style={{ height: "50%" }}>
+            <View style={{}}>
               <Text style={{ fontFamily: "PoppinsRegular" }}>Name</Text>
               <TextInput
                 theme={{ roundness: 20 }}
                 mode="flat"
                 defaultValue={userInfo[1]}
-                onChangeText={setName}
+                value={name}
+                onChangeText={(name) => setName(name.trim())}
                 placeholder="Name"
                 style={{
                   width: 336,
@@ -366,18 +372,43 @@ function EditProfileComponent(props) {
                 }
               />
             </View>
-            <View style={{ height: "50%" }}>
+            <View style={{}}>
               <Text style={{ fontFamily: "PoppinsRegular" }}>Username</Text>
               <TextInput
                 theme={{ roundness: 20 }}
                 mode="flat"
                 defaultValue={userInfo[2]}
-                onChangeText={setUsername}
+                value={username}
+                onChangeText={(username) => setUsername(username.trim())}
                 placeholder="Username"
                 style={{
                   width: 336,
                   alignSelf: "center",
                 }}
+                autoCapitalize="none"
+                left={
+                  <TextInput.Icon
+                    name="face-profile"
+                    color={true ? theme.colors.primary : theme.colors.text}
+                  />
+                }
+              />
+            </View>
+            <View style={{}}>
+              <Text style={{ fontFamily: "PoppinsRegular" }}>Description</Text>
+              <TextInput
+                theme={{ roundness: 20 }}
+                mode="flat"
+                //defaultValue={userInfo[2]}
+                value={description}
+                onChangeText={setDescription}
+                placeholder="Description"
+                style={{
+                  width: 336,
+                  alignSelf: "center",
+                }}
+                multiline
+                numberOfLines={5}
                 autoCapitalize="none"
                 left={
                   <TextInput.Icon

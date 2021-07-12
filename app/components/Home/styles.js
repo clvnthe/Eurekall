@@ -82,7 +82,7 @@ export default ScaledSheet.create({
   },
   decksContainer: { alignSelf: "center" },
   decksSurface: {
-    height: "250@s",
+    height: "160@s",
     width: "310@s",
     elevation: "6@s",
     borderRadius: "20@s",
