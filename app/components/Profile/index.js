@@ -50,6 +50,7 @@ function ProfileComponent(props) {
     "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8"
   );
   const userEmail = String(fireauth.currentUser.email);
+  const [userLvl, setUserLvl] = React.useState(1);
 
   const isFocused = useIsFocused();
 
@@ -82,6 +83,24 @@ function ProfileComponent(props) {
       setUserInfo(user);
     }, 0);
   }, [isFocused]);
+
+  useEffect(() => {
+        setTimeout( async () => {
+            try {
+                const userEmail = String(fireauth.currentUser.email);
+                const retrieveUser = await firestore.collection('users').doc(userEmail).get()
+                console.log(userEmail);
+                const userDetails = retrieveUser.data();
+                const userExp = userDetails["exp"];
+                const actualUserLvl = Math.floor(userExp/500) + 1;
+                setUserLvl(actualUserLvl);
+            } catch (error){
+                console.log(error);
+            }
+        }, 0)
+    }, [])
+
+
 
   const theme = useTheme();
 
@@ -169,7 +188,7 @@ function ProfileComponent(props) {
                 justifyContent: "center",
               }}
             >
-              <Text style={{ fontFamily: "PoppinsBold" }}>1</Text>
+              <Text style={{ fontFamily: "PoppinsBold" }}>{userLvl}</Text>
             </View>
           </LinearGradient>
         </View>
@@ -178,8 +197,7 @@ function ProfileComponent(props) {
         Title: Mugger Dog
       </Title>
       <Subheading style={[styles.description, { fontFamily: "PoppinsLight" }]}>
-        Hi I’m {userInfo[1]}! I’m a freshman from the National University of
-        Singapore!
+        {userInfo[3]}
       </Subheading>
       <View style={styles.dividerContainer}>
         <View style={styles.rankContainer}>

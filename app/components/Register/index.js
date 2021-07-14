@@ -60,7 +60,7 @@ function RegisterComponent() {
         email: email,
         preferred_username: username,
         name: name,
-        decks: [],
+        exp: 0
       });
       setIsSignInHelperTextVisible(false);
       setLoading(false);

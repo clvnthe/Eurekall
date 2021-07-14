@@ -61,6 +61,8 @@ function HomeComponent(props) {
   const [userInfo, setUserInfo] = React.useState([]);
   const [userNumDeck, setUserNumDeck] = React.useState([]);
   const [numDeckComparator, setNumDeckComparator] = React.useState([]);
+  const [userExp, setUserExp] = React.useState(0);
+  const [userLvl, setUserLvl] = React.useState(1);
   const numOfDecks = useSelector(Decks.getDecks).length;
 
   const isFocused = useIsFocused();
@@ -105,9 +107,26 @@ function HomeComponent(props) {
       } catch (err) {
         console.log(err);
       }
-      console.log(userNumDeck);
     }, 0);
   }, []);
+
+  useEffect(() => {
+    setTimeout( async () => {
+      try {
+        const userEmail = String(fireauth.currentUser.email);
+        const retrieveUser = await firestore.collection('users').doc(userEmail).get()
+        console.log(userEmail);
+        const userDetails = retrieveUser.data();
+        const userExp = userDetails["exp"];
+        const actualUserLvl = Math.floor(userExp/500) + 1;
+        const actualUserExp = userExp % 500
+        setUserExp(actualUserExp);
+        setUserLvl(actualUserLvl);
+      } catch (error){
+        console.log(error);
+      }
+    }, 0)
+  }, [])
 
   const { navigate } = useNavigation();
 
@@ -189,9 +208,9 @@ function HomeComponent(props) {
           </View>
         </View>*/}
         <View style={styles.progressTextView}>
-          <Text style={{ fontFamily: "PoppinsLight" }}>Level 1</Text>
+          <Text style={{ fontFamily: "PoppinsLight" }}>Level {userLvl}</Text>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontFamily: "PoppinsLight" }}>300/500</Text>
+            <Text style={{ fontFamily: "PoppinsLight" }}>{userExp}/500</Text>
             <MaterialCommunityIcons
               name="diamond-stone"
               size={20}
@@ -201,7 +220,7 @@ function HomeComponent(props) {
         </View>
         <View style={styles.progressbarView}>
           <ProgressBar
-            progress={0.7}
+            progress={userExp/500}
             color={theme.colors.primary}
             style={styles.progressbar}
           />
