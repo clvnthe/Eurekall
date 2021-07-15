@@ -125,20 +125,32 @@ const AppNavContainer = () => {
         const userDetails = userData["docs"][0].data();
         const nameOfUser = String(userDetails["name"]);
         const userName = String(userDetails["preferred_username"]);
-        const defaultDescription = `Hi I'm ${nameOfUser} and welcome to my profile!`
-        const description = typeof userDetails["description"] === "undefined" ? defaultDescription : String(userDetails["description"])
-        const exp = typeof userDetails["exp"] === "undefined" ? 0 : userDetails["exp"]
-        if (typeof userDetails["exp"] === "undefined"){
-          const settingUserExp = firestore.collection("users").doc(emailAddress);
+        const defaultDescription = `Hi I'm ${nameOfUser} and welcome to my profile!`;
+        const description =
+          typeof userDetails["description"] === "undefined"
+            ? defaultDescription
+            : String(userDetails["description"]);
+        const exp =
+          typeof userDetails["exp"] === "undefined" ? 0 : userDetails["exp"];
+        if (typeof userDetails["exp"] === "undefined") {
+          const settingUserExp = firestore
+            .collection("users")
+            .doc(emailAddress);
           await settingUserExp.set({
-            exp: 0
-          })
+            exp: 0,
+          });
         }
         try {
           await AsyncStorage.setItem("userToken", userToken);
           await AsyncStorage.setItem(
             "userInfo",
-            JSON.stringify([emailAddress, nameOfUser, userName,description,exp])
+            JSON.stringify([
+              emailAddress,
+              nameOfUser,
+              userName,
+              description,
+              exp,
+            ])
           );
         } catch (err) {
           console.log(err);

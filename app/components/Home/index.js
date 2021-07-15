@@ -64,7 +64,8 @@ function HomeComponent(props) {
   const [userExp, setUserExp] = React.useState(0);
   const [userLvl, setUserLvl] = React.useState(1);
   const numOfDecks = useSelector(Decks.getDecks).length;
-
+  const [objectivesRenderData, setObjectivesRenderData] =
+    React.useState(objectivesData);
   const isFocused = useIsFocused();
 
   useEffect(() => {
@@ -111,24 +112,33 @@ function HomeComponent(props) {
   }, []);
 
   useEffect(() => {
-    setTimeout( async () => {
+    setTimeout(async () => {
       try {
         const userEmail = String(fireauth.currentUser.email);
-        const retrieveUser = await firestore.collection('users').doc(userEmail).get()
+        const retrieveUser = await firestore
+          .collection("users")
+          .doc(userEmail)
+          .get();
         console.log(userEmail);
         const userDetails = retrieveUser.data();
         const userExp = userDetails["exp"];
-        const actualUserLvl = Math.floor(userExp/500) + 1;
-        const actualUserExp = userExp % 500
+        const actualUserLvl = Math.floor(userExp / 500) + 1;
+        const actualUserExp = userExp % 500;
         setUserExp(actualUserExp);
         setUserLvl(actualUserLvl);
-      } catch (error){
+      } catch (error) {
         console.log(error);
       }
-    }, 0)
-  }, [])
+    }, 0);
+  }, []);
 
   const { navigate } = useNavigation();
+
+  const objectiveUnlockedHandler = (id) => {
+    setObjectivesRenderData(
+      objectivesRenderData.filter((objective) => objective.id !== id)
+    );
+  };
 
   const renderItem = ({ item }) => {
     return (
@@ -151,15 +161,38 @@ function HomeComponent(props) {
             {item.objectiveName}
           </Text>
         </View>
-        <Text
+        <TouchableOpacity
           style={[
-            { fontFamily: "PoppinsMedium" },
-            styles.objectivesFlatListName,
+            styles.objectivesTouchableOpacity,
+            {
+              backgroundColor: item.completed
+                ? theme.colors.secondary
+                : "#cccccc",
+            },
           ]}
+          disabled={!item.completed}
+          onPress={() => objectiveUnlockedHandler(item.id)}
         >
-          0/{item.targetAmt}
-        </Text>
-
+          {!item.completed ? (
+            <Text
+              style={[
+                {
+                  fontFamily: "PoppinsMedium",
+                  color: "#666666",
+                },
+                styles.objectivesFlatListName,
+              ]}
+            >
+              0/{item.targetAmt}
+            </Text>
+          ) : (
+            <MaterialCommunityIcons
+              name="treasure-chest"
+              size={24}
+              color={theme.dark ? "black" : "white"}
+            />
+          )}
+        </TouchableOpacity>
         <Text
           style={[{ fontFamily: "PoppinsBold" }, styles.objectivesFlatListName]}
         >
@@ -220,7 +253,7 @@ function HomeComponent(props) {
         </View>
         <View style={styles.progressbarView}>
           <ProgressBar
-            progress={userExp/500}
+            progress={userExp / 500}
             color={theme.colors.primary}
             style={styles.progressbar}
           />
@@ -231,7 +264,7 @@ function HomeComponent(props) {
           My Objectives
         </Title>
         <FlatList
-          data={objectivesData}
+          data={objectivesRenderData}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           horizontal={true}
