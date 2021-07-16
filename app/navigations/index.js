@@ -120,9 +120,8 @@ const AppNavContainer = () => {
       logIn: async () => {
         const userToken = String(await fireauth.currentUser.getIdToken());
         const emailAddress = String(await fireauth.currentUser.email);
-        const userRef = firestore.collection("users");
-        const userData = await userRef.where("email", "==", emailAddress).get();
-        const userDetails = userData["docs"][0].data();
+        const userData = await firestore.collection("users").doc(emailAddress).get();
+        const userDetails = userData.data();
         const nameOfUser = String(userDetails["name"]);
         const userName = String(userDetails["preferred_username"]);
         const defaultDescription = `Hi I'm ${nameOfUser} and welcome to my profile!`

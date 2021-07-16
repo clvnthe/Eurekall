@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="included add deck,delete deck,load deck fnctn(in-progress) and fixed timeout bug because of firebase">
-      <change beforePath="$PROJECT_DIR$/.expo/packager-info.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/packager-info.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.expo/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/.expo/settings.json" afterDir="false" />
+    <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="Completed Custom Description,Live exp and lvl">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/EditProfile/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/EditProfile/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/Home/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Home/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/Profile/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Profile/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/components/Register/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Register/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Home/DrawerContent.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Home/DrawerContent.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/navigations/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/navigations/index.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -47,25 +42,13 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="yarn" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.build" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\clvnt\Desktop\Projects\Eurekall\src\graphql" />
       <recent name="C:\Users\clvnt\Desktop\Projects\Eurekall" />
     </key>
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -92,7 +75,9 @@
       <workItem from="1624432304842" duration="16885000" />
       <workItem from="1624677952528" duration="10309000" />
       <workItem from="1624696335700" duration="1709000" />
-      <workItem from="1626233510602" duration="7410000" />
+      <workItem from="1626233510602" duration="8805000" />
+      <workItem from="1626403255695" duration="146000" />
+      <workItem from="1626403415197" duration="2905000" />
     </task>
     <task id="LOCAL-00001" summary="miscellaneous changes please ignore">
       <created>1623057973234</created>
@@ -171,7 +156,14 @@
       <option name="project" value="LOCAL" />
       <updated>1624696413881</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Completed Custom Description,Live exp and lvl">
+      <created>1626249640933</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1626249640933</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -200,6 +192,7 @@
     <MESSAGE value="Removed completely AWS backend API and Change to Firebase backend API" />
     <MESSAGE value="included add deck delete deck and load deck fnctn(in-progress)" />
     <MESSAGE value="included add deck,delete deck,load deck fnctn(in-progress) and fixed timeout bug because of firebase" />
-    <option name="LAST_COMMIT_MESSAGE" value="included add deck,delete deck,load deck fnctn(in-progress) and fixed timeout bug because of firebase" />
+    <MESSAGE value="Completed Custom Description,Live exp and lvl" />
+    <option name="LAST_COMMIT_MESSAGE" value="Completed Custom Description,Live exp and lvl" />
   </component>
 </project>

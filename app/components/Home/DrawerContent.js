@@ -70,9 +70,8 @@ function DrawerContent(props) {
   };
 
   const loadDetails = async (userEmail) => {
-    const userRef = firestore.collection("users");
-    const userData = await userRef.where("email", "==", userEmail).get();
-    const userDetails = userData["docs"][0].data();
+    const userData = await firestore.collection("users").doc(userEmail).get();
+    const userDetails = userData.data();
     const nameOfUser = String(userDetails["name"]);
     const userName = String(userDetails["preferred_username"]);
     setName(nameOfUser);
