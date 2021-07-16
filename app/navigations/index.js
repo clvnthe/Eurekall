@@ -137,7 +137,7 @@ const AppNavContainer = () => {
             .doc(emailAddress);
           await settingUserExp.set({
             exp: 0,
-          });
+          },{merge: true});
         }
         try {
           await AsyncStorage.setItem("userToken", userToken);
