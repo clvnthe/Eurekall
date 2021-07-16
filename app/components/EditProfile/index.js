@@ -64,11 +64,9 @@ function EditProfileComponent(props) {
     }, 0);
   }, []);
 
-
   const [name, setName] = useState(userInfo[1]);
   const [username, setUsername] = useState(userInfo[2]);
   const [description, setDescription] = useState(userInfo[3]);
-
 
   const windowWidth = Dimensions.get("window").width;
   const windowHeight = Dimensions.get("window").height;
@@ -78,7 +76,8 @@ function EditProfileComponent(props) {
     const updateUserInfoRef = firestore.collection("users").doc(userId);
     const name1 = typeof name === "undefined" ? userInfo[1] : name;
     const username1 = typeof username === "undefined" ? userInfo[2] : username;
-    const description1 = typeof description === "undefined" ? userInfo[3] : description
+    const description1 =
+      typeof description === "undefined" ? userInfo[3] : description;
 
     try {
       if (name1 === "" || username1 === "") {
@@ -89,11 +88,11 @@ function EditProfileComponent(props) {
         await updateUserInfoRef.update({
           name: name1,
           preferred_username: username1,
-          description: description
+          description: description,
         });
         await AsyncStorage.setItem(
           "userInfo",
-          JSON.stringify([userInfo[0], name1, username1,description])
+          JSON.stringify([userInfo[0], name1, username1, description])
         );
         Alert.alert("Edit Profile", "Changes have been saved.", [
           { text: "OK", onPress: () => console.log("OK Pressed") },
@@ -411,6 +410,7 @@ function EditProfileComponent(props) {
                 style={{
                   width: 336,
                   alignSelf: "center",
+                  maxHeight: 100,
                 }}
                 multiline
                 numberOfLines={5}

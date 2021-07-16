@@ -71,6 +71,13 @@ export default ScaledSheet.create({
     textAlign: "center",
     padding: "10@s",
   },
+  objectivesTouchableOpacity: {
+    height: "25%",
+    width: "50%",
+    borderRadius: "20@s",
+    justifyContent: "center",
+    alignItems: "center",
+  },
   decksView: {
     flex: 3,
     justifyContent: "center",
