@@ -85,26 +85,45 @@ function ProfileComponent(props) {
   }, [isFocused]);
 
   useEffect(() => {
-        setTimeout( async () => {
-            try {
-                const userEmail = String(fireauth.currentUser.email);
-                const retrieveUser = await firestore.collection('users').doc(userEmail).get()
-                console.log(userEmail);
-                const userDetails = retrieveUser.data();
-                const userExp = userDetails["exp"];
-                const actualUserLvl = Math.floor(userExp/500) + 1;
-                setUserLvl(actualUserLvl);
-            } catch (error){
-                console.log(error);
-            }
-        }, 0)
-    }, [])
-
-
+    setTimeout(async () => {
+      try {
+        const userEmail = String(fireauth.currentUser.email);
+        const retrieveUser = await firestore
+          .collection("users")
+          .doc(userEmail)
+          .get();
+        console.log(userEmail);
+        const userDetails = retrieveUser.data();
+        const userExp = userDetails["exp"];
+        const actualUserLvl = Math.floor(userExp / 500) + 1;
+        setUserLvl(actualUserLvl);
+      } catch (error) {
+        console.log(error);
+      }
+    }, 0);
+  }, []);
 
   const theme = useTheme();
 
   const { navigate } = useNavigation();
+
+  const determineLvlCircleOutline = (userLvl) => {
+    if (userLvl >= 30) {
+      return ["#ff512f", "#dd2476"];
+    } else if (userLvl >= 25) {
+      return ["#FDC830", "#F37335"];
+    } else if (userLvl >= 20) {
+      return ["#00B4DB", "#0083B0"];
+    } else if (userLvl >= 15) {
+      return ["#3494E6", "#EC6EAD"];
+    } else if (userLvl >= 10) {
+      return ["#3E5151", "#DECBA4"];
+    } else if (userLvl >= 5) {
+      return ["#D3CCE3", "#E9E4F0"];
+    } else {
+      return ["#DBE6F6", "#DBE6F6"];
+    }
+  };
 
   const [loaded] = useFonts({
     MontserratLight: require("../../../assets/fonts/Montserrat-Light.ttf"),
@@ -158,22 +177,25 @@ function ProfileComponent(props) {
           </Text>
         </Surface>
       </TouchableOpacity>
+      <Title style={[styles.titleText, { fontFamily: "PoppinsMedium" }]}>
+        Title: Mugger Dog
+      </Title>
+      <Subheading style={[styles.description, { fontFamily: "PoppinsLight" }]}>
+        {userInfo[3]}
+      </Subheading>
       <View
         style={{
-          flexDirection: "row",
           alignSelf: "center",
+          top: 80,
         }}
       >
-        <Title style={[styles.levelText, { fontFamily: "PoppinsMedium" }]}>
-          Level{" "}
-        </Title>
-        <View style={{ justifyContent: "center" }}>
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
           <LinearGradient
-            colors={["#ff512f", "#dd2476"]}
+            colors={determineLvlCircleOutline(userLvl)}
             style={{
-              borderRadius: 15,
-              width: 30,
-              height: 30,
+              borderRadius: 75,
+              width: 150,
+              height: 150,
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -181,9 +203,9 @@ function ProfileComponent(props) {
             <View
               style={{
                 backgroundColor: theme.colors.background,
-                width: 20,
-                height: 20,
-                borderRadius: 10,
+                width: 130,
+                height: 130,
+                borderRadius: 65,
                 alignItems: "center",
                 justifyContent: "center",
               }}
@@ -191,35 +213,6 @@ function ProfileComponent(props) {
               <Text style={{ fontFamily: "PoppinsBold" }}>{userLvl}</Text>
             </View>
           </LinearGradient>
-        </View>
-      </View>
-      <Title style={[styles.titleText, { fontFamily: "PoppinsMedium" }]}>
-        Title: Mugger Dog
-      </Title>
-      <Subheading style={[styles.description, { fontFamily: "PoppinsLight" }]}>
-        {userInfo[3]}
-      </Subheading>
-      <View style={styles.dividerContainer}>
-        <View style={styles.rankContainer}>
-          <Badge
-            size={50}
-            style={{ backgroundColor: "#c68856", alignSelf: "center" }}
-          >
-            <MaterialCommunityIcons name="gold" size={24} color="white" />
-          </Badge>
-          <Text style={[styles.rankText, { fontFamily: "PoppinsRegular" }]}>
-            Bronze
-          </Text>
-        </View>
-        <View style={styles.pointsContainer}>
-          <MaterialCommunityIcons
-            name="diamond-stone"
-            size={50}
-            color="#4169e1"
-          />
-          <Text style={[styles.pointsText, { fontFamily: "PoppinsRegular" }]}>
-            300
-          </Text>
         </View>
       </View>
     </ScrollView>
