@@ -18,11 +18,7 @@ import EStyleSheet from "react-native-extended-stylesheet";
 import { AuthContext } from "../../context/Provider";
 import colors from "../../../assets/theme/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {
-  PROFILE_NAVIGATOR,
-  SETTINGS_NAVIGATOR,
-  TAB_NAVIGATOR,
-} from "../../constants/routeNames";
+import { PROFILE_NAVIGATOR, TAB_NAVIGATOR } from "../../constants/routeNames";
 import { useDispatch } from "react-redux";
 import { useFonts } from "expo-font";
 import * as Decks from "../../../store/slices/deckSlice";
@@ -196,16 +192,6 @@ function DrawerContent(props) {
               labelStyle={{ fontFamily: "PoppinsRegular" }}
               onPress={() => {
                 props.navigation.navigate(PROFILE_NAVIGATOR);
-              }}
-            ></DrawerItem>
-            <DrawerItem
-              icon={({ color, size }) => (
-                <Icon name="cog-outline" color={color} size={size} />
-              )}
-              label="Settings"
-              labelStyle={{ fontFamily: "PoppinsRegular" }}
-              onPress={() => {
-                props.navigation.navigate(SETTINGS_NAVIGATOR);
               }}
             ></DrawerItem>
           </Drawer.Section>

@@ -137,7 +137,7 @@ function FlipCard({ front, back, deleteCard, id, boxType }) {
 
 function FlashCard({ id, question, answer, deleteCard, boxType }) {
   return (
-    <View style={{}}>
+    <View>
       <FlipCard
         front={question}
         back={answer}
