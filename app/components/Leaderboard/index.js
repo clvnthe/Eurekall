@@ -2,12 +2,26 @@ import { useTheme } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { FlatList, Text, View } from "react-native";
-import { Avatar, Subheading, Surface, Title } from "react-native-paper";
+import {
+  FlatList,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import {
+  Avatar,
+  Portal,
+  Modal,
+  Subheading,
+  Surface,
+  Title,
+} from "react-native-paper";
 import styles from "./styles";
 
 function LeaderboardComponent(props) {
   const theme = useTheme();
+
   const users = [
     {
       id: "1",
@@ -75,6 +89,20 @@ function LeaderboardComponent(props) {
     },
   ];
 
+  const [visible, setVisible] = React.useState(false);
+  const [currentUserProfile, setCurrentUserProfile] = React.useState({
+    id: null,
+    username: null,
+    title: null,
+    level: null,
+    profilePic: null,
+  });
+  const showModal = (item) => {
+    setVisible(true);
+    setCurrentUserProfile(item);
+  };
+  const hideModal = () => setVisible(false);
+
   const determineLvlCircleOutline = (userLvl) => {
     if (userLvl >= 30) {
       return ["#ff512f", "#dd2476"];
@@ -121,79 +149,170 @@ function LeaderboardComponent(props) {
 
   const renderItem = ({ item }) => {
     return (
-      <Surface
-        style={[
-          styles.userContainer,
-          {
-            backgroundColor: !theme.dark ? "#F0F0F0" : theme.colors.border,
-          },
-        ]}
-      >
-        <View style={styles.innerContainer}>
-          <View style={styles.rankTextContainer}>
-            <Text
-              style={{
-                fontFamily: "PoppinsMedium",
-                color: determineRankTextColour(item.id),
-              }}
-            >
-              #{item.id}
-            </Text>
-          </View>
-          <View style={styles.innerPPandTextContainer}>
-            <Avatar.Image
-              size={80}
-              source={{
-                uri: item.profilePic,
-              }}
-            />
-            <View style={styles.innerTextContainer}>
-              <Title
-                style={[
-                  styles.usernameText,
-                  { fontFamily: "PoppinsBold", color: theme.colors.text },
-                ]}
+      <TouchableOpacity onPress={() => showModal(item)}>
+        <Surface
+          style={[
+            styles.userContainer,
+            {
+              backgroundColor: !theme.dark ? "#F0F0F0" : theme.colors.border,
+            },
+          ]}
+        >
+          <View style={styles.innerContainer}>
+            <View style={styles.rankTextContainer}>
+              <Text
+                style={{
+                  fontFamily: "PoppinsMedium",
+                  color: determineRankTextColour(item.id),
+                }}
               >
-                {item.username}
-              </Title>
-              <Subheading style={{ fontFamily: "PoppinsMedium" }}>
-                {item.title}
-              </Subheading>
+                #{item.id}
+              </Text>
+            </View>
+            <View style={styles.innerPPandTextContainer}>
+              <Avatar.Image
+                size={80}
+                source={{
+                  uri: item.profilePic,
+                }}
+              />
+              <View style={styles.innerTextContainer}>
+                <Title
+                  style={[
+                    styles.usernameText,
+                    { fontFamily: "PoppinsBold", color: theme.colors.text },
+                  ]}
+                >
+                  {item.username}
+                </Title>
+                <Subheading style={{ fontFamily: "PoppinsMedium" }}>
+                  {item.title}
+                </Subheading>
+              </View>
+            </View>
+            <View style={styles.levelContainer}>
+              <LinearGradient
+                colors={determineLvlCircleOutline(item.level)}
+                style={styles.levelCircleOutline}
+              >
+                <View
+                  style={[
+                    styles.levelCircleInner,
+                    {
+                      backgroundColor: theme.dark
+                        ? theme.colors.border
+                        : "#F0F0F0",
+                    },
+                  ]}
+                >
+                  <Text
+                    style={{
+                      fontFamily: "PoppinsBold",
+                      color: theme.colors.text,
+                    }}
+                  >
+                    {item.level}
+                  </Text>
+                </View>
+              </LinearGradient>
             </View>
           </View>
-          <View style={styles.levelContainer}>
-            <LinearGradient
-              colors={determineLvlCircleOutline(item.level)}
-              style={styles.levelCircleOutline}
-            >
-              <View
-                style={[
-                  styles.levelCircleInner,
-                  {
-                    backgroundColor: theme.dark
-                      ? theme.colors.border
-                      : "#F0F0F0",
-                  },
-                ]}
-              >
-                <Text
-                  style={{
-                    fontFamily: "PoppinsBold",
-                    color: theme.colors.text,
-                  }}
-                >
-                  {item.level}
-                </Text>
-              </View>
-            </LinearGradient>
-          </View>
-        </View>
-      </Surface>
+        </Surface>
+      </TouchableOpacity>
     );
   };
 
   return (
     <View style={styles.container}>
+      <Portal>
+        <Modal
+          visible={visible}
+          onDismiss={hideModal}
+          contentContainerStyle={[
+            {
+              backgroundColor: theme.dark
+                ? theme.colors.border
+                : theme.colors.background,
+            },
+            styles.modalContainer,
+          ]}
+        >
+          <ScrollView
+            contentContainerStyle={[
+              {
+                backgroundColor: theme.dark
+                  ? theme.colors.border
+                  : theme.colors.background,
+              },
+              styles.modalInnerScrollViewContainer,
+            ]}
+          >
+            <Title
+              style={{
+                fontFamily: "PoppinsBold",
+                color: determineRankTextColour(currentUserProfile.id),
+              }}
+            >
+              #{currentUserProfile.id}
+            </Title>
+            <Avatar.Image
+              size={100}
+              source={{ uri: currentUserProfile.profilePic }}
+            ></Avatar.Image>
+            <Title
+              style={{
+                fontFamily: "PoppinsBold",
+                color: theme.colors.text,
+                marginBottom: -8,
+              }}
+            >
+              {currentUserProfile.username}
+            </Title>
+            <Subheading
+              style={{ fontFamily: "PoppinsMedium", color: theme.colors.text }}
+            >
+              {currentUserProfile.title}
+            </Subheading>
+            <Text
+              style={{
+                fontFamily: "PoppinsRegular",
+                color: theme.colors.text,
+                textAlign: "center",
+              }}
+            >
+              Hi there, I am {currentUserProfile.username}! Welcome to my
+              profile page!
+            </Text>
+            <View style={styles.profileLvl}>
+              <LinearGradient
+                colors={determineLvlCircleOutline(currentUserProfile.level)}
+                style={styles.profileLevelCircleOutline}
+              >
+                <View
+                  style={[
+                    styles.profileLevelCircleInner,
+                    {
+                      backgroundColor: theme.dark
+                        ? theme.colors.border
+                        : theme.colors.background,
+                    },
+                  ]}
+                >
+                  <Text
+                    style={{
+                      fontFamily: "PoppinsBold",
+                      fontSize: 30,
+                      color: theme.colors.text,
+                    }}
+                  >
+                    {currentUserProfile.level}
+                  </Text>
+                </View>
+              </LinearGradient>
+            </View>
+          </ScrollView>
+        </Modal>
+      </Portal>
       <FlatList
         data={users}
         renderItem={renderItem}

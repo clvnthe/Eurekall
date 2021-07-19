@@ -63,4 +63,33 @@ export default ScaledSheet.create({
   footer: {
     height: windowHeight * 0.1,
   },
+  modalContainer: {
+    margin: "10@s",
+    padding: "6@s",
+    height: windowHeight * 0.6,
+    borderRadius: "20@s",
+    elevation: 8,
+  },
+  modalInnerScrollViewContainer: {
+    flexGrow: 1,
+    alignItems: "center",
+    padding: "20@s",
+  },
+  profileLvl: {
+    margin: "20@s",
+  },
+  profileLevelCircleOutline: {
+    borderRadius: "50@s",
+    width: "100@s",
+    height: "100@s",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  profileLevelCircleInner: {
+    width: "80@s",
+    height: "80@s",
+    borderRadius: "40@s",
+    alignItems: "center",
+    justifyContent: "center",
+  },
 });
