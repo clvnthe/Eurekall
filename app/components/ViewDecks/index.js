@@ -67,8 +67,10 @@ function DeckComponent(props) {
 
   useEffect(() => {
     setFilteredDecks(
-      decks.filter((deck) =>
-        deck.title.toLowerCase().includes(searchQuery.toLowerCase())
+      decks.filter(
+        (deck) =>
+          deck.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          deck.subtitle.toLowerCase().includes(searchQuery.toLowerCase())
       )
     );
   }, [searchQuery]);

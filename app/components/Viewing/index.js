@@ -67,8 +67,10 @@ function ViewingComponent({ route }) {
 
   useEffect(() => {
     setFilteredCards(
-      decks[index].cards.filter((card) =>
-        card.question.toLowerCase().includes(searchQuery.toLowerCase())
+      decks[index].cards.filter(
+        (card) =>
+          card.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          card.answer.toLowerCase().includes(searchQuery.toLowerCase())
       )
     );
   }, [searchQuery]);
