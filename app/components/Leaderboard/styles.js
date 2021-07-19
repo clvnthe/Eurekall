@@ -16,6 +16,7 @@ export default ScaledSheet.create({
     borderRadius: "20@s",
     alignItems: "center",
     alignSelf: "center",
+    elevation: 4,
   },
   innerContainer: {
     height: "80@s",

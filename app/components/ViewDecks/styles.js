@@ -34,6 +34,9 @@ export default ScaledSheet.create({
     right: windowWidth * 0.05,
     elevation: 6,
   },
+  fabGroup: {
+    paddingBottom: windowHeight * 0.1,
+  },
   modal: {
     padding: "10@s",
     borderRadius: "20@s",

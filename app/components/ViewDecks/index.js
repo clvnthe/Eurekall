@@ -61,6 +61,9 @@ function DeckComponent(props) {
   const [keyboardIsActive, setKeyboardIsActive] = useState(false);
   const onChangeSearch = (query) => setSearchQuery(query);
   const windowHeight = useWindowDimensions().height;
+  const [state, setState] = React.useState({ open: false });
+  const onStateChange = ({ open }) => setState({ open });
+  const { open } = state;
 
   useEffect(() => {
     setFilteredDecks(
@@ -405,7 +408,7 @@ function DeckComponent(props) {
         >
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
         </Modal>
-        <FAB
+        <FAB.Group
           visible={
             !keyboardIsActive &&
             !visibleHelp &&
@@ -413,10 +416,31 @@ function DeckComponent(props) {
             !visibleAddCardModal &&
             isFocused
           }
-          style={[styles.fab, { backgroundColor: theme.colors.secondary }]}
-          icon="plus"
+          open={open}
+          icon={open ? "close" : "plus"}
+          actions={[
+            {
+              icon: "credit-card-plus",
+              label: "Create Deck",
+              onPress: () => {
+                showModal();
+              },
+            },
+            {
+              icon: "file-upload",
+              label: "Upload PDF",
+              onPress: () => console.log("Pressed upload pdf"),
+            },
+          ]}
+          onStateChange={onStateChange}
+          onPress={() => {
+            if (open) {
+              // do something if the speed dial is open
+            }
+          }}
+          style={styles.fabGroup}
+          fabStyle={{ backgroundColor: theme.colors.secondary }}
           color={theme.colors.onPrimary}
-          onPress={showModal}
         />
       </Portal>
       <View style={styles.helpIconView}>

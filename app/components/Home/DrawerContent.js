@@ -181,7 +181,10 @@ function DrawerContent(props) {
               label="Home"
               labelStyle={{ fontFamily: "PoppinsRegular" }}
               onPress={() => {
-                props.navigation.navigate(TAB_NAVIGATOR);
+                props.navigation.reset({
+                  index: 0,
+                  routes: [{ name: TAB_NAVIGATOR }],
+                });
               }}
             ></DrawerItem>
             <DrawerItem

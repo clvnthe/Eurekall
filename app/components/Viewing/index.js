@@ -430,8 +430,8 @@ const styles = ScaledSheet.create({
   },
   fab: {
     alignSelf: "flex-end",
-    top: "80%",
-    right: "5%",
+    top: "80.5%",
+    right: "4.5%",
     elevation: 6,
   },
   modal: {
