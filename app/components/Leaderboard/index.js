@@ -93,6 +93,18 @@ function LeaderboardComponent(props) {
     }
   };
 
+  const determineRankTextColour = (rank) => {
+    if (rank === "1") {
+      return "#C9B037";
+    } else if (rank === "2") {
+      return "#aaa9ad";
+    } else if (rank === "3") {
+      return "#CD7F32";
+    } else {
+      return theme.colors.text;
+    }
+  };
+
   const [loaded] = useFonts({
     MontserratLight: require("../../../assets/fonts/Montserrat-Light.ttf"),
     MontserratBold: require("../../../assets/fonts/Montserrat-Bold.ttf"),
@@ -120,7 +132,10 @@ function LeaderboardComponent(props) {
         <View style={styles.innerContainer}>
           <View style={styles.rankTextContainer}>
             <Text
-              style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+              style={{
+                fontFamily: "PoppinsMedium",
+                color: determineRankTextColour(item.id),
+              }}
             >
               #{item.id}
             </Text>
