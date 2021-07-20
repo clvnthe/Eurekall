@@ -23,6 +23,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import firebase from "firebase";
 import { LinearGradient } from "expo-linear-gradient";
 import { ScrollView } from "moti";
+import useWindowDimensions from "react-native/Libraries/Utilities/useWindowDimensions";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -45,6 +46,8 @@ const fireauth = firebase.auth();
 const fireBucket = firebase.storage();
 
 function ProfileComponent(props) {
+  const windowWidth = useWindowDimensions().width;
+  const windowHeight = useWindowDimensions().height;
   const [userInfo, setUserInfo] = React.useState([]);
   const [image, setImage] = useState(
     "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8"
@@ -141,52 +144,70 @@ function ProfileComponent(props) {
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: "50%" }}>
-      <Avatar.Image
-        size={120}
-        style={styles.profilePic}
-        source={{
-          uri: image,
+      <View
+        style={{
+          height: windowHeight * 0.2,
+          justifyContent: "center",
+          backgroundColor: theme.colors.border,
+          borderBottomStartRadius: 300,
+          borderBottomEndRadius: 300,
         }}
-      ></Avatar.Image>
-      <Title style={[styles.name, { fontFamily: "PoppinsBold" }]}>
-        {userInfo[1]}
-      </Title>
-      <Subheading style={[styles.username, { fontFamily: "PoppinsLight" }]}>
-        @{userInfo[2]}
-      </Subheading>
-      <TouchableOpacity
-        style={styles.editProfileButton}
-        onPress={() => navigate(EDIT_PROFILE)}
       >
-        <Surface
-          style={[
-            styles.editProfileButtonContainer,
-            {
-              backgroundColor: theme.colors.primary,
-            },
-          ]}
+        <Avatar.Image
+          size={120}
+          style={styles.profilePic}
+          source={{
+            uri: image,
+          }}
+        ></Avatar.Image>
+      </View>
+      <View
+        style={{
+          justifyContent: "center",
+        }}
+      >
+        <Text style={[styles.name, { fontFamily: "PoppinsBold" }]}>
+          {userInfo[1]}
+        </Text>
+        <Text style={[styles.username, { fontFamily: "PoppinsLight" }]}>
+          @{userInfo[2]}
+        </Text>
+        <Text style={[styles.titleText, { fontFamily: "PoppinsLight" }]}>
+          Mugger Dog
+        </Text>
+        <TouchableOpacity
+          style={styles.editProfileButton}
+          onPress={() => navigate(EDIT_PROFILE)}
         >
-          <Feather name="edit" size={18} color="#ffffff" />
-          <Text
+          <Surface
             style={[
-              styles.editProfileButtonText,
-              { fontFamily: "PoppinsMedium" },
+              styles.editProfileButtonContainer,
+              {
+                backgroundColor: theme.colors.primary,
+              },
             ]}
           >
-            Edit Profile
-          </Text>
-        </Surface>
-      </TouchableOpacity>
-      <Title style={[styles.titleText, { fontFamily: "PoppinsMedium" }]}>
-        Title: Mugger Dog
-      </Title>
-      <Subheading style={[styles.description, { fontFamily: "PoppinsLight" }]}>
-        {userInfo[3]}
-      </Subheading>
+            <Feather name="edit" size={18} color="#ffffff" />
+            <Text
+              style={[
+                styles.editProfileButtonText,
+                { fontFamily: "PoppinsMedium" },
+              ]}
+            >
+              Edit Profile
+            </Text>
+          </Surface>
+        </TouchableOpacity>
+      </View>
+      <View style={{ padding: 10 }}>
+        <Text style={[styles.description, { fontFamily: "PoppinsLight" }]}>
+          {userInfo[3]}
+        </Text>
+      </View>
       <View
         style={{
           alignSelf: "center",
-          top: 80,
+          //top: 80,
         }}
       >
         <View style={{ justifyContent: "center", alignItems: "center" }}>

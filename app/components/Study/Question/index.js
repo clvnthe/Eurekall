@@ -4,7 +4,7 @@ import {
   useIsFocused,
 } from "@react-navigation/native";
 import React, { useEffect } from "react";
-import { Alert, ScrollView, View } from "react-native";
+import { Alert, KeyboardAvoidingView, ScrollView, View } from "react-native";
 import { Surface, Text, TextInput } from "react-native-paper";
 import { useSelector } from "react-redux";
 import { ANSWER } from "../../../constants/routeNames";
@@ -75,66 +75,71 @@ function QuestionComponent({ route }) {
     const curCard = curDeck.cards[curDeck.cards.length - 1];
 
     return (
-      <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
-        <Surface
-          style={[styles.question, { backgroundColor: theme.colors.primary }]}
-        >
-          <ScrollView
-            contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      <KeyboardAvoidingView
+        style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}
+        behavior="position"
+      >
+        <ScrollView>
+          <Surface
+            style={[styles.question, { backgroundColor: theme.colors.primary }]}
           >
-            <Text
-              style={[
-                styles.questionText,
-                {
-                  color: theme.dark ? theme.colors.onPrimary : "#ffffff",
-                  fontFamily: "PoppinsMedium",
-                },
-              ]}
+            <ScrollView
+              contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
             >
-              {curCard.question}
-            </Text>
-          </ScrollView>
-        </Surface>
-        <Surface style={styles.userAnswer}>
-          <TextInput
-            theme={{ roundness: 20 }}
-            mode="flat"
-            label="Answer"
-            value={userAnswer}
-            onChangeText={setUserAnswer}
-            style={styles.userAnswerTextInput}
-            left={
-              <TextInput.Icon
-                name="alpha-a-box-outline"
-                color={userAnswer ? theme.colors.primary : theme.colors.text}
-              />
-            }
-          ></TextInput>
-        </Surface>
-        <View style={{ alignItems: "center" }}>
-          <CustomButton
-            title="Submit"
-            //width={165}
-            onPress={() => {
-              if (userAnswer !== "") {
-                navigate(ANSWER, {
-                  paramIndex: route.params.paramIndex,
-                  //cardIndex: route.params.cardIndex,
-                  paramUserAnswer: userAnswer,
-                  curDeck: curDeck,
-                  studyAll: true,
-                  statsTracker: statsTracker,
-                });
-                setUserAnswer("");
-              } else {
-                Alert.alert("Alert", "Please enter an answer :)", [
-                  { text: "OK", onPress: () => console.log("OK Pressed") },
-                ]);
+              <Text
+                style={[
+                  styles.questionText,
+                  {
+                    color: theme.dark ? theme.colors.onPrimary : "#ffffff",
+                    fontFamily: "PoppinsMedium",
+                  },
+                ]}
+              >
+                {curCard.question}
+              </Text>
+            </ScrollView>
+          </Surface>
+          <Surface style={styles.userAnswer}>
+            <TextInput
+              theme={{ roundness: 20 }}
+              mode="flat"
+              label="Answer"
+              value={userAnswer}
+              onChangeText={setUserAnswer}
+              style={styles.userAnswerTextInput}
+              left={
+                <TextInput.Icon
+                  name="alpha-a-box-outline"
+                  color={userAnswer ? theme.colors.primary : theme.colors.text}
+                />
               }
-            }}
-          ></CustomButton>
-        </View>
-      </ScrollView>
+            ></TextInput>
+          </Surface>
+          <View style={{ alignItems: "center" }}>
+            <CustomButton
+              title="Submit"
+              //width={165}
+              onPress={() => {
+                if (userAnswer !== "") {
+                  navigate(ANSWER, {
+                    paramIndex: route.params.paramIndex,
+                    //cardIndex: route.params.cardIndex,
+                    paramUserAnswer: userAnswer,
+                    curDeck: curDeck,
+                    studyAll: true,
+                    statsTracker: statsTracker,
+                  });
+                  setUserAnswer("");
+                } else {
+                  Alert.alert("Alert", "Please enter an answer :)", [
+                    { text: "OK", onPress: () => console.log("OK Pressed") },
+                  ]);
+                }
+              }}
+            ></CustomButton>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   } else {
     const statsTracker =
@@ -153,69 +158,74 @@ function QuestionComponent({ route }) {
     }
 
     return (
-      <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
-        <Surface
-          style={[styles.question, { backgroundColor: theme.colors.primary }]}
-        >
-          <ScrollView
-            contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+      <KeyboardAvoidingView
+        style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}
+        behavior="position"
+      >
+        <ScrollView>
+          <Surface
+            style={[styles.question, { backgroundColor: theme.colors.primary }]}
           >
-            <Text
-              style={[
-                styles.questionText,
-                {
-                  color: theme.dark ? theme.colors.onPrimary : "#ffffff",
-                  fontFamily: "PoppinsMedium",
-                },
-              ]}
+            <ScrollView
+              contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
             >
-              {studydeck.length === 0
-                ? ""
-                : studydeck[studydeck.length - 1].question}
-            </Text>
-          </ScrollView>
-        </Surface>
-        <Surface style={styles.userAnswer}>
-          <TextInput
-            theme={{ roundness: 20 }}
-            mode="flat"
-            label="Answer"
-            value={userAnswer}
-            onChangeText={setUserAnswer}
-            style={styles.userAnswerTextInput}
-            left={
-              <TextInput.Icon
-                name="alpha-a-box-outline"
-                color={userAnswer ? theme.colors.primary : theme.colors.text}
-              />
-            }
-          ></TextInput>
-        </Surface>
-        <View style={{ alignItems: "center" }}>
-          <CustomButton
-            title="Submit"
-            //width={165}
-            onPress={() => {
-              if (userAnswer !== "") {
-                navigate(ANSWER, {
-                  paramIndex: route.params.paramIndex,
-                  paramUserAnswer: userAnswer,
-                  statsTracker: statsTracker,
-                  studydeckCopy:
-                    typeof route.params.studydeckCopy === "undefined"
-                      ? studydeck
-                      : route.params.studydeckCopy,
-                });
-                setUserAnswer("");
-              } else {
-                Alert.alert("Alert", "Please enter an answer :)", [
-                  { text: "OK", onPress: () => console.log("OK Pressed") },
-                ]);
+              <Text
+                style={[
+                  styles.questionText,
+                  {
+                    color: theme.dark ? theme.colors.onPrimary : "#ffffff",
+                    fontFamily: "PoppinsMedium",
+                  },
+                ]}
+              >
+                {studydeck.length === 0
+                  ? ""
+                  : studydeck[studydeck.length - 1].question}
+              </Text>
+            </ScrollView>
+          </Surface>
+          <Surface style={styles.userAnswer}>
+            <TextInput
+              theme={{ roundness: 20 }}
+              mode="flat"
+              label="Answer"
+              value={userAnswer}
+              onChangeText={setUserAnswer}
+              style={styles.userAnswerTextInput}
+              left={
+                <TextInput.Icon
+                  name="alpha-a-box-outline"
+                  color={userAnswer ? theme.colors.primary : theme.colors.text}
+                />
               }
-            }}
-          ></CustomButton>
-        </View>
-      </ScrollView>
+            ></TextInput>
+          </Surface>
+          <View style={{ alignItems: "center" }}>
+            <CustomButton
+              title="Submit"
+              //width={165}
+              onPress={() => {
+                if (userAnswer !== "") {
+                  navigate(ANSWER, {
+                    paramIndex: route.params.paramIndex,
+                    paramUserAnswer: userAnswer,
+                    statsTracker: statsTracker,
+                    studydeckCopy:
+                      typeof route.params.studydeckCopy === "undefined"
+                        ? studydeck
+                        : route.params.studydeckCopy,
+                  });
+                  setUserAnswer("");
+                } else {
+                  Alert.alert("Alert", "Please enter an answer :)", [
+                    { text: "OK", onPress: () => console.log("OK Pressed") },
+                  ]);
+                }
+              }}
+            ></CustomButton>
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }

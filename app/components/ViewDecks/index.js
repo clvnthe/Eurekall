@@ -395,19 +395,43 @@ function DeckComponent(props) {
             },
           ]}
         >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Title style={{ fontFamily: "PoppinsBold" }}>Create a deck</Title>
+            <TouchableOpacity onPress={hideModal}>
+              <Ionicons name="ios-close-outline" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
           <ReviewFormComponent createDeckHandler={createDeckHandler} />
         </Modal>
         <Modal
           visible={visibleAddCardModal}
           onDismiss={hideAddCardModal}
           contentContainerStyle={[
-            styles.modal,
+            styles.modalCardForm,
             {
               backgroundColor: theme.colors.background,
               borderColor: theme.colors.surface,
             },
           ]}
         >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Title style={{ fontFamily: "PoppinsBold" }}>
+              Create a flashcard
+            </Title>
+            <TouchableOpacity onPress={hideAddCardModal}>
+              <Ionicons name="ios-close-outline" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
         </Modal>
         <FAB.Group

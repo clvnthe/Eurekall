@@ -42,18 +42,20 @@ export default (props, backgroundColor) => {
   } else if (props.noPadding) {
     return (
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <SafeAreaView
+        <KeyboardAvoidingView
           style={{
             backgroundColor: { backgroundColor },
             //height: "100%",
             flex: 1,
             ...props.style,
           }}
-          {...props}
+          behavior="position"
         >
-          <StatusBar style="dark" />
-          {props.children}
-        </SafeAreaView>
+          <SafeAreaView {...props}>
+            <StatusBar style="dark" />
+            {props.children}
+          </SafeAreaView>
+        </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     );
   } else {

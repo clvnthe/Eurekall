@@ -1,12 +1,12 @@
 import React from "react";
-import { Alert, View } from "react-native";
+import { Alert, ScrollView, View } from "react-native";
 import { TextInput } from "react-native-paper";
 import { Formik } from "formik";
 import CustomButton from "../CustomButton";
 
 function FlashCardForm({ createFlashcardHandler }) {
   return (
-    <View>
+    <ScrollView>
       <Formik
         initialValues={{ question: "", answer: "" }}
         onSubmit={(values, actions) => {
@@ -19,9 +19,11 @@ function FlashCardForm({ createFlashcardHandler }) {
             <TextInput
               mode="outlined"
               label="Flashcard Question"
+              multiline={true}
+              numberOfLines={10}
               maxLength={100}
               style={{
-                //maxHeight: 100,
+                maxHeight: 150,
                 marginTop: -5,
                 padding: 10,
               }}
@@ -43,7 +45,7 @@ function FlashCardForm({ createFlashcardHandler }) {
               maxLength={500}
               textAlignVertical="top"
               style={{
-                maxHeight: 300,
+                maxHeight: 200,
                 marginTop: -10,
                 padding: 10,
               }}
@@ -83,7 +85,7 @@ function FlashCardForm({ createFlashcardHandler }) {
           </View>
         )}
       </Formik>
-    </View>
+    </ScrollView>
   );
 }
 

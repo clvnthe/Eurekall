@@ -31,7 +31,7 @@ function Shape({ bg, words, isFront, state }) {
         style={[
           styles.shape,
           {
-            transform: [!isFront ? { rotateY: "180deg" } : { rotateY: "0deg" }],
+            //transform: [!isFront ? { rotateY: "180deg" } : { rotateY: "0deg" }],
           },
         ]}
         colors={bg.length === 5 ? bg : [bg, bg]}
@@ -64,11 +64,15 @@ function FlipCard({ front, back, deleteCard, id, boxType }) {
   const flipState = useAnimationState({
     from: {
       opacity: 1,
+      scaleX: -1,
       rotateY: "180deg",
+      perspective: 500,
     },
     to: {
       opacity: 1,
+      //scaleX: 1,
       rotateY: "0deg",
+      perspective: 500,
     },
     exit: {
       opacity: 0,

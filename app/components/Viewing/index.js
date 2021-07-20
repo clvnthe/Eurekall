@@ -298,13 +298,26 @@ function ViewingComponent({ route }) {
           visible={visible}
           onDismiss={hideModal}
           contentContainerStyle={[
-            styles.modal,
+            styles.modalCardForm,
             {
               backgroundColor: theme.colors.background,
               borderColor: theme.colors.surface,
             },
           ]}
         >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Title style={{ fontFamily: "PoppinsBold" }}>
+              Create a flashcard
+            </Title>
+            <TouchableOpacity onPress={hideModal}>
+              <Ionicons name="ios-close-outline" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
         </Modal>
         <FAB
@@ -435,6 +448,19 @@ const styles = ScaledSheet.create({
     top: "80.5%",
     right: "4.5%",
     elevation: 6,
+  },
+  modalCardForm: {
+    padding: "10@s",
+    borderRadius: "20@s",
+    borderWidth: "1@s",
+    shadowOffset: { width: "1@s", height: "1@s" },
+    shadowColor: "#333",
+    shadowOpacity: "0.3@s",
+    shadowRadius: "2@s",
+    marginHorizontal: "4@s",
+    marginVertical: "6@s",
+    elevation: "24@s",
+    flex: 1,
   },
   modal: {
     padding: "10@s",
