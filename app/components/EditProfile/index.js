@@ -263,7 +263,7 @@ function EditProfileComponent(props) {
   }
 
   return (
-    <Container noPadding>
+    <Container editProfilePage>
       <BottomSheet
         ref={bs}
         snapPoints={[330, 0]}
