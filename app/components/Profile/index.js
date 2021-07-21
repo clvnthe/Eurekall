@@ -150,7 +150,7 @@ function ProfileComponent(props) {
           justifyContent: "center",
           backgroundColor: theme.colors.border,
           borderBottomStartRadius: 300,
-          borderBottomEndRadius: 300,
+          borderTopEndRadius: 300,
         }}
       >
         <Avatar.Image

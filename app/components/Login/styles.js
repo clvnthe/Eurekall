@@ -1,47 +1,55 @@
 import { ScaledSheet } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default ScaledSheet.create({
   logoView: {
-    height: "20%",
-    width: "310@s",
+    height: hp(15), //"20%",
+    width: wp(90), //"310@s",
     alignSelf: "center",
     justifyContent: "flex-end",
   },
   logo: {
-    width: "82%",
-    height: "75@s",
+    flex: 1,
+    width: undefined, //wp(78), //"82%",
+    height: undefined, //hp("75@s",
     //top: "120@s",
     //right: "40@s",
     //position: "absolute",
   },
   titleView: {
     flexDirection: "row",
-    width: "310@s",
+    width: wp(90), //"310@s",
     alignSelf: "center",
-    height: "25%",
-  },
-  doodle: {
-    //position: "absolute",
-    width: "160@s",
-    height: "170@s",
-    //left: "210@s",
-    //top: "170@s",
+    height: hp(25), //"25%",
   },
   title: {
     //position: "absolute",
-    width: "180@s",
+    width: wp(50), //"180@s",
     //top: "180@s",
     //left: "20@s",
-    fontSize: "55@s",
+    //flex: 1,
+    fontSize: hp(9), //"55@s",
+  },
+  doodle: {
+    flex: 1,
+    //position: "absolute",
+    width: undefined, //wp(45), //"160@s",
+    height: hp(30), //"170@s",
+    resizeMode: "contain",
+    //left: "210@s",
+    //top: "170@s",
   },
   inputView: {
-    width: "310@s",
+    width: wp(90), //"310@s",
     alignSelf: "center",
     alignItems: "center",
-    height: "30%",
+    height: hp(28), //"30%",
   },
   emailAddressTextInput: {
-    width: "310@s",
+    width: wp(90), //"310@s",
     //top: "320@s",
     //position: "absolute",
   },
@@ -52,13 +60,13 @@ export default ScaledSheet.create({
     alignSelf: "flex-start",
   },
   passwordTextInput: {
-    width: "310@s",
+    width: wp(90), //"310@s",
     //top: "410@s",
     //position: "absolute",
   },
   passwordHelperTextView: {
-    width: "310@s",
-    height: "100@s",
+    width: wp(90), //"310@s",
+    height: hp(10), //"100@s",
   },
   passwordHelperText: {
     position: "absolute",
@@ -73,7 +81,7 @@ export default ScaledSheet.create({
     alignSelf: "center",
   },
   bottomView: {
-    flex: 1,
+    height: hp(20),
     justifyContent: "space-evenly",
   },
   forgotPasswordView: {
@@ -81,7 +89,7 @@ export default ScaledSheet.create({
     alignSelf: "center",
   },
   forgotPWText: {
-    fontSize: "16@s",
+    fontSize: hp(2.5), //"16@s",
     fontWeight: "bold",
     alignSelf: "center",
   },
@@ -91,27 +99,27 @@ export default ScaledSheet.create({
     alignSelf: "center",
   },
   signUpText: {
-    fontSize: "16@s",
+    fontSize: hp(2.5), //"16@s",
   },
   registerText: {
-    fontSize: "16@s",
+    fontSize: hp(2.5), //"16@s",
     fontWeight: "bold",
     alignSelf: "center",
   },
   dividerView: {
-    paddingLeft: "20@s",
-    paddingRight: "20@s",
+    paddingLeft: hp(1), //"20@s",
+    paddingRight: hp(1), //"20@s",
     //top: "530@s",
     flexDirection: "row",
     alignItems: "center",
   },
   dividerLine: {
     flex: 1,
-    height: "0.8@s",
+    height: hp(0.1), //"0.8@s",
   },
   dividerText: {
-    top: "-2@s",
-    width: "30@s",
+    top: hp(-0.2), //"-2@s",
+    width: wp(8), //"30@s",
     textAlign: "center",
   },
 });

@@ -1,5 +1,9 @@
 import { Dimensions } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -64,5 +68,15 @@ export default ScaledSheet.create({
   },
   footer: {
     height: windowHeight * 0.45,
+  },
+  uploadPDFwrapper: {
+    borderRadius: hp(1),
+    borderWidth: wp(0.25),
+    borderStyle: "dashed",
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+    height: hp(15),
+    width: wp(90),
   },
 });

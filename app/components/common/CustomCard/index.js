@@ -22,6 +22,10 @@ import * as Decks from "../../../../store/slices/deckSlice";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useFonts } from "expo-font";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
   const theme = useTheme();
@@ -206,16 +210,23 @@ function CustomCard({ title, subtitle, showAddCardModal, deleteCard, id }) {
 
 const styles = StyleSheet.create({
   touchableButton: {
-    height: 92,
-    width: 100,
+    height: hp(13.5), //92,
+    width: wp(27), //100,
     borderRadius: 10,
     backgroundColor: "#FBF4E2",
     elevation: 2,
     alignItems: "center",
     justifyContent: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
   },
   studyAllButton: {
-    height: 50,
+    height: hp(7),
     width: "100%",
     marginTop: 10,
     borderRadius: 10,
@@ -224,6 +235,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flexDirection: "row",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
   },
   topVector: { top: 5, height: 32, width: 32, position: "absolute" },
   bottomVector: { bottom: 5, height: 32, width: 32, position: "absolute" },
