@@ -5,7 +5,7 @@ import { Surface, Text } from "react-native-paper";
 import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import { useDispatch, useSelector } from "react-redux";
 import * as Decks from "../../../../store/slices/deckSlice";
-import { POST_STUDY, QUESTION } from "../../../constants/routeNames";
+import { DECKS, POST_STUDY, QUESTION } from "../../../constants/routeNames";
 import Constants from "expo-constants";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { useFonts } from "expo-font";
@@ -84,7 +84,13 @@ function AnswerComponent({ route }) {
     const curCard = curDeck.cards[curDeck.cards.length - 1];
 
     return (
-      <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
+      <View
+        style={{
+          paddingTop: Constants.statusBarHeight,
+          flex: 1,
+          marginBottom: 10,
+        }}
+      >
         <Surface
           style={[styles.answer, { backgroundColor: theme.colors.primary }]}
         >
@@ -121,12 +127,23 @@ function AnswerComponent({ route }) {
               };
               tempDeck.cards.length === 0
                 ? setAllDone(true)
-                : navigate(QUESTION, {
-                    paramIndex: index,
-                    //cardIndex: route.params.cardIndex + 1,
-                    curDeck: tempDeck,
-                    studyAll: true,
-                    statsTracker: route.params.statsTracker,
+                : reset({
+                    index: 1,
+                    routes: [
+                      {
+                        name: DECKS,
+                      },
+                      {
+                        name: QUESTION,
+                        params: {
+                          paramIndex: index,
+                          //cardIndex: route.params.cardIndex + 1,
+                          curDeck: tempDeck,
+                          studyAll: true,
+                          statsTracker: route.params.statsTracker,
+                        },
+                      },
+                    ],
                   });
               console.log("Correct Answer!");
             }}
@@ -151,12 +168,23 @@ function AnswerComponent({ route }) {
               ++route.params.statsTracker[
                 decks[index].cards.findIndex((card) => curCard.id === card.id)
               ].numOfTries;
-              navigate(QUESTION, {
-                paramIndex: index,
-                //cardIndex: route.params.cardIndex,
-                curDeck: tempDeck,
-                studyAll: true,
-                statsTracker: route.params.statsTracker,
+              reset({
+                index: 1,
+                routes: [
+                  {
+                    name: DECKS,
+                  },
+                  {
+                    name: QUESTION,
+                    params: {
+                      paramIndex: index,
+                      //cardIndex: route.params.cardIndex,
+                      curDeck: tempDeck,
+                      studyAll: true,
+                      statsTracker: route.params.statsTracker,
+                    },
+                  },
+                ],
               });
               console.log("Wrong Answer!");
             }}
@@ -169,11 +197,17 @@ function AnswerComponent({ route }) {
             ></Icon>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     );
   } else {
     return (
-      <ScrollView style={{ paddingTop: Constants.statusBarHeight, flex: 1 }}>
+      <View
+        style={{
+          paddingTop: Constants.statusBarHeight,
+          flex: 1,
+          marginBottom: 10,
+        }}
+      >
         <Surface
           style={[styles.answer, { backgroundColor: theme.colors.primary }]}
         >
@@ -211,11 +245,27 @@ function AnswerComponent({ route }) {
               {
                 studydeck.length - 1 === 0
                   ? setAllDone(true)
-                  : navigate(QUESTION, {
+                  : reset({
+                      index: 1,
+                      routes: [
+                        {
+                          name: DECKS,
+                        },
+                        {
+                          name: QUESTION,
+                          params: {
+                            paramIndex: index,
+                            statsTracker: route.params.statsTracker,
+                            studydeckCopy: route.params.studydeckCopy,
+                          },
+                        },
+                      ],
+                    });
+                /*navigate(QUESTION, {
                       paramIndex: index,
                       statsTracker: route.params.statsTracker,
                       studydeckCopy: route.params.studydeckCopy,
-                    });
+                    });*/
               }
               console.log("Correct Answer!");
             }}
@@ -236,11 +286,27 @@ function AnswerComponent({ route }) {
                   (card) => studydeck[studydeck.length - 1].id === card.id
                 )
               ].numOfTries;
-              navigate(QUESTION, {
+              reset({
+                index: 1,
+                routes: [
+                  {
+                    name: DECKS,
+                  },
+                  {
+                    name: QUESTION,
+                    params: {
+                      paramIndex: index,
+                      statsTracker: route.params.statsTracker,
+                      studydeckCopy: route.params.studydeckCopy,
+                    },
+                  },
+                ],
+              });
+              /*navigate(QUESTION, {
                 paramIndex: index,
                 statsTracker: route.params.statsTracker,
                 studydeckCopy: route.params.studydeckCopy,
-              });
+              });*/
               console.log("Wrong Answer!");
             }}
           >
@@ -252,7 +318,7 @@ function AnswerComponent({ route }) {
             ></Icon>
           </TouchableOpacity>
         </View>
-      </ScrollView>
+      </View>
     );
   }
 }

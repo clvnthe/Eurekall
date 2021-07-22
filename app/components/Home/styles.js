@@ -1,14 +1,18 @@
 import { ScaledSheet } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default ScaledSheet.create({
   title: {
     //fontSize: "36@s",
     //height: "100%",
     //lineHeight: "38@s",
-    padding: "18@s",
+    padding: hp(3),
   },
   welcomeHomeView: {
-    marginTop: "-25@s",
+    marginTop: hp(-4.5), //"-25@s",
   },
   progressContainer: {
     //top: "20@s",

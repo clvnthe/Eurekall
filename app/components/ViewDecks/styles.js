@@ -1,5 +1,9 @@
 import { Dimensions } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -34,6 +38,9 @@ export default ScaledSheet.create({
     right: windowWidth * 0.05,
     elevation: 6,
   },
+  fabGroup: {
+    paddingBottom: windowHeight * 0.1,
+  },
   modal: {
     padding: "10@s",
     borderRadius: "20@s",
@@ -46,7 +53,30 @@ export default ScaledSheet.create({
     marginVertical: "6@s",
     elevation: "24@s",
   },
+  modalCardForm: {
+    padding: "10@s",
+    borderRadius: "20@s",
+    borderWidth: "1@s",
+    shadowOffset: { width: "1@s", height: "1@s" },
+    shadowColor: "#333",
+    shadowOpacity: "0.3@s",
+    shadowRadius: "2@s",
+    marginHorizontal: "4@s",
+    marginVertical: "6@s",
+    elevation: "24@s",
+    flex: 1,
+  },
   footer: {
     height: windowHeight * 0.45,
+  },
+  uploadPDFwrapper: {
+    borderRadius: hp(1),
+    borderWidth: wp(0.25),
+    borderStyle: "dashed",
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+    height: hp(15),
+    width: wp(90),
   },
 });

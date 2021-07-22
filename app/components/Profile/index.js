@@ -23,6 +23,7 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import firebase from "firebase";
 import { LinearGradient } from "expo-linear-gradient";
 import { ScrollView } from "moti";
+import useWindowDimensions from "react-native/Libraries/Utilities/useWindowDimensions";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -45,6 +46,8 @@ const fireauth = firebase.auth();
 const fireBucket = firebase.storage();
 
 function ProfileComponent(props) {
+  const windowWidth = useWindowDimensions().width;
+  const windowHeight = useWindowDimensions().height;
   const [userInfo, setUserInfo] = React.useState([]);
   const [image, setImage] = useState(
     "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8"
@@ -85,26 +88,45 @@ function ProfileComponent(props) {
   }, [isFocused]);
 
   useEffect(() => {
-        setTimeout( async () => {
-            try {
-                const userEmail = String(fireauth.currentUser.email);
-                const retrieveUser = await firestore.collection('users').doc(userEmail).get()
-                console.log(userEmail);
-                const userDetails = retrieveUser.data();
-                const userExp = userDetails["exp"];
-                const actualUserLvl = Math.floor(userExp/500) + 1;
-                setUserLvl(actualUserLvl);
-            } catch (error){
-                console.log(error);
-            }
-        }, 0)
-    }, [])
-
-
+    setTimeout(async () => {
+      try {
+        const userEmail = String(fireauth.currentUser.email);
+        const retrieveUser = await firestore
+          .collection("users")
+          .doc(userEmail)
+          .get();
+        console.log(userEmail);
+        const userDetails = retrieveUser.data();
+        const userExp = userDetails["exp"];
+        const actualUserLvl = Math.floor(userExp / 500) + 1;
+        setUserLvl(actualUserLvl);
+      } catch (error) {
+        console.log(error);
+      }
+    }, 0);
+  }, []);
 
   const theme = useTheme();
 
   const { navigate } = useNavigation();
+
+  const determineLvlCircleOutline = (userLvl) => {
+    if (userLvl >= 30) {
+      return ["#ff512f", "#dd2476"];
+    } else if (userLvl >= 25) {
+      return ["#FDC830", "#F37335"];
+    } else if (userLvl >= 20) {
+      return ["#00B4DB", "#0083B0"];
+    } else if (userLvl >= 15) {
+      return ["#3494E6", "#EC6EAD"];
+    } else if (userLvl >= 10) {
+      return ["#3E5151", "#DECBA4"];
+    } else if (userLvl >= 5) {
+      return ["#D3CCE3", "#E9E4F0"];
+    } else {
+      return ["#DBE6F6", "#DBE6F6"];
+    }
+  };
 
   const [loaded] = useFonts({
     MontserratLight: require("../../../assets/fonts/Montserrat-Light.ttf"),
@@ -122,58 +144,79 @@ function ProfileComponent(props) {
 
   return (
     <ScrollView contentContainerStyle={{ flexGrow: 1, paddingBottom: "50%" }}>
-      <Avatar.Image
-        size={120}
-        style={styles.profilePic}
-        source={{
-          uri: image,
-        }}
-      ></Avatar.Image>
-      <Title style={[styles.name, { fontFamily: "PoppinsBold" }]}>
-        {userInfo[1]}
-      </Title>
-      <Subheading style={[styles.username, { fontFamily: "PoppinsLight" }]}>
-        @{userInfo[2]}
-      </Subheading>
-      <TouchableOpacity
-        style={styles.editProfileButton}
-        onPress={() => navigate(EDIT_PROFILE)}
-      >
-        <Surface
-          style={[
-            styles.editProfileButtonContainer,
-            {
-              backgroundColor: theme.colors.primary,
-            },
-          ]}
-        >
-          <Feather name="edit" size={18} color="#ffffff" />
-          <Text
-            style={[
-              styles.editProfileButtonText,
-              { fontFamily: "PoppinsMedium" },
-            ]}
-          >
-            Edit Profile
-          </Text>
-        </Surface>
-      </TouchableOpacity>
       <View
         style={{
-          flexDirection: "row",
-          alignSelf: "center",
+          height: windowHeight * 0.2,
+          justifyContent: "center",
+          backgroundColor: theme.colors.border,
+          borderBottomStartRadius: 300,
+          borderTopEndRadius: 300,
         }}
       >
-        <Title style={[styles.levelText, { fontFamily: "PoppinsMedium" }]}>
-          Level{" "}
-        </Title>
-        <View style={{ justifyContent: "center" }}>
+        <Avatar.Image
+          size={120}
+          style={styles.profilePic}
+          source={{
+            uri: image,
+          }}
+        ></Avatar.Image>
+      </View>
+      <View
+        style={{
+          justifyContent: "center",
+        }}
+      >
+        <Text style={[styles.name, { fontFamily: "PoppinsBold" }]}>
+          {userInfo[1]}
+        </Text>
+        <Text style={[styles.username, { fontFamily: "PoppinsLight" }]}>
+          @{userInfo[2]}
+        </Text>
+        <Text style={[styles.titleText, { fontFamily: "PoppinsLight" }]}>
+          Mugger Dog
+        </Text>
+        <TouchableOpacity
+          style={styles.editProfileButton}
+          onPress={() => navigate(EDIT_PROFILE)}
+        >
+          <Surface
+            style={[
+              styles.editProfileButtonContainer,
+              {
+                backgroundColor: theme.colors.primary,
+              },
+            ]}
+          >
+            <Feather name="edit" size={18} color="#ffffff" />
+            <Text
+              style={[
+                styles.editProfileButtonText,
+                { fontFamily: "PoppinsMedium" },
+              ]}
+            >
+              Edit Profile
+            </Text>
+          </Surface>
+        </TouchableOpacity>
+      </View>
+      <View style={{ padding: 10 }}>
+        <Text style={[styles.description, { fontFamily: "PoppinsLight" }]}>
+          {userInfo[3]}
+        </Text>
+      </View>
+      <View
+        style={{
+          alignSelf: "center",
+          //top: 80,
+        }}
+      >
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
           <LinearGradient
-            colors={["#ff512f", "#dd2476"]}
+            colors={determineLvlCircleOutline(userLvl)}
             style={{
-              borderRadius: 15,
-              width: 30,
-              height: 30,
+              borderRadius: 75,
+              width: 150,
+              height: 150,
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -181,9 +224,9 @@ function ProfileComponent(props) {
             <View
               style={{
                 backgroundColor: theme.colors.background,
-                width: 20,
-                height: 20,
-                borderRadius: 10,
+                width: 130,
+                height: 130,
+                borderRadius: 65,
                 alignItems: "center",
                 justifyContent: "center",
               }}
@@ -191,35 +234,6 @@ function ProfileComponent(props) {
               <Text style={{ fontFamily: "PoppinsBold" }}>{userLvl}</Text>
             </View>
           </LinearGradient>
-        </View>
-      </View>
-      <Title style={[styles.titleText, { fontFamily: "PoppinsMedium" }]}>
-        Title: Mugger Dog
-      </Title>
-      <Subheading style={[styles.description, { fontFamily: "PoppinsLight" }]}>
-        {userInfo[3]}
-      </Subheading>
-      <View style={styles.dividerContainer}>
-        <View style={styles.rankContainer}>
-          <Badge
-            size={50}
-            style={{ backgroundColor: "#c68856", alignSelf: "center" }}
-          >
-            <MaterialCommunityIcons name="gold" size={24} color="white" />
-          </Badge>
-          <Text style={[styles.rankText, { fontFamily: "PoppinsRegular" }]}>
-            Bronze
-          </Text>
-        </View>
-        <View style={styles.pointsContainer}>
-          <MaterialCommunityIcons
-            name="diamond-stone"
-            size={50}
-            color="#4169e1"
-          />
-          <Text style={[styles.pointsText, { fontFamily: "PoppinsRegular" }]}>
-            300
-          </Text>
         </View>
       </View>
     </ScrollView>

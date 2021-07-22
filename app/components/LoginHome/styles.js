@@ -1,41 +1,52 @@
 import EStyleSheet from "react-native-extended-stylesheet";
 import { ScaledSheet } from "react-native-size-matters";
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from "react-native-responsive-screen";
 
 export default ScaledSheet.create({
   logoView: {
     //top: "20%",
-    height: "50%",
+    height: hp(50),
     flexDirection: "column",
     justifyContent: "flex-end",
-    width: "310@s",
+    width: wp(85),
     alignSelf: "center",
+    alignItems: "flex-start",
   },
   logo: {
-    width: "82%",
-    height: "75@s",
+    width: wp(75),
+    height: hp(13),
     //right: "40@s",
     //top: "150@s",
     //alignSelf: "center",
   },
   backgroundImage: {
-    width: "100%",
-    height: "110%",
+    //width: wp(100),
+    //height: hp(110),
+    flex: 1,
+    alignSelf: "stretch",
+    width: undefined,
+    height: undefined,
   },
   doodleView: {
     //top: "20%",
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "flex-end",
+    //justifyContent: "flex-end",
   },
   doodle: {
-    width: "200@s",
+    height: undefined, //hp(40),
+    width: undefined, //wp(60), //"200@s",
     flex: 1,
-    //top: "20%",
+    right: wp(20),
+    top: hp(5),
   },
   title: {
-    fontSize: "55@s",
+    fontSize: hp(8), //"55@s",
+    width: wp(80),
     //left: "20@s",
-    lineHeight: "58@s",
+    lineHeight: hp(8), //"58@s",
     //top: "150@s",
   },
   buttonView: {

@@ -31,6 +31,8 @@ import { useFonts } from "expo-font";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebase from "firebase";
 import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons";
+import CustomButton from "../common/CustomButton";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -61,11 +63,16 @@ function DeckComponent(props) {
   const [keyboardIsActive, setKeyboardIsActive] = useState(false);
   const onChangeSearch = (query) => setSearchQuery(query);
   const windowHeight = useWindowDimensions().height;
+  const [state, setState] = React.useState({ open: false });
+  const onStateChange = ({ open }) => setState({ open });
+  const { open } = state;
 
   useEffect(() => {
     setFilteredDecks(
-      decks.filter((deck) =>
-        deck.title.toLowerCase().includes(searchQuery.toLowerCase())
+      decks.filter(
+        (deck) =>
+          deck.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          deck.subtitle.toLowerCase().includes(searchQuery.toLowerCase())
       )
     );
   }, [searchQuery]);
@@ -180,6 +187,11 @@ function DeckComponent(props) {
   const [visible, setVisible] = React.useState(false);
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
+
+  const [visibleUploadPDFModal, setVisibleUploadPDFModal] =
+    React.useState(false);
+  const showUploadPDFModal = () => setVisibleUploadPDFModal(true);
+  const hideUploadPDFModal = () => setVisibleUploadPDFModal(false);
 
   const [visibleAddCardModal, setVisibleAddCardModal] = useState(false);
   const showAddCardModal = (id) => {
@@ -362,7 +374,41 @@ function DeckComponent(props) {
           >
             1) To create a deck, press on the "+" button located on the bottom
             right.
-            {"\n"}
+          </Text>
+          <View style={{ flexDirection: "row", paddingLeft: 10 }}>
+            <Text
+              style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+            >
+              a){" "}
+            </Text>
+            <Text
+              style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+            >
+              Press on the button with the "Create Deck" label to manually
+              create a deck.
+            </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              paddingLeft: 10,
+            }}
+          >
+            <Text
+              style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+            >
+              b){" "}
+            </Text>
+            <Text
+              style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+            >
+              Press on the button with the "Upload PDF" label to create a deck
+              from your PDF file.
+            </Text>
+          </View>
+          <Text
+            style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+          >
             {"\n"}2) To delete a deck, press on the "⋮" icon located on the top
             right of that deck. A "delete deck" button will appear. Press on
             that button to proceed with the deletion of the deck. {"\n"}
@@ -390,22 +436,78 @@ function DeckComponent(props) {
             },
           ]}
         >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Title style={{ fontFamily: "PoppinsBold" }}>Create a deck</Title>
+            <TouchableOpacity onPress={hideModal}>
+              <Ionicons name="ios-close-outline" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
           <ReviewFormComponent createDeckHandler={createDeckHandler} />
+        </Modal>
+        <Modal
+          visible={visibleUploadPDFModal}
+          onDismiss={hideUploadPDFModal}
+          style={{
+            justifyContent: "center",
+          }}
+          contentContainerStyle={[
+            styles.modal,
+            {
+              backgroundColor: theme.colors.background,
+            },
+          ]}
+        >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Title style={{ fontFamily: "PoppinsBold" }}>Upload PDF</Title>
+            <TouchableOpacity onPress={hideUploadPDFModal}>
+              <Ionicons name="ios-close-outline" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity style={styles.uploadPDFwrapper}>
+            <FontAwesome name="file-pdf-o" size={40} color="black" />
+            <Text style={{ fontFamily: "PoppinsMedium" }}>
+              Upload your PDF file here
+            </Text>
+          </TouchableOpacity>
+          <CustomButton title="Submit"></CustomButton>
         </Modal>
         <Modal
           visible={visibleAddCardModal}
           onDismiss={hideAddCardModal}
           contentContainerStyle={[
-            styles.modal,
+            styles.modalCardForm,
             {
               backgroundColor: theme.colors.background,
               borderColor: theme.colors.surface,
             },
           ]}
         >
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+          >
+            <Title style={{ fontFamily: "PoppinsBold" }}>
+              Create a flashcard
+            </Title>
+            <TouchableOpacity onPress={hideAddCardModal}>
+              <Ionicons name="ios-close-outline" size={24} color="black" />
+            </TouchableOpacity>
+          </View>
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
         </Modal>
-        <FAB
+        <FAB.Group
           visible={
             !keyboardIsActive &&
             !visibleHelp &&
@@ -413,10 +515,31 @@ function DeckComponent(props) {
             !visibleAddCardModal &&
             isFocused
           }
-          style={[styles.fab, { backgroundColor: theme.colors.secondary }]}
-          icon="plus"
+          open={open}
+          icon={open ? "close" : "plus"}
+          actions={[
+            {
+              icon: "credit-card-plus",
+              label: "Create Deck",
+              onPress: () => {
+                showModal();
+              },
+            },
+            {
+              icon: "file-upload",
+              label: "Upload PDF",
+              onPress: () => showUploadPDFModal(),
+            },
+          ]}
+          onStateChange={onStateChange}
+          onPress={() => {
+            if (open) {
+              // do something if the speed dial is open
+            }
+          }}
+          style={styles.fabGroup}
+          fabStyle={{ backgroundColor: theme.colors.secondary }}
           color={theme.colors.onPrimary}
-          onPress={showModal}
         />
       </Portal>
       <View style={styles.helpIconView}>
