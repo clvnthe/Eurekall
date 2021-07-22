@@ -1,17 +1,17 @@
-export const objectivesData = [
+export var objectivesData = [
   {
     id: "1",
     objectiveName: "Create your first deck",
     targetAmt: "1",
     expAmt: "50",
-    completed: true,
+    completed: false,
   },
   {
     id: "2",
     objectiveName: "Create your first card",
     targetAmt: "1",
     expAmt: "100",
-    completed: true,
+    completed: false,
   },
   {
     id: "3",

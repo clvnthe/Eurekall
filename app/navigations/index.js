@@ -115,6 +115,30 @@ const AppNavContainer = () => {
     initialLoginState
   );
 
+  const defaultFirebaseObjectivesData = [
+    {
+      id: "1",
+      completed: false,
+      collected: false
+    },
+    {
+      id: "2",
+      completed: false,
+      collected: false
+    },
+    {
+      id: "3",
+      completed: false,
+      collected: false
+    },
+    {
+      id: "4",
+      completed: false,
+      collected: false
+    },
+  ];
+
+
   const authContext = React.useMemo(
     () => ({
       logIn: async () => {
@@ -138,6 +162,12 @@ const AppNavContainer = () => {
           await settingUserExp.set({
             exp: 0,
           },{merge: true});
+        }
+        if (typeof userDetails["objectives"] === "undefined") {
+          const setObjectivesTracking = firestore.collection("users").doc(emailAddress);
+          await setObjectivesTracking.set({
+            objectives: defaultFirebaseObjectivesData
+          }, {merge:true});
         }
         try {
           await AsyncStorage.setItem("userToken", userToken);

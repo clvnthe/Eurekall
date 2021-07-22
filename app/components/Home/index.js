@@ -25,6 +25,7 @@ import { useFonts } from "expo-font";
 import firebase from "firebase";
 import { ScrollView } from "moti";
 import { objectivesData } from "../../../assets/data/objectivesData";
+import merge from "deepmerge";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -61,6 +62,7 @@ function HomeComponent(props) {
   const [userInfo, setUserInfo] = React.useState([]);
   const [userNumDeck, setUserNumDeck] = React.useState([]);
   const [numDeckComparator, setNumDeckComparator] = React.useState([]);
+  const [overallUserExp, setOverallUserExp] = React.useState(0);
   const [userExp, setUserExp] = React.useState(0);
   const [userLvl, setUserLvl] = React.useState(1);
   const numOfDecks = useSelector(Decks.getDecks).length;
@@ -119,26 +121,106 @@ function HomeComponent(props) {
           .collection("users")
           .doc(userEmail)
           .get();
-        console.log(userEmail);
         const userDetails = retrieveUser.data();
+
+        // For updating user level and exp
         const userExp = userDetails["exp"];
-        const actualUserLvl = Math.floor(userExp / 500) + 1;
-        const actualUserExp = userExp % 500;
+        setOverallUserExp(userExp);
+        const actualUserLvl = Math.floor(overallUserExp / 500) + 1;
+        const actualUserExp = overallUserExp % 500;
         setUserExp(actualUserExp);
         setUserLvl(actualUserLvl);
       } catch (error) {
         console.log(error);
       }
     }, 0);
-  }, []);
+  }, [overallUserExp]);
+
+  useEffect(() => {
+    setTimeout(async () => {
+      try {
+        const userEmail = String(fireauth.currentUser.email);
+        const retrieveUser = await firestore
+            .collection("users")
+            .doc(userEmail)
+            .get();
+        const userDetails = retrieveUser.data();
+        // For updating objectives tracking
+        const userObjectives = userDetails["objectives"];
+        let collectedObjectives = [];
+        userObjectives.forEach((objective) => {
+          if (objective.collected === false) {
+            collectedObjectives.push(objective.id);
+          }
+        });
+        console.log(collectedObjectives);
+        objectiveInitialFilter(collectedObjectives);
+        const completedUserObjectives = userObjectives.filter((objective) =>
+            objective.collected === false && objective.completed === true);
+        completedUserObjectives.forEach((objective)=> updateObjectiveStatusLocally(objective.id));
+      } catch (error) {
+        console.log('firebase objective loading error');
+        console.log(error);
+      }
+    },0)
+  },[])
 
   const { navigate } = useNavigation();
+
+  const updateExptoFirebase = async (addExp,userEmail) => {
+    try {
+      const updateExp = firestore.collection("users").doc(userEmail);
+      const updatedExp = overallUserExp + addExp;
+      setOverallUserExp(updatedExp);
+      await updateExp.set({
+        exp: updatedExp,
+      },{merge:true});
+    } catch (error) {
+      console.log('score update error');
+      console.log(error);
+    }
+  }
+
+  const updateObjectiveStatusLocally = (id) => {
+    objectivesRenderData.filter((objective) => { if(objective.id === id) {
+      objective.completed = true;
+    }
+    });
+  }
+
+  const updateObjectiveStatusFirebase = async (id,userEmail) => {
+    try {
+      const userRef = firestore.collection('users').doc(userEmail);
+      const retrieveUserDetails = await userRef.get();
+      const userDetails = retrieveUserDetails.data();
+      const firebaseObjectives = userDetails['objectives'];
+      firebaseObjectives.filter((objective) => {
+        if(objective.id === id) {
+          objective.completed = true;
+          objective.collected = true;
+        }
+      });
+      await userRef.update({
+        objectives: firebaseObjectives
+      })
+    } catch (error) {
+      console.log('firebase objectives update error for collection');
+      console.log(error);
+    }
+  }
+
+  const objectiveInitialFilter = (finishedObjectives) => {
+    setObjectivesRenderData(
+        objectivesData.filter((objective) => finishedObjectives.includes(objective.id))
+    );
+  };
 
   const objectiveUnlockedHandler = (id) => {
     setObjectivesRenderData(
       objectivesRenderData.filter((objective) => objective.id !== id)
     );
   };
+
 
   const renderItem = ({ item }) => {
     return (
@@ -171,7 +253,11 @@ function HomeComponent(props) {
             },
           ]}
           disabled={!item.completed}
-          onPress={() => objectiveUnlockedHandler(item.id)}
+          onPress={() => {
+            objectiveUnlockedHandler(item.id);
+            updateExptoFirebase(Number(item["expAmt"]),userInfo[0]);
+            updateObjectiveStatusFirebase(item.id,userInfo[0]);
+          }}
         >
           {!item.completed ? (
             <Text
