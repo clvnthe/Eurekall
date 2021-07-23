@@ -134,7 +134,7 @@ function HomeComponent(props) {
         console.log(error);
       }
     }, 0);
-  }, [overallUserExp]);
+  }, []);
 
   useEffect(() => {
     setTimeout(async () => {
@@ -171,7 +171,11 @@ function HomeComponent(props) {
     try {
       const updateExp = firestore.collection("users").doc(userEmail);
       const updatedExp = overallUserExp + addExp;
+      const actualUserLvl = Math.floor(overallUserExp / 500) + 1;
+      const actualUserExp = overallUserExp % 500;
       setOverallUserExp(updatedExp);
+      setUserExp(actualUserExp);
+      setUserLvl(actualUserLvl);
       await updateExp.set({
         exp: updatedExp,
       },{merge:true});
