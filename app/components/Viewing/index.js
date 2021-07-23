@@ -102,6 +102,9 @@ function ViewingComponent({ route }) {
       id: cardId,
       date: currentDate,
     });
+    await firestore.collection("users").doc(userEmail).update({
+      'stats.cardsCreated': firebase.firestore.FieldValue.increment(1)
+    })
   };
 
   const createFlashcardHandler = (question, answer) => {
@@ -137,6 +140,9 @@ function ViewingComponent({ route }) {
       .collection("cards")
       .doc(id)
       .delete();
+    await firestore.collection("users").doc(userEmail).update({
+      'stats.cardsDeleted': firebase.firestore.FieldValue.increment(1)
+    })
   };
 
   const deleteFlashcardHandler = (id) => {

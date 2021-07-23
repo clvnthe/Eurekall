@@ -140,6 +140,7 @@ function HomeComponent(props) {
     setTimeout(async () => {
       try {
         const userEmail = String(fireauth.currentUser.email);
+        await updateObjectiveStatusFirebaseCompleted(userEmail);
         const retrieveUser = await firestore
             .collection("users")
             .doc(userEmail)
@@ -153,7 +154,6 @@ function HomeComponent(props) {
             collectedObjectives.push(objective.id);
           }
         });
-        console.log(collectedObjectives);
         objectiveInitialFilter(collectedObjectives);
         const completedUserObjectives = userObjectives.filter((objective) =>
             objective.collected === false && objective.completed === true);
@@ -188,7 +188,7 @@ function HomeComponent(props) {
     });
   }
 
-  const updateObjectiveStatusFirebase = async (id,userEmail) => {
+  const updateObjectiveStatusFirebaseCollection = async (id,userEmail) => {
     try {
       const userRef = firestore.collection('users').doc(userEmail);
       const retrieveUserDetails = await userRef.get();
@@ -203,8 +203,37 @@ function HomeComponent(props) {
       await userRef.update({
         objectives: firebaseObjectives
       })
+      objectiveUnlockedHandler(id);
     } catch (error) {
       console.log('firebase objectives update error for collection');
+      console.log(error);
+    }
+  }
+
+  const updateObjectiveStatusFirebaseCompleted = async (userEmail) => {
+    try {
+      const userRef = firestore.collection("users").doc(userEmail);
+      const getUserDetails = await userRef.get();
+      const userDetails = getUserDetails.data();
+      const userStats = userDetails["stats"];
+      const userObjectives = userDetails["objectives"];
+      if (userStats["decksCreated"] >= 1 && userObjectives[0]["collected"] === false) {
+        userObjectives[0]["completed"] = true;
+      }
+      if (userStats["cardsCreated"] >= 1 && userObjectives[1]["collected"] === false) {
+        userObjectives[1]["completed"] = true;
+      }
+      if (userStats["cardsDeleted"] >= 1 && userObjectives[2]["collected"] === false) {
+        userObjectives[2]["completed"] = true;
+      }
+      if (userStats["box5Cards"] >= 5  && userObjectives[3]["collected"] === false) {
+        userObjectives[3]["completed"] = true;
+      }
+      await userRef.update({
+        objectives:userObjectives
+      })
+    } catch (error){
+      console.log('firebase completed objectives update error');
       console.log(error);
     }
   }
@@ -220,7 +249,6 @@ function HomeComponent(props) {
       objectivesRenderData.filter((objective) => objective.id !== id)
     );
   };
-
 
   const renderItem = ({ item }) => {
     return (
@@ -254,9 +282,8 @@ function HomeComponent(props) {
           ]}
           disabled={!item.completed}
           onPress={() => {
-            objectiveUnlockedHandler(item.id);
             updateExptoFirebase(Number(item["expAmt"]),userInfo[0]);
-            updateObjectiveStatusFirebase(item.id,userInfo[0]);
+            updateObjectiveStatusFirebaseCollection(item.id,userInfo[0]);
           }}
         >
           {!item.completed ? (
