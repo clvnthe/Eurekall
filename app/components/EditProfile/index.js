@@ -84,8 +84,7 @@ function EditProfileComponent(props) {
     const name1 = typeof name === "undefined" ? userInfo[1] : name;
     const username1 = typeof username === "undefined" ? userInfo[2] : username;
     const description1 =
-      typeof description === "undefined" ? userInfo[3] : description;
-
+      typeof description === "undefined" ? userInfo[3] : description.trim();
     try {
       if (name1 === "" || username1 === "" || description1 === "") {
         Alert.alert("Edit Profile", "Fields cannot be empty.", [
@@ -149,7 +148,7 @@ function EditProfileComponent(props) {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.All,
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [1, 1],
         quality: 1,
       });
       if (!result.cancelled) {
@@ -165,7 +164,7 @@ function EditProfileComponent(props) {
     let permissions = await Camera.requestPermissionsAsync();
     if (permissions.granted) {
       const { cancelled, uri } = await ImagePicker.launchCameraAsync({
-        allowsEditing: false,
+        allowsEditing: true,
       });
       if (!cancelled) {
         setImage(uri);
@@ -440,14 +439,15 @@ function EditProfileComponent(props) {
                 style={{
                   width: responsiveWidth(90),
                   alignSelf: "center",
-                  maxHeight: responsiveHeight(20),
+                  paddingTop: responsiveHeight(2),
+                  maxHeight: responsiveHeight(15),
                 }}
                 multiline
                 numberOfLines={5}
                 autoCapitalize="none"
                 left={
                   <TextInput.Icon
-                    name="face-profile"
+                    name="account-details"
                     color={true ? theme.colors.primary : theme.colors.text}
                   />
                 }
@@ -458,7 +458,6 @@ function EditProfileComponent(props) {
           <View style={{ alignItems: "center" }}>
             <CustomButton
               title="Submit changes"
-              width={336}
               onPress={() => {
                 hasImageChanged ||
                 typeof name !== "undefined" ||

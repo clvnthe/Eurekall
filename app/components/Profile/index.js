@@ -128,6 +128,24 @@ function ProfileComponent(props) {
     }
   };
 
+  const determineTitle = (userLvl) => {
+    if (userLvl >= 30) {
+      return "Legend";
+    } else if (userLvl >= 25) {
+      return "Grandmaster";
+    } else if (userLvl >= 20) {
+      return "Master";
+    } else if (userLvl >= 15) {
+      return "Expert";
+    } else if (userLvl >= 10) {
+      return "Graduate";
+    } else if (userLvl >= 5) {
+      return "Novice";
+    } else {
+      return "Beginner";
+    }
+  };
+
   const [loaded] = useFonts({
     MontserratLight: require("../../../assets/fonts/Montserrat-Light.ttf"),
     MontserratBold: require("../../../assets/fonts/Montserrat-Bold.ttf"),
@@ -188,7 +206,7 @@ function ProfileComponent(props) {
           @{userInfo[2]}
         </Text>
         <Text style={[styles.titleText, { fontFamily: "PoppinsLight" }]}>
-          Mugger Dog
+          {determineTitle(userLvl)}
         </Text>
         <TouchableOpacity
           style={styles.editProfileButton}
