@@ -25,6 +25,7 @@ import {
   responsiveHeight,
   responsiveWidth,
 } from "react-native-responsive-dimensions";
+import { AntDesign } from "@expo/vector-icons";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -53,6 +54,7 @@ function EditProfileComponent(props) {
     "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8"
   );
   const [userInfo, setUserInfo] = React.useState([]);
+  const [hasImageChanged, setHasImageChanged] = useState(false);
 
   useEffect(() => {
     setTimeout(async () => {
@@ -85,7 +87,7 @@ function EditProfileComponent(props) {
       typeof description === "undefined" ? userInfo[3] : description;
 
     try {
-      if (name1 === "" || username1 === "") {
+      if (name1 === "" || username1 === "" || description1 === "") {
         Alert.alert("Edit Profile", "Fields cannot be empty.", [
           { text: "OK", onPress: () => console.log("OK Pressed") },
         ]);
@@ -97,7 +99,7 @@ function EditProfileComponent(props) {
         });
         await AsyncStorage.setItem(
           "userInfo",
-          JSON.stringify([userInfo[0], name1, username1, description])
+          JSON.stringify([userInfo[0], name1, username1, description1])
         );
         Alert.alert("Edit Profile", "Changes have been saved.", [
           { text: "OK", onPress: () => console.log("OK Pressed") },
@@ -121,6 +123,7 @@ function EditProfileComponent(props) {
       .catch((error) => {
         console.log(error);
       });
+    console.log(image);
   }, []);
 
   const uploadImage = async (imageuri) => {
@@ -151,6 +154,7 @@ function EditProfileComponent(props) {
       });
       if (!result.cancelled) {
         setImage(result.uri);
+        setHasImageChanged(true);
       }
     } else {
       alert("Sorry, we need camera roll permissions to make this work!");
@@ -165,6 +169,7 @@ function EditProfileComponent(props) {
       });
       if (!cancelled) {
         setImage(uri);
+        setHasImageChanged(true);
       }
     } else {
       alert("Sorry, we need camera access permissions to make this work!");
@@ -314,8 +319,18 @@ function EditProfileComponent(props) {
                   source={{
                     uri: image,
                   }}
-                  style={{ height: 100, width: 100 }}
-                  imageStyle={{ borderRadius: 15 }}
+                  style={{
+                    height: 100,
+                    width: 100,
+                    borderWidth: 1,
+                    borderRadius: 15,
+                    overflow: "hidden",
+                    borderColor: theme.colors.text,
+                    backgroundColor: theme.colors.border,
+                  }}
+                  imageStyle={{
+                    borderRadius: 15,
+                  }}
                 >
                   <View
                     style={{
@@ -324,17 +339,17 @@ function EditProfileComponent(props) {
                       alignItems: "center",
                     }}
                   >
-                    <Icon
-                      name="camera"
+                    <AntDesign
+                      name="camerao"
                       size={35}
                       color="#fff"
                       style={{
                         opacity: 0.7,
-                        alignItems: "center",
                         justifyContent: "center",
                         borderWidth: 1,
                         borderColor: "#fff",
                         borderRadius: 10,
+                        width: 35,
                       }}
                     />
                   </View>
@@ -381,6 +396,7 @@ function EditProfileComponent(props) {
                     color={true ? theme.colors.primary : theme.colors.text}
                   />
                 }
+                editable={!isOpen}
               />
             </View>
             <View style={{}}>
@@ -409,6 +425,7 @@ function EditProfileComponent(props) {
                     text={String(username).trim().length + "/12"}
                   />
                 }
+                editable={!isOpen}
               />
             </View>
             <View>
@@ -434,6 +451,7 @@ function EditProfileComponent(props) {
                     color={true ? theme.colors.primary : theme.colors.text}
                   />
                 }
+                editable={!isOpen}
               />
             </View>
           </View>
@@ -442,14 +460,21 @@ function EditProfileComponent(props) {
               title="Submit changes"
               width={336}
               onPress={() => {
-                uploadImage(image)
-                  .then(() => {
-                    console.log("passed");
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                  });
-                updateUserInfo();
+                hasImageChanged ||
+                typeof name !== "undefined" ||
+                typeof username !== "undefined" ||
+                typeof description !== "undefined"
+                  ? (uploadImage(image)
+                      .then(() => {
+                        console.log("passed");
+                      })
+                      .catch((error) => {
+                        console.log(error);
+                      }),
+                    updateUserInfo())
+                  : Alert.alert("Edit Profile", "No changes detected.", [
+                      { text: "OK", onPress: () => console.log("OK Pressed") },
+                    ]);
               }}
             />
           </View>

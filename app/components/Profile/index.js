@@ -163,7 +163,13 @@ function ProfileComponent(props) {
         >
           <Avatar.Image
             size={120}
-            style={styles.profilePic}
+            style={[
+              styles.profilePic,
+              {
+                borderColor: theme.colors.text,
+                backgroundColor: theme.colors.border,
+              },
+            ]}
             source={{
               uri: image,
             }}

@@ -21,6 +21,8 @@ export default ScaledSheet.create({
     //top: "20@s",
     elevation: 8,
     alignSelf: "center",
+    borderWidth: 1,
+    overflow: "hidden",
   },
   name: {
     fontSize: "26@s",
