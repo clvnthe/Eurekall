@@ -1,0 +1,15 @@
+export var userStatsLocal = [{
+    decksCreated: 0,
+    decksDeleted: 0,
+    currentDecks: 0,
+    cardsCreated: 0,
+    cardsDeleted: 0,
+    currentCards: 0,
+    cardsAnsweredCorrectly: 0,
+    cardsAnsweredWrongly: 0,
+    box1Cards: 0,
+    box2Cards: 0,
+    box3Cards: 0,
+    box4Cards: 0,
+    box5Cards: 0,
+}]

@@ -5,6 +5,7 @@ export var objectivesData = [
     targetAmt: "1",
     expAmt: "50",
     completed: false,
+    collected: false
   },
   {
     id: "2",
@@ -12,6 +13,7 @@ export var objectivesData = [
     targetAmt: "1",
     expAmt: "100",
     completed: false,
+    collected: false
   },
   {
     id: "3",
@@ -19,6 +21,7 @@ export var objectivesData = [
     targetAmt: "1",
     expAmt: "200",
     completed: false,
+    collected: false
   },
   {
     id: "4",
@@ -26,5 +29,6 @@ export var objectivesData = [
     targetAmt: "5",
     expAmt: "1000",
     completed: false,
+    collected: false
   },
 ];

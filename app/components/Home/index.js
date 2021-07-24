@@ -25,6 +25,8 @@ import { useFonts } from "expo-font";
 import firebase from "firebase";
 import { ScrollView } from "moti";
 import { objectivesData } from "../../../assets/data/objectivesData";
+import merge from "deepmerge";
+import {userStatsLocal} from "../../../assets/data/userStatsLocal";
 import LottieView from "lottie-react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -69,6 +71,8 @@ function HomeComponent(props) {
   const numOfDecks = useSelector(Decks.getDecks).length;
   const [objectivesRenderData, setObjectivesRenderData] =
     React.useState(objectivesData);
+  const [initialObjectivesRender, setInitialObjectivesRender] = React.useState(true);
+  const [userStats, setUserStats] = React.useState();
   const isFocused = useIsFocused();
   const [hasLeveledUp, setHasLeveledUp] = React.useState(false);
 
@@ -132,44 +136,45 @@ function HomeComponent(props) {
         const actualUserExp = overallUserExp % 500;
         setUserExp(actualUserExp);
         setUserLvl(actualUserLvl);
+        console.log('running exp')
       } catch (error) {
         console.log(error);
       }
     }, 0);
-  }, []);
+  }, [overallUserExp]);
 
   useEffect(() => {
     setTimeout(async () => {
       try {
-        const userEmail = String(fireauth.currentUser.email);
-        await updateObjectiveStatusFirebaseCompleted(userEmail);
-        const retrieveUser = await firestore
-          .collection("users")
-          .doc(userEmail)
-          .get();
-        const userDetails = retrieveUser.data();
-        // For updating objectives tracking
-        const userObjectives = userDetails["objectives"];
-        let collectedObjectives = [];
-        userObjectives.forEach((objective) => {
-          if (objective.collected === false) {
-            collectedObjectives.push(objective.id);
+        if (initialObjectivesRender) {
+          const userEmail = String(fireauth.currentUser.email);
+          await updateObjectiveStatusFirebaseCompleted(userEmail);
+          const retrieveUser = await firestore
+              .collection("users")
+              .doc(userEmail)
+              .get();
+          const userDetails = retrieveUser.data();
+
+          // For updating objectives tracking
+          userStatsLocal[0] = userDetails["stats"];
+          setUserStats(userDetails["stats"]);
+          const userObjectives = userDetails["objectives"];
+          const tempObjectives = objectivesData;
+          for (let i = 0; i < tempObjectives.length; i++) {
+            tempObjectives[i]["completed"] = userObjectives[i]["completed"];
+            tempObjectives[i]["collected"] = userObjectives[i]["collected"];
           }
-        });
-        objectiveInitialFilter(collectedObjectives);
-        const completedUserObjectives = userObjectives.filter(
-          (objective) =>
-            objective.collected === false && objective.completed === true
-        );
-        completedUserObjectives.forEach((objective) =>
-          updateObjectiveStatusLocally(objective.id)
-        );
+          setInitialObjectivesRender(false);
+        } else {
+          setUserStats(userStatsLocal[0])
+          updateObjectiveStatusLocally()
+        }
       } catch (error) {
         console.log("firebase objective loading error");
         console.log(error);
       }
-    }, 0);
-  }, []);
+    },0)
+  },[userStats]);
 
   useEffect(() => {
     setTimeout(() => setHasLeveledUp(false), 3000);
@@ -198,13 +203,6 @@ function HomeComponent(props) {
     }
   };
 
-  const updateObjectiveStatusLocally = (id) => {
-    objectivesRenderData.filter((objective) => {
-      if (objective.id === id) {
-        objective.completed = true;
-      }
-    });
-  };
 
   const updateObjectiveStatusFirebaseCollection = async (id,userEmail) => {
     try {
@@ -256,12 +254,25 @@ function HomeComponent(props) {
     }
   }
 
-  const objectiveInitialFilter = (finishedObjectives) => {
-    setObjectivesRenderData(
-      objectivesData.filter((objective) =>
-        finishedObjectives.includes(objective.id)
-      )
-    );
+  const updateObjectiveStatusLocally = () => {
+    const userStats = userStatsLocal[0];
+    const userObjectives = objectivesData;
+    if (userStats["decksCreated"] >= 1 && userObjectives[0]["collected"] === false) {
+      userObjectives[0]["completed"] = true;
+    }
+    if (userStats["cardsCreated"] >= 1 && userObjectives[1]["collected"] === false) {
+      userObjectives[1]["completed"] = true;
+    }
+    if (userStats["cardsDeleted"] >= 1 && userObjectives[2]["collected"] === false) {
+      userObjectives[2]["completed"] = true;
+    }
+    if (userStats["box5Cards"] >= 5  && userObjectives[3]["collected"] === false) {
+      userObjectives[3]["completed"] = true;
+    }
+  }
+
+  const objectiveCollectedFilter = (objectives) => {
+    return objectives.filter((objective) => objective.collected === false)
   };
 
   const objectiveUnlockedHandler = (id) => {
@@ -409,7 +420,7 @@ function HomeComponent(props) {
           </TouchableOpacity>
         </View>
         <FlatList
-          data={objectivesRenderData}
+          data={objectiveCollectedFilter(objectivesRenderData)}
           renderItem={renderItem}
           keyExtractor={(item) => item.id}
           horizontal={true}

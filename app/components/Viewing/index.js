@@ -30,6 +30,8 @@ import firebase from "firebase";
 import { ScaledSheet } from "react-native-size-matters";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
+import {userStatsLocal} from "../../../assets/data/userStatsLocal";
+import {objectivesData} from "../../../assets/data/objectivesData";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -60,6 +62,23 @@ function ViewingComponent({ route }) {
   const [keyboardIsActive, setKeyboardIsActive] = useState(false);
   const onChangeSearch = (query) => setSearchQuery(query);
   const windowHeight = useWindowDimensions().height;
+
+  const updateObjectiveStatusLocally = () => {
+    const userStats = userStatsLocal[0];
+    const userObjectives = objectivesData;
+    if (userStats["decksCreated"] >= 1 && userObjectives[0]["collected"] === false) {
+      userObjectives[0]["completed"] = true;
+    }
+    if (userStats["cardsCreated"] >= 1 && userObjectives[1]["collected"] === false) {
+      userObjectives[1]["completed"] = true;
+    }
+    if (userStats["cardsDeleted"] >= 1 && userObjectives[2]["collected"] === false) {
+      userObjectives[2]["completed"] = true;
+    }
+    if (userStats["box5Cards"] >= 5  && userObjectives[3]["collected"] === false) {
+      userObjectives[3]["completed"] = true;
+    }
+  }
 
   const theme = useTheme();
 
@@ -105,6 +124,8 @@ function ViewingComponent({ route }) {
     await firestore.collection("users").doc(userEmail).update({
       'stats.cardsCreated': firebase.firestore.FieldValue.increment(1)
     })
+    userStatsLocal[0]['cardsCreated'] = userStatsLocal[0]['cardsCreated'] + 1;
+    updateObjectiveStatusLocally();
   };
 
   const createFlashcardHandler = (question, answer) => {
@@ -143,6 +164,8 @@ function ViewingComponent({ route }) {
     await firestore.collection("users").doc(userEmail).update({
       'stats.cardsDeleted': firebase.firestore.FieldValue.increment(1)
     })
+    userStatsLocal[0]['cardsDeleted'] = userStatsLocal[0]['cardsDeleted'] + 1;
+    updateObjectiveStatusLocally()
   };
 
   const deleteFlashcardHandler = (id) => {
