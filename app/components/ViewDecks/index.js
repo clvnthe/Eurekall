@@ -45,6 +45,7 @@ import {
   PlaceholderMedia,
   ShineOverlay,
 } from "rn-placeholder";
+import axios from 'axios';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -79,6 +80,7 @@ function DeckComponent(props) {
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
   const [isLoading, setIsLoading] = useState(!decks.length);
+  const [mlText, setMLText] = useState([]);
 
   useEffect(() => {
     setFilteredDecks(
@@ -407,6 +409,20 @@ function DeckComponent(props) {
   if (!loaded) {
     return null;
   }
+  // const test_text = 'The Empire of Japan aimed to dominate Asia and the Pacific and was already at war with the Republic of China in 1937, but the world war is generally said to have begun on 1 September 1939 with the invasion of Poland by Germany and subsequent declarations of war on Germany by France and the United Kingdom. From late 1939 to early 1941, in a series of campaigns and treaties, Germany conquered or controlled much of continental Europe, and formed the Axis alliance with Italy and Japan. Under the Molotov-Ribbentrop Pact of August 1939, Germany and the Soviet Union partitioned and annexed territories of their European neighbours, Poland, Finland, Romania and the Baltic states. The war continued primarily between the European Axis powers and the coalition of the United Kingdom and the British Commonwealth, with campaigns including the North Africa and East Africa campaigns, the aerial Battle of Britain, the Blitz bombing campaign, the Balkan Campaign as well as the long-running Battle of the Atlantic. In June 1941, the European Axis powers launched an invasion of the Soviet Union, opening the largest land theatre of war in history, which trapped the major part of the Axis\' military forces into a war of attrition. In December 1941, Japan attacked the United States and European territories in the Pacific Ocean, and quickly conquered much of the Western Pacific.'
+
+  const generateQuestions = (test_text) => {
+    axios.post("https://plated-hash-320814.as.r.appspot.com/generate/",{"text":test_text})
+        .then((response) => {
+          const qna = response["data"]["result"];
+          console.log(qna);
+          setMLText(qna);
+        }).catch((err) => {
+          console.log(err);
+    })
+  }
+
+
 
   return (
     <SafeAreaView
@@ -546,13 +562,6 @@ function DeckComponent(props) {
               <Ionicons name="ios-close-outline" size={24} color="black" />
             </TouchableOpacity>
           </View>
-          {/*<TouchableOpacity style={styles.uploadPDFwrapper}>
-            <FontAwesome name="file-pdf-o" size={40} color="black" />
-            <Text style={{ fontFamily: "PoppinsMedium" }}>
-              Upload your PDF file here
-            </Text>
-          </TouchableOpacity>
-          <CustomButton title="Submit"></CustomButton>*/}
           <ReviewFormComponent
             autoGeneratorUI
             createDeckHandler={createDeckHandler}
@@ -820,86 +829,34 @@ function DeckComponent(props) {
             </Card>
             <Card
               style={{
-                margin: 10,
+                height: responsiveHeight(32),
+                width: responsiveWidth(100),
+                marginBottom: responsiveHeight(1),
                 elevation: 8,
-                padding: 10,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 4,
+                },
+                shadowOpacity: 0.3,
+                shadowRadius: 4.65,
               }}
-            >
-              <PlaceholderLine
-                style={{
-                  height: responsiveHeight(5),
-                  width: responsiveWidth(50),
-                }}
-              />
-              <PlaceholderLine style={{ width: responsiveWidth(30) }} />
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                }}
-              >
-                <PlaceholderMedia
-                  style={{
-                    height: responsiveHeight(13.5),
-                    width: responsiveWidth(27),
-                    borderRadius: 10,
-                    elevation: 2,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                      width: 0,
-                      height: 1,
-                    },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 1.41,
-                  }}
-                />
-                <PlaceholderMedia
-                  style={{
-                    height: responsiveHeight(13.5),
-                    width: responsiveWidth(27),
-                    borderRadius: 10,
-                    elevation: 2,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                      width: 0,
-                      height: 1,
-                    },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 1.41,
-                  }}
-                />
-                <PlaceholderMedia
-                  style={{
-                    height: responsiveHeight(13.5),
-                    width: responsiveWidth(27),
-                    borderRadius: 10,
-                    elevation: 2,
-                    shadowColor: "#000",
-                    shadowOffset: {
-                      width: 0,
-                      height: 1,
-                    },
-                    shadowOpacity: 0.2,
-                    shadowRadius: 1.41,
-                  }}
-                />
-              </View>
-              <PlaceholderMedia
-                style={{
-                  width: responsiveWidth(89),
-                  marginTop: 10,
-                  borderRadius: 10,
-                  elevation: 2,
-                  shadowColor: "#000",
-                  shadowOffset: {
-                    width: 0,
-                    height: 1,
-                  },
-                  shadowOpacity: 0.2,
-                  shadowRadius: 1.41,
-                }}
-              />
-            </Card>
+            />
+            <PlaceholderMedia
+              style={{
+                height: responsiveHeight(32),
+                width: responsiveWidth(100),
+                marginBottom: responsiveHeight(1),
+                elevation: 8,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 4,
+                },
+                shadowOpacity: 0.3,
+                shadowRadius: 4.65,
+              }}
+            />
           </Placeholder>
         </View>
       )}
