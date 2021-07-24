@@ -94,7 +94,7 @@ function DeckComponent(props) {
   };
 
   const createDeckDatabase = async (title, subtitle, id) => {
-    const userEmail = String(await fireauth.currentUser.email);
+    const userEmail = await String(fireauth.currentUser.email);
     const deckRef = firestore
       .collection("users")
       .doc(userEmail)
@@ -105,6 +105,9 @@ function DeckComponent(props) {
       subtitle: subtitle,
       id: id,
     });
+    await firestore.collection("users").doc(userEmail).update({
+      'stats.decksCreated': firebase.firestore.FieldValue.increment(1)
+    })
   };
 
   const createDeckHandler = (
@@ -249,7 +252,7 @@ function DeckComponent(props) {
     cardId,
     currentDate
   ) => {
-    const userEmail = String(await fireauth.currentUser.email);
+    const userEmail = await String(fireauth.currentUser.email);
     const deckRef = firestore
       .collection("users")
       .doc(userEmail)
@@ -264,6 +267,9 @@ function DeckComponent(props) {
       id: cardId,
       date: currentDate,
     });
+    await firestore.collection("users").doc(userEmail).update({
+      'stats.cardsCreated': firebase.firestore.FieldValue.increment(1)
+    })
   };
 
   const createFlashcardHandler = (
@@ -291,7 +297,7 @@ function DeckComponent(props) {
         dispatch(Decks.pushOntoStudydeck(index, card));
       } else if (boxType === 3 && cardDays >= 7) {
         dispatch(Decks.pushOntoStudydeck(index, card));
-      } else if (boxType === 4 && cardDays >= 14) {
+      } else if ((boxType === 4 || boxType === 5) && cardDays >= 14) {
         dispatch(Decks.pushOntoStudydeck(index, card));
       }
       setVisibleAddCardModal(false);
@@ -311,13 +317,16 @@ function DeckComponent(props) {
   };
 
   const deleteDeckDatabase = async (id) => {
-    const userEmail = String(await fireauth.currentUser.email);
+    const userEmail = await String(fireauth.currentUser.email);
     await firestore
       .collection("users")
       .doc(userEmail)
       .collection("decks")
       .doc(id)
       .delete();
+    await firestore.collection("users").doc(userEmail).update({
+      'stats.decksDeleted': firebase.firestore.FieldValue.increment(1)
+    })
   };
 
   const deleteDeckHandler = (id) => {

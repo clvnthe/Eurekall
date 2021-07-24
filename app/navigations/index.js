@@ -138,6 +138,24 @@ const AppNavContainer = () => {
     },
   ];
 
+  const defaultStatsTrackingData = {
+      decksCreated: 0,
+      decksDeleted: 0,
+      currentDecks: 0,
+      cardsCreated: 0,
+      cardsDeleted: 0,
+      currentCards: 0,
+      cardsAnsweredCorrectly: 0,
+      cardsAnsweredWrongly: 0,
+      box1Cards: 0,
+      box2Cards: 0,
+      box3Cards: 0,
+      box4Cards: 0,
+      box5Cards: 0,
+    }
+
+
+
 
   const authContext = React.useMemo(
     () => ({
@@ -167,6 +185,12 @@ const AppNavContainer = () => {
           const setObjectivesTracking = firestore.collection("users").doc(emailAddress);
           await setObjectivesTracking.set({
             objectives: defaultFirebaseObjectivesData
+          }, {merge:true});
+        }
+        if (typeof userDetails["Stats"] === "undefined") {
+          const setStatsTracking = firestore.collection("users").doc(emailAddress);
+          await setStatsTracking.set({
+            stats: defaultStatsTrackingData
           }, {merge:true});
         }
         try {

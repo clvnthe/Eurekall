@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="Fixed login/proceed to home bug 3">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="leaderboard(faulty), objectives(not live)">
       <change beforePath="$PROJECT_DIR$/app/components/Home/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Home/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/navigations/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/navigations/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/data/objectivesData.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/data/objectivesData.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,7 +40,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.build" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.editor" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -81,6 +78,14 @@
       <workItem from="1626403415197" duration="5594000" />
       <workItem from="1626587188342" duration="4178000" />
       <workItem from="1626662102552" duration="11369000" />
+      <workItem from="1626925069496" duration="9222000" />
+      <workItem from="1626965340504" duration="759000" />
+      <workItem from="1627007658455" duration="6789000" />
+      <workItem from="1627042645583" duration="591000" />
+      <workItem from="1627043329777" duration="513000" />
+      <workItem from="1627044067389" duration="228000" />
+      <workItem from="1627044672255" duration="3689000" />
+      <workItem from="1627048486510" duration="938000" />
     </task>
     <task id="LOCAL-00001" summary="miscellaneous changes please ignore">
       <created>1623057973234</created>
@@ -180,7 +185,21 @@
       <option name="project" value="LOCAL" />
       <updated>1626429825089</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Objectives and exp loading">
+      <created>1626925409517</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1626925409517</updated>
+    </task>
+    <task id="LOCAL-00016" summary="leaderboard(faulty), objectives(not live)">
+      <created>1627048958992</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1627048958992</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,6 +231,12 @@
     <MESSAGE value="Completed Custom Description,Live exp and lvl" />
     <MESSAGE value="Fixed login/proceed to home bug" />
     <MESSAGE value="Fixed login/proceed to home bug 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed login/proceed to home bug 2" />
+    <MESSAGE value="Objectives and exp loading" />
+    <MESSAGE value="leaderboard(faulty), objectives(not live)" />
+    <option name="LAST_COMMIT_MESSAGE" value="leaderboard(faulty), objectives(not live)" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
