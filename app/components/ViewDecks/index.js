@@ -33,6 +33,8 @@ import firebase from "firebase";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import CustomButton from "../common/CustomButton";
+import { objectivesData } from "../../../assets/data/objectivesData";
+import { userStatsLocal } from "../../../assets/data/userStatsLocal";
 import {
   responsiveHeight,
   responsiveWidth,
@@ -112,6 +114,8 @@ function DeckComponent(props) {
       .update({
         "stats.decksCreated": firebase.firestore.FieldValue.increment(1),
       });
+    userStatsLocal[0]["decksCreated"] = userStatsLocal[0]["decksCreated"] + 1;
+    updateObjectiveStatusLocally();
   };
 
   const createDeckHandler = (
@@ -186,7 +190,6 @@ function DeckComponent(props) {
         .collection("users")
         .doc(userEmail)
         .collection("decks");
-
       const deckRetrieve = await retrieveDeckRef.get();
       if (!deckRetrieve.empty) {
         if (decks.length === 0) {
@@ -242,6 +245,35 @@ function DeckComponent(props) {
     return dateDays;
   };
 
+  const updateObjectiveStatusLocally = () => {
+    const userStats = userStatsLocal[0];
+    const userObjectives = objectivesData;
+    if (
+      userStats["decksCreated"] >= 1 &&
+      userObjectives[0]["collected"] === false
+    ) {
+      userObjectives[0]["completed"] = true;
+    }
+    if (
+      userStats["cardsCreated"] >= 1 &&
+      userObjectives[1]["collected"] === false
+    ) {
+      userObjectives[1]["completed"] = true;
+    }
+    if (
+      userStats["cardsDeleted"] >= 1 &&
+      userObjectives[2]["collected"] === false
+    ) {
+      userObjectives[2]["completed"] = true;
+    }
+    if (
+      userStats["box5Cards"] >= 5 &&
+      userObjectives[3]["collected"] === false
+    ) {
+      userObjectives[3]["completed"] = true;
+    }
+  };
+
   const currentDate =
     String(new Date().getFullYear()) +
     "/" +
@@ -277,6 +309,8 @@ function DeckComponent(props) {
       .update({
         "stats.cardsCreated": firebase.firestore.FieldValue.increment(1),
       });
+    userStatsLocal[0]["cardsCreated"] = userStatsLocal[0]["cardsCreated"] + 1;
+    updateObjectiveStatusLocally();
   };
 
   const createFlashcardHandler = (
@@ -337,6 +371,8 @@ function DeckComponent(props) {
       .update({
         "stats.decksDeleted": firebase.firestore.FieldValue.increment(1),
       });
+    userStatsLocal[0]["decksDeleted"] = userStatsLocal[0]["decksDeleted"] + 1;
+    updateObjectiveStatusLocally();
   };
 
   const deleteDeckHandler = (id) => {

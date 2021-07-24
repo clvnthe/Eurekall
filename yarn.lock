@@ -6319,10 +6319,10 @@ react-native-iphone-x-helper@^1.3.0, react-native-iphone-x-helper@^1.3.1:
   resolved "https://registry.yarnpkg.com/react-native-iphone-x-helper/-/react-native-iphone-x-helper-1.3.1.tgz#20c603e9a0e765fd6f97396638bdeb0e5a60b010"
   integrity sha512-HOf0jzRnq2/aFUcdCJ9w9JGzN3gdEg0zFE4FyYlp4jtidqU03D5X7ZegGKfT1EWteR0gPBGp9ye5T5FvSWi9Yg==
 
-react-native-pager-view@^5.3.1:
-  version "5.3.1"
-  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.3.1.tgz#23a8a6c5ddd71403c14137cfdfe3f1189f19a3d0"
-  integrity sha512-CZMyLvMDOWV6Qqv8gABrakovkJCKyFfpcWVdKyzHAPBBXJ2aN2LcRiUvV9OSg8l2Md1ZdsyK6ZUYBQRKnnPIRQ==
+react-native-pager-view@^5.3.2:
+  version "5.3.2"
+  resolved "https://registry.yarnpkg.com/react-native-pager-view/-/react-native-pager-view-5.3.2.tgz#11c1210c60d3953aecf2588754d465bebe32a858"
+  integrity sha512-IYMxRg5gvoyOBhXeo8+LrA2TN1NjxmvTCyaTnbzVIScUTucYZwHL/8raXBi1k3p71JL2WjyA1KW/j6gVDzBOiQ==
 
 react-native-paper-tabs@^0.4.2:
   version "0.4.2"
@@ -7834,11 +7834,6 @@ yargs@^16.1.1:
     string-width "^4.2.0"
     y18n "^5.0.5"
     yargs-parser "^20.2.2"
-
-yarn@^1.22.10:
-  version "1.22.10"
-  resolved "https://registry.yarnpkg.com/yarn/-/yarn-1.22.10.tgz#c99daa06257c80f8fa2c3f1490724e394c26b18c"
-  integrity sha512-IanQGI9RRPAN87VGTF7zs2uxkSyQSrSPsju0COgbsKQOOXr5LtcVPeyXWgwVa0ywG3d8dg6kSYKGBuYK021qeA==
 
 yocto-queue@^0.1.0:
   version "0.1.0"
