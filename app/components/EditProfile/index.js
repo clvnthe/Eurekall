@@ -7,6 +7,7 @@ import {
   ImageBackground,
   Alert,
   Dimensions,
+  Keyboard,
 } from "react-native";
 import { Title, Text, Divider, TextInput } from "react-native-paper";
 import BottomSheet from "reanimated-bottom-sheet";
@@ -20,6 +21,10 @@ import firebase from "firebase";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { useFonts } from "expo-font";
+import {
+  responsiveHeight,
+  responsiveWidth,
+} from "react-native-responsive-dimensions";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -274,12 +279,14 @@ function EditProfileComponent(props) {
         enabledGestureInteraction={true}
         enabledContentGestureInteraction={false}
       />
-      <TouchableWithoutFeedback
-        onPress={() =>
+      <TouchableOpacity
+        onPress={() => {
+          Keyboard.dismiss();
           isOpen
             ? (bs.current.snapTo(1), setIsOpen(false))
-            : console.log(isOpen)
-        }
+            : console.log(isOpen);
+        }}
+        activeOpacity={1}
       >
         <Animated.View
           style={{
@@ -364,7 +371,7 @@ function EditProfileComponent(props) {
                 onChangeText={(name) => setName(name.trim())}
                 placeholder="Name"
                 style={{
-                  width: 336,
+                  width: responsiveWidth(90),
                   alignSelf: "center",
                 }}
                 autoCapitalize="none"
@@ -386,7 +393,7 @@ function EditProfileComponent(props) {
                 onChangeText={(username) => setUsername(username.trim())}
                 placeholder="Username"
                 style={{
-                  width: 336,
+                  width: responsiveWidth(90),
                   alignSelf: "center",
                 }}
                 autoCapitalize="none"
@@ -414,9 +421,9 @@ function EditProfileComponent(props) {
                 onChangeText={setDescription}
                 placeholder="Description"
                 style={{
-                  width: 336,
+                  width: responsiveWidth(90),
                   alignSelf: "center",
-                  maxHeight: 100,
+                  maxHeight: responsiveHeight(20),
                 }}
                 multiline
                 numberOfLines={5}
@@ -447,7 +454,7 @@ function EditProfileComponent(props) {
             />
           </View>
         </Animated.View>
-      </TouchableWithoutFeedback>
+      </TouchableOpacity>
     </Container>
   );
 }
