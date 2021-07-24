@@ -43,6 +43,16 @@ export default ScaledSheet.create({
     width: "96%",
     justifyContent: "space-between",
   },
+  levelWrapper: {
+    width: wp(15),
+    height: hp(3),
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  levelUpWrapper: {
+    height: hp(3),
+    //bottom: Platform.OS === "ios" ? hp(2) : hp(3),
+  },
   progressbarView: {
     width: "310@s",
     alignSelf: "center",
@@ -59,7 +69,6 @@ export default ScaledSheet.create({
     marginLeft: "10@s",
   },
   objectivesFlatListView: {
-    backgroundColor: "orange",
     height: "160@s",
     width: "142@s",
     marginRight: "20@s",

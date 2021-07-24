@@ -6,6 +6,8 @@ import {
   ANSWER,
   DECKS,
   HOME_MAIN,
+  OBJECTIVES,
+  OBJECTIVES_NAVIGATOR,
   POST_STUDY,
   QUESTION,
   STUDY_NAVIGATOR,
@@ -17,6 +19,8 @@ import DeckScreen from "../screens/Home/DeckScreen";
 import QuestionScreen from "../screens/Home/StudyScreens/QuestionScreen";
 import AnswerScreen from "../screens/Home/StudyScreens/AnswerScreen";
 import PostStudyScreen from "../screens/Home/StudyScreens/PostStudyScreen";
+import ObjectivesScreen from "../screens/Home/ObjectivesScreens/Ongoing";
+import { ObjectivesTopTabsNavigator } from "./ObjectivesTopTabsNavigator";
 
 const HomeNavigator = () => {
   const HomeStack = createStackNavigator();
@@ -38,6 +42,11 @@ const HomeNavigator = () => {
         name={HOME_MAIN}
         component={HomeScreen}
         options={{ headerTitle: "Home" }}
+      ></HomeStack.Screen>
+      <HomeStack.Screen
+        name={OBJECTIVES_NAVIGATOR}
+        component={ObjectivesTopTabsNavigator}
+        options={{ headerTitle: "Objectives" }}
       ></HomeStack.Screen>
       <HomeStack.Screen
         name={DECKS}

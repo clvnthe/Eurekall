@@ -14,7 +14,7 @@ import {
   useTheme,
 } from "@react-navigation/native";
 import { Surface, Title, Text, ProgressBar, Badge } from "react-native-paper";
-import { DECKS } from "../../constants/routeNames";
+import { DECKS, OBJECTIVES_NAVIGATOR } from "../../constants/routeNames";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Decks from "../../../store/slices/deckSlice";
 import { useSelector } from "react-redux";
@@ -26,6 +26,8 @@ import firebase from "firebase";
 import { ScrollView } from "moti";
 import { objectivesData } from "../../../assets/data/objectivesData";
 import merge from "deepmerge";
+import LottieView from "lottie-react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -69,6 +71,7 @@ function HomeComponent(props) {
   const [objectivesRenderData, setObjectivesRenderData] =
     React.useState(objectivesData);
   const isFocused = useIsFocused();
+  const [hasLeveledUp, setHasLeveledUp] = React.useState(false);
 
   useEffect(() => {
     setTimeout(async () => {
@@ -141,9 +144,9 @@ function HomeComponent(props) {
       try {
         const userEmail = String(fireauth.currentUser.email);
         const retrieveUser = await firestore
-            .collection("users")
-            .doc(userEmail)
-            .get();
+          .collection("users")
+          .doc(userEmail)
+          .get();
         const userDetails = retrieveUser.data();
         // For updating objectives tracking
         const userObjectives = userDetails["objectives"];
@@ -155,63 +158,80 @@ function HomeComponent(props) {
         });
         console.log(collectedObjectives);
         objectiveInitialFilter(collectedObjectives);
-        const completedUserObjectives = userObjectives.filter((objective) =>
-            objective.collected === false && objective.completed === true);
-        completedUserObjectives.forEach((objective)=> updateObjectiveStatusLocally(objective.id));
+        const completedUserObjectives = userObjectives.filter(
+          (objective) =>
+            objective.collected === false && objective.completed === true
+        );
+        completedUserObjectives.forEach((objective) =>
+          updateObjectiveStatusLocally(objective.id)
+        );
       } catch (error) {
-        console.log('firebase objective loading error');
+        console.log("firebase objective loading error");
         console.log(error);
       }
-    },0)
-  },[])
+    }, 0);
+  }, []);
+
+  useEffect(() => {
+    setTimeout(() => setHasLeveledUp(false), 3000);
+  }, [hasLeveledUp]);
 
   const { navigate } = useNavigation();
 
-  const updateExptoFirebase = async (addExp,userEmail) => {
+  const updateExptoFirebase = async (addExp, userEmail) => {
     try {
       const updateExp = firestore.collection("users").doc(userEmail);
       const updatedExp = overallUserExp + addExp;
+      if (Math.floor(updatedExp / 500) - Math.floor(overallUserExp / 500) > 0) {
+        setHasLeveledUp(true);
+      }
       setOverallUserExp(updatedExp);
-      await updateExp.set({
-        exp: updatedExp,
-      },{merge:true});
+      await updateExp.set(
+        {
+          exp: updatedExp,
+        },
+        { merge: true }
+      );
     } catch (error) {
-      console.log('score update error');
+      console.log("score update error");
       console.log(error);
     }
-  }
+  };
 
   const updateObjectiveStatusLocally = (id) => {
-    objectivesRenderData.filter((objective) => { if(objective.id === id) {
-      objective.completed = true;
-    }
+    objectivesRenderData.filter((objective) => {
+      if (objective.id === id) {
+        objective.completed = true;
+      }
     });
-  }
+  };
 
-  const updateObjectiveStatusFirebase = async (id,userEmail) => {
+  const updateObjectiveStatusFirebase = async (id, userEmail) => {
     try {
-      const userRef = firestore.collection('users').doc(userEmail);
+      const userRef = firestore.collection("users").doc(userEmail);
       const retrieveUserDetails = await userRef.get();
       const userDetails = retrieveUserDetails.data();
-      const firebaseObjectives = userDetails['objectives'];
+      const firebaseObjectives = userDetails["objectives"];
       firebaseObjectives.filter((objective) => {
-        if(objective.id === id) {
+        if (objective.id === id) {
           objective.completed = true;
           objective.collected = true;
         }
       });
       await userRef.update({
-        objectives: firebaseObjectives
-      })
+        objectives: firebaseObjectives,
+      });
     } catch (error) {
-      console.log('firebase objectives update error for collection');
+      console.log("firebase objectives update error for collection");
       console.log(error);
     }
-  }
+  };
 
   const objectiveInitialFilter = (finishedObjectives) => {
     setObjectivesRenderData(
-        objectivesData.filter((objective) => finishedObjectives.includes(objective.id))
+      objectivesData.filter((objective) =>
+        finishedObjectives.includes(objective.id)
+      )
     );
   };
 
@@ -220,7 +240,6 @@ function HomeComponent(props) {
       objectivesRenderData.filter((objective) => objective.id !== id)
     );
   };
-
 
   const renderItem = ({ item }) => {
     return (
@@ -255,8 +274,8 @@ function HomeComponent(props) {
           disabled={!item.completed}
           onPress={() => {
             objectiveUnlockedHandler(item.id);
-            updateExptoFirebase(Number(item["expAmt"]),userInfo[0]);
-            updateObjectiveStatusFirebase(item.id,userInfo[0]);
+            updateExptoFirebase(Number(item["expAmt"]), userInfo[0]);
+            updateObjectiveStatusFirebase(item.id, userInfo[0]);
           }}
         >
           {!item.completed ? (
@@ -317,24 +336,22 @@ function HomeComponent(props) {
         </View>
       </View>
       <View style={styles.progressContainer}>
-        {/*<View style={styles.tierView}>
-          <Badge size={50} style={{ backgroundColor: "#c68856" }}>
-            <MaterialCommunityIcons name="gold" size={24} color="white" />
-          </Badge>
-          <View style={styles.tierTextView}>
-            <Text style={styles.tierTextBold}>Your tier is Bronze!</Text>
-            <Text style={styles.tierTextLight}>Earn more exp to progress!</Text>
-          </View>
-        </View>*/}
         <View style={styles.progressTextView}>
-          <Text style={{ fontFamily: "PoppinsLight" }}>Level {userLvl}</Text>
+          <View style={styles.levelWrapper}>
+            <Text style={{ fontFamily: "PoppinsLight" }}>Level {userLvl}</Text>
+            {hasLeveledUp && (
+              <LottieView
+                source={require("../../../assets/lottieAnimations/11316-arrow-up.json")}
+                autoPlay
+                loop
+                style={styles.levelUpWrapper}
+              />
+            )}
+          </View>
           <View style={{ flexDirection: "row" }}>
-            <Text style={{ fontFamily: "PoppinsLight" }}>{userExp}/500</Text>
-            <MaterialCommunityIcons
-              name="diamond-stone"
-              size={20}
-              color={theme.colors.text}
-            />
+            <Text style={{ fontFamily: "PoppinsLight" }}>
+              {userExp}/500 EXP
+            </Text>
           </View>
         </View>
         <View style={styles.progressbarView}>
@@ -346,9 +363,23 @@ function HomeComponent(props) {
         </View>
       </View>
       <View style={styles.objectivesView}>
-        <Title style={[{ fontFamily: "PoppinsMedium" }, styles.objectivesText]}>
-          My Objectives
-        </Title>
+        <View style={{ flexDirection: "row" }}>
+          <Title
+            style={[{ fontFamily: "PoppinsMedium" }, styles.objectivesText]}
+          >
+            My Objectives
+          </Title>
+          <TouchableOpacity
+            style={{ alignSelf: "center" }}
+            onPress={() => navigate(OBJECTIVES_NAVIGATOR)}
+          >
+            <MaterialIcons
+              name="arrow-forward-ios"
+              size={24}
+              color={theme.colors.text}
+            />
+          </TouchableOpacity>
+        </View>
         <FlatList
           data={objectivesRenderData}
           renderItem={renderItem}

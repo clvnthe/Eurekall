@@ -50,6 +50,10 @@ export default class App extends React.Component {
       require("./assets/images/vector4.png"),
       require("./assets/images/vector5.png"),
       require("./assets/images/vector6.png"),
+      require("./assets/images/eastwood-come-back-later.png"),
+      require("./assets/images/emptydoodle_cropped.png"),
+      require("./assets/images/eurekall_logo_cropped.png"),
+      require("./assets/images/eurekall_whitelogo_cropped.png"),
     ]);
 
     //const fontAssets = cacheFonts([FontAwesome.font]);

@@ -28,11 +28,20 @@ import { nanoid } from "nanoid";
 import { useIsFocused } from "@react-navigation/core";
 import styles from "./styles";
 import { useFonts } from "expo-font";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import firebase from "firebase";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import CustomButton from "../common/CustomButton";
+import {
+  responsiveHeight,
+  responsiveWidth,
+} from "react-native-responsive-dimensions";
+import {
+  Placeholder,
+  PlaceholderLine,
+  PlaceholderMedia,
+  ShineOverlay,
+} from "rn-placeholder";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -66,6 +75,7 @@ function DeckComponent(props) {
   const [state, setState] = React.useState({ open: false });
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
+  const [isLoading, setIsLoading] = useState(!decks.length);
 
   useEffect(() => {
     setFilteredDecks(
@@ -79,6 +89,7 @@ function DeckComponent(props) {
 
   const onRefresh = () => {
     setRefreshing(true);
+    setIsLoading(true);
     setRefreshBoolean(() => !refreshBoolean);
   };
 
@@ -107,6 +118,7 @@ function DeckComponent(props) {
       setVisible(false);
       if (decks.length === 0) {
         setEmpty(false);
+        setIsLoading(false);
       }
     } else {
       console.log(id);
@@ -115,6 +127,7 @@ function DeckComponent(props) {
       setVisible(false);
       if (decks.length === 0) {
         setEmpty(false);
+        setIsLoading(false);
       }
     }
   };
@@ -172,11 +185,13 @@ function DeckComponent(props) {
         if (decks.length === 0) {
           loadDeckDatabase(deckRetrieve, userEmail);
         }
+        setIsLoading(false);
         console.log("Decks already loaded");
       } else {
+        setIsLoading(false);
         console.log("No decks");
       }
-    }, 0);
+    }, 1000);
     setRefreshing(false);
   }, [refreshBoolean]);
 
@@ -310,6 +325,7 @@ function DeckComponent(props) {
     dispatch(Decks.deleteDeck(id));
     if (decks.length === 1) {
       setEmpty(true);
+      setIsLoading(false);
     }
   };
 
@@ -560,7 +576,72 @@ function DeckComponent(props) {
           <Avatar.Icon icon="account-question" size={26} />
         </TouchableOpacity>
       </View>
-      {empty ? (
+      {isLoading && (
+        <View
+          style={{
+            width: responsiveWidth(95),
+            alignItems: "center",
+            alignSelf: "center",
+            marginTop: responsiveHeight(1),
+          }}
+        >
+          <Placeholder
+            Animation={ShineOverlay}
+            style={{
+              borderRadius: 4,
+              alignSelf: "center",
+              overflow: "hidden",
+            }}
+          >
+            <PlaceholderMedia
+              style={{
+                height: responsiveHeight(32),
+                width: responsiveWidth(100),
+                marginBottom: responsiveHeight(1),
+                elevation: 8,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 4,
+                },
+                shadowOpacity: 0.3,
+                shadowRadius: 4.65,
+              }}
+            />
+            <PlaceholderMedia
+              style={{
+                height: responsiveHeight(32),
+                width: responsiveWidth(100),
+                marginBottom: responsiveHeight(1),
+                elevation: 8,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 4,
+                },
+                shadowOpacity: 0.3,
+                shadowRadius: 4.65,
+              }}
+            />
+            <PlaceholderMedia
+              style={{
+                height: responsiveHeight(32),
+                width: responsiveWidth(100),
+                marginBottom: responsiveHeight(1),
+                elevation: 8,
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 4,
+                },
+                shadowOpacity: 0.3,
+                shadowRadius: 4.65,
+              }}
+            />
+          </Placeholder>
+        </View>
+      )}
+      {!isLoading && empty ? (
         <View style={{ flex: 1 }}>
           <View style={{ flex: 1, justifyContent: "center" }}>
             <Text

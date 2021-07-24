@@ -6,9 +6,11 @@ import {
 
 export default ScaledSheet.create({
   logoView: {
-    height: hp(15), //"20%",
-    width: wp(90), //"310@s",
-    alignSelf: "center",
+    height: hp(10), //"20%",
+    width: wp(70), //"310@s",
+    alignSelf: "flex-start",
+    marginTop: hp(3),
+    marginLeft: wp(5),
     justifyContent: "flex-end",
   },
   logo: {

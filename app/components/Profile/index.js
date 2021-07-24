@@ -151,15 +151,24 @@ function ProfileComponent(props) {
           backgroundColor: theme.colors.border,
           borderBottomStartRadius: 300,
           borderTopEndRadius: 300,
+          overflow: "hidden",
         }}
       >
-        <Avatar.Image
-          size={120}
-          style={styles.profilePic}
-          source={{
-            uri: image,
+        <LinearGradient
+          colors={["#92FE9D", "#00C9FF"]}
+          style={{
+            height: windowHeight * 0.2,
+            justifyContent: "center",
           }}
-        ></Avatar.Image>
+        >
+          <Avatar.Image
+            size={120}
+            style={styles.profilePic}
+            source={{
+              uri: image,
+            }}
+          ></Avatar.Image>
+        </LinearGradient>
       </View>
       <View
         style={{

@@ -19,3 +19,5 @@ export const SETTINGS_NAVIGATOR = "SettingsNavigator";
 export const QUESTION = "Question";
 export const ANSWER = "Answer";
 export const POST_STUDY = "PostStudy";
+export const OBJECTIVES = "Objectives";
+export const OBJECTIVES_NAVIGATOR = "ObjectivesNavigator";
