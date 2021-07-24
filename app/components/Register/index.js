@@ -60,7 +60,7 @@ function RegisterComponent() {
         email: email,
         preferred_username: username,
         name: name,
-        exp: 0
+        exp: 0,
       });
       setIsSignInHelperTextVisible(false);
       setLoading(false);
@@ -249,12 +249,14 @@ function RegisterComponent() {
           returnKeyType="next"
           onSubmitEditing={() => passwordTextInput.current.focus()}
           blurOnSubmit={false}
+          maxLength={12}
           left={
             <TextInput.Icon
               name="face-profile"
               color={username ? theme.colors.primary : theme.colors.text}
             />
           }
+          right={<TextInput.Affix text={username.trim().length + "/12"} />}
           error={isHelperTextVisible ? hasErrors(username) : false}
         />
         <HelperText

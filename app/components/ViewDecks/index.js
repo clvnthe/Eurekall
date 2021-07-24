@@ -7,6 +7,7 @@ import {
   Title,
   Avatar,
   Searchbar,
+  Card,
 } from "react-native-paper";
 import ReviewFormComponent from "../common/reviewForm";
 import FlashCardForm from "../common/flashcardForm";
@@ -105,9 +106,12 @@ function DeckComponent(props) {
       subtitle: subtitle,
       id: id,
     });
-    await firestore.collection("users").doc(userEmail).update({
-      'stats.decksCreated': firebase.firestore.FieldValue.increment(1)
-    })
+    await firestore
+      .collection("users")
+      .doc(userEmail)
+      .update({
+        "stats.decksCreated": firebase.firestore.FieldValue.increment(1),
+      });
   };
 
   const createDeckHandler = (
@@ -267,9 +271,12 @@ function DeckComponent(props) {
       id: cardId,
       date: currentDate,
     });
-    await firestore.collection("users").doc(userEmail).update({
-      'stats.cardsCreated': firebase.firestore.FieldValue.increment(1)
-    })
+    await firestore
+      .collection("users")
+      .doc(userEmail)
+      .update({
+        "stats.cardsCreated": firebase.firestore.FieldValue.increment(1),
+      });
   };
 
   const createFlashcardHandler = (
@@ -324,9 +331,12 @@ function DeckComponent(props) {
       .collection("decks")
       .doc(id)
       .delete();
-    await firestore.collection("users").doc(userEmail).update({
-      'stats.decksDeleted': firebase.firestore.FieldValue.increment(1)
-    })
+    await firestore
+      .collection("users")
+      .doc(userEmail)
+      .update({
+        "stats.decksDeleted": firebase.firestore.FieldValue.increment(1),
+      });
   };
 
   const deleteDeckHandler = (id) => {
@@ -427,8 +437,8 @@ function DeckComponent(props) {
             <Text
               style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
             >
-              Press on the button with the "Upload PDF" label to create a deck
-              from your PDF file.
+              Press on the button with the "Upload Your Notes" label to create a
+              deck from your notes.
             </Text>
           </View>
           <Text
@@ -493,18 +503,24 @@ function DeckComponent(props) {
               justifyContent: "space-between",
             }}
           >
-            <Title style={{ fontFamily: "PoppinsBold" }}>Upload PDF</Title>
+            <Title style={{ fontFamily: "PoppinsBold" }}>
+              Upload Your Notes
+            </Title>
             <TouchableOpacity onPress={hideUploadPDFModal}>
               <Ionicons name="ios-close-outline" size={24} color="black" />
             </TouchableOpacity>
           </View>
-          <TouchableOpacity style={styles.uploadPDFwrapper}>
+          {/*<TouchableOpacity style={styles.uploadPDFwrapper}>
             <FontAwesome name="file-pdf-o" size={40} color="black" />
             <Text style={{ fontFamily: "PoppinsMedium" }}>
               Upload your PDF file here
             </Text>
           </TouchableOpacity>
-          <CustomButton title="Submit"></CustomButton>
+          <CustomButton title="Submit"></CustomButton>*/}
+          <ReviewFormComponent
+            autoGeneratorUI
+            createDeckHandler={createDeckHandler}
+          />
         </Modal>
         <Modal
           visible={visibleAddCardModal}
@@ -534,6 +550,7 @@ function DeckComponent(props) {
         </Modal>
         <FAB.Group
           visible={
+            !isLoading &&
             !keyboardIsActive &&
             !visibleHelp &&
             !visible &&
@@ -552,7 +569,7 @@ function DeckComponent(props) {
             },
             {
               icon: "file-upload",
-              label: "Upload PDF",
+              label: "Upload Your Notes",
               onPress: () => showUploadPDFModal(),
             },
           ]}
@@ -585,13 +602,12 @@ function DeckComponent(props) {
           <Avatar.Icon icon="account-question" size={26} />
         </TouchableOpacity>
       </View>
-      {isLoading && (
+      {isLoading && ( //SKELETON PLACEHOLDER UI
         <View
           style={{
-            width: responsiveWidth(95),
+            width: responsiveWidth(100),
             alignItems: "center",
             alignSelf: "center",
-            marginTop: responsiveHeight(1),
           }}
         >
           <Placeholder
@@ -602,51 +618,252 @@ function DeckComponent(props) {
               overflow: "hidden",
             }}
           >
-            <PlaceholderMedia
+            <Card
               style={{
-                height: responsiveHeight(32),
-                width: responsiveWidth(100),
-                marginBottom: responsiveHeight(1),
+                margin: 10,
                 elevation: 8,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 4,
-                },
-                shadowOpacity: 0.3,
-                shadowRadius: 4.65,
+                padding: 10,
               }}
-            />
-            <PlaceholderMedia
+            >
+              <PlaceholderLine
+                style={{
+                  height: responsiveHeight(5),
+                  width: responsiveWidth(50),
+                }}
+              />
+              <PlaceholderLine style={{ width: responsiveWidth(30) }} />
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <PlaceholderMedia
+                  style={{
+                    height: responsiveHeight(13.5),
+                    width: responsiveWidth(27),
+                    borderRadius: 10,
+                    elevation: 2,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 1,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 1.41,
+                  }}
+                />
+                <PlaceholderMedia
+                  style={{
+                    height: responsiveHeight(13.5),
+                    width: responsiveWidth(27),
+                    borderRadius: 10,
+                    elevation: 2,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 1,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 1.41,
+                  }}
+                />
+                <PlaceholderMedia
+                  style={{
+                    height: responsiveHeight(13.5),
+                    width: responsiveWidth(27),
+                    borderRadius: 10,
+                    elevation: 2,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 1,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 1.41,
+                  }}
+                />
+              </View>
+              <PlaceholderMedia
+                style={{
+                  width: responsiveWidth(89),
+                  marginTop: 10,
+                  borderRadius: 10,
+                  elevation: 2,
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 1,
+                  },
+                  shadowOpacity: 0.2,
+                  shadowRadius: 1.41,
+                }}
+              />
+            </Card>
+            <Card
               style={{
-                height: responsiveHeight(32),
-                width: responsiveWidth(100),
-                marginBottom: responsiveHeight(1),
+                margin: 10,
                 elevation: 8,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 4,
-                },
-                shadowOpacity: 0.3,
-                shadowRadius: 4.65,
+                padding: 10,
               }}
-            />
-            <PlaceholderMedia
+            >
+              <PlaceholderLine
+                style={{
+                  height: responsiveHeight(5),
+                  width: responsiveWidth(50),
+                }}
+              />
+              <PlaceholderLine style={{ width: responsiveWidth(30) }} />
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <PlaceholderMedia
+                  style={{
+                    height: responsiveHeight(13.5),
+                    width: responsiveWidth(27),
+                    borderRadius: 10,
+                    elevation: 2,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 1,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 1.41,
+                  }}
+                />
+                <PlaceholderMedia
+                  style={{
+                    height: responsiveHeight(13.5),
+                    width: responsiveWidth(27),
+                    borderRadius: 10,
+                    elevation: 2,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 1,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 1.41,
+                  }}
+                />
+                <PlaceholderMedia
+                  style={{
+                    height: responsiveHeight(13.5),
+                    width: responsiveWidth(27),
+                    borderRadius: 10,
+                    elevation: 2,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 1,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 1.41,
+                  }}
+                />
+              </View>
+              <PlaceholderMedia
+                style={{
+                  width: responsiveWidth(89),
+                  marginTop: 10,
+                  borderRadius: 10,
+                  elevation: 2,
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 1,
+                  },
+                  shadowOpacity: 0.2,
+                  shadowRadius: 1.41,
+                }}
+              />
+            </Card>
+            <Card
               style={{
-                height: responsiveHeight(32),
-                width: responsiveWidth(100),
-                marginBottom: responsiveHeight(1),
+                margin: 10,
                 elevation: 8,
-                shadowColor: "#000",
-                shadowOffset: {
-                  width: 0,
-                  height: 4,
-                },
-                shadowOpacity: 0.3,
-                shadowRadius: 4.65,
+                padding: 10,
               }}
-            />
+            >
+              <PlaceholderLine
+                style={{
+                  height: responsiveHeight(5),
+                  width: responsiveWidth(50),
+                }}
+              />
+              <PlaceholderLine style={{ width: responsiveWidth(30) }} />
+              <View
+                style={{
+                  flexDirection: "row",
+                  justifyContent: "space-between",
+                }}
+              >
+                <PlaceholderMedia
+                  style={{
+                    height: responsiveHeight(13.5),
+                    width: responsiveWidth(27),
+                    borderRadius: 10,
+                    elevation: 2,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 1,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 1.41,
+                  }}
+                />
+                <PlaceholderMedia
+                  style={{
+                    height: responsiveHeight(13.5),
+                    width: responsiveWidth(27),
+                    borderRadius: 10,
+                    elevation: 2,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 1,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 1.41,
+                  }}
+                />
+                <PlaceholderMedia
+                  style={{
+                    height: responsiveHeight(13.5),
+                    width: responsiveWidth(27),
+                    borderRadius: 10,
+                    elevation: 2,
+                    shadowColor: "#000",
+                    shadowOffset: {
+                      width: 0,
+                      height: 1,
+                    },
+                    shadowOpacity: 0.2,
+                    shadowRadius: 1.41,
+                  }}
+                />
+              </View>
+              <PlaceholderMedia
+                style={{
+                  width: responsiveWidth(89),
+                  marginTop: 10,
+                  borderRadius: 10,
+                  elevation: 2,
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 1,
+                  },
+                  shadowOpacity: 0.2,
+                  shadowRadius: 1.41,
+                }}
+              />
+            </Card>
           </Placeholder>
         </View>
       )}

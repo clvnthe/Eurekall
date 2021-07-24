@@ -88,7 +88,7 @@ function EditProfileComponent(props) {
         await updateUserInfoRef.update({
           name: name1,
           preferred_username: username1,
-          description: description,
+          description: description1,
         });
         await AsyncStorage.setItem(
           "userInfo",
@@ -390,15 +390,21 @@ function EditProfileComponent(props) {
                   alignSelf: "center",
                 }}
                 autoCapitalize="none"
+                maxLength={12}
                 left={
                   <TextInput.Icon
                     name="face-profile"
                     color={true ? theme.colors.primary : theme.colors.text}
                   />
                 }
+                right={
+                  <TextInput.Affix
+                    text={String(username).trim().length + "/12"}
+                  />
+                }
               />
             </View>
-            <View style={{}}>
+            <View>
               <Text style={{ fontFamily: "PoppinsRegular" }}>Description</Text>
               <TextInput
                 theme={{ roundness: 20 }}

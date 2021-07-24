@@ -1,9 +1,10 @@
 import { useTheme } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { LinearGradient } from "expo-linear-gradient";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   FlatList,
+  RefreshControl,
   ScrollView,
   Text,
   TouchableOpacity,
@@ -19,6 +20,17 @@ import {
 } from "react-native-paper";
 import styles from "./styles";
 import firebase from "firebase";
+import {
+  Placeholder,
+  PlaceholderLine,
+  PlaceholderMedia,
+  ShineOverlay,
+} from "rn-placeholder";
+import {
+  responsiveHeight,
+  responsiveWidth,
+} from "react-native-responsive-dimensions";
+
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
   authDomain: "eurekall.firebaseapp.com",
@@ -38,60 +50,80 @@ const fireBucket = firebase.storage();
 
 function LeaderboardComponent(props) {
   const theme = useTheme();
-  const defaultImage = "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8"
+  const defaultImage =
+    "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/fe58bbba-fabe-4ca9-a574-04bb6f4d453d/d4j47k3-8983fc90-50e8-47ee-a08c-e7a31e7401ab.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcL2ZlNThiYmJhLWZhYmUtNGNhOS1hNTc0LTA0YmI2ZjRkNDUzZFwvZDRqNDdrMy04OTgzZmM5MC01MGU4LTQ3ZWUtYTA4Yy1lN2EzMWU3NDAxYWIuanBnIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.YbcvA7bF9G7E5gxhZuGcWw5bXoArcb_T-4z_BrmXyQ8";
   const [image, setImage] = useState(defaultImage);
-  const [leaderboardUsers,setLeaderboardUsers] = useState([]);
-  const loadDetails = (userData,idCounter) => {
-    let i = 1;
-    fireBucket
-        .ref()
-        .child("images/" + userData["email"])
-        .getDownloadURL()
-        .then((url) => {
-          const userDataObject = {
-            id: String(idCounter),
-            username: userData["preferred_username"],
-            title: "titletbc",
-            description: userData["description"],
-            level: String(Math.floor(userData["exp"]/500)),
-            profilePic: url
-          }
-          leaderboardUsers.push(userDataObject);
-          leaderboardUsers.sort((a,b) => parseInt(a.id) - parseInt(b.id))
-        })
-        .catch((error) => {
-          const userDataObject = {
-            id: String(idCounter),
-            username: userData["preferred_username"],
-            title: "titletbc",
-            description: userData["description"],
-            level: String(Math.floor(userData["exp"]/500)),
-            profilePic: defaultImage
-          }
-          leaderboardUsers.push(userDataObject);
-          leaderboardUsers.sort((a,b) => parseInt(a.id) - parseInt(b.id))
-        });
+  const [leaderboardUsers, setLeaderboardUsers] = useState([]);
+  const [tempLeaderboardUsers, setTempLeaderboardUsers] = useState([]);
+  const [refreshing, setRefreshing] = useState(false);
+  const [refreshBoolean, setRefreshBoolean] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    setIsLoading(true);
+    setRefreshBoolean(() => !refreshBoolean);
   };
 
-  useEffect( () => {
-    setTimeout( async () => {
+  const loadDetails = (userData, idCounter) => {
+    let i = 1;
+    fireBucket
+      .ref()
+      .child("images/" + userData["email"])
+      .getDownloadURL()
+      .then((url) => {
+        const userDataObject = {
+          id: String(idCounter),
+          username: userData["preferred_username"],
+          title: determineTitle(Math.floor(userData["exp"] / 500) + 1),
+          description: userData["description"],
+          level: String(Math.floor(userData["exp"] / 500) + 1),
+          profilePic: url,
+        };
+        tempLeaderboardUsers.push(userDataObject);
+        tempLeaderboardUsers.sort((a, b) => parseInt(a.id) - parseInt(b.id));
+      })
+      .catch((error) => {
+        const userDataObject = {
+          id: String(idCounter),
+          username: userData["preferred_username"],
+          title: determineTitle(Math.floor(userData["exp"] / 500) + 1),
+          description: userData["description"],
+          level: String(Math.floor(userData["exp"] / 500) + 1),
+          profilePic: defaultImage,
+        };
+        tempLeaderboardUsers.push(userDataObject);
+        tempLeaderboardUsers.sort((a, b) => parseInt(a.id) - parseInt(b.id));
+      });
+  };
+
+  useEffect(() => {
+    setTimeout(async () => {
       try {
-        const firebaseUserRef = firestore.collection('users');
-        const getLeaderboardData = await firebaseUserRef.orderBy('exp','desc').limit(8).get();
-        const leaderboardData = getLeaderboardData['docs'];
+        const firebaseUserRef = firestore.collection("users");
+        const getLeaderboardData = await firebaseUserRef
+          .orderBy("exp", "desc")
+          .limit(8)
+          .get();
+        const leaderboardData = getLeaderboardData["docs"];
         let i = 1;
         leaderboardData.forEach((getUserData) => {
           const userData = getUserData.data();
-          loadDetails(userData,i);
+          loadDetails(userData, i);
           i++;
-        })
+        });
+        setLeaderboardUsers(tempLeaderboardUsers);
+        setTempLeaderboardUsers([]);
       } catch (error) {
-        console.log('leaderboard loading error');
+        console.log("leaderboard loading error");
         console.log(error);
       }
-    },0)
-  },[])
-
+    }, 0);
+    setTimeout(() => {
+      setIsLoading(false);
+      setRefreshing(false);
+    }, 1000);
+  }, [refreshBoolean]);
 
   const users = [
     {
@@ -189,6 +221,24 @@ function LeaderboardComponent(props) {
       return ["#D3CCE3", "#E9E4F0"];
     } else {
       return ["#DBE6F6", "#DBE6F6"];
+    }
+  };
+
+  const determineTitle = (userLvl) => {
+    if (userLvl >= 30) {
+      return "Legend";
+    } else if (userLvl >= 25) {
+      return "Grandmaster";
+    } else if (userLvl >= 20) {
+      return "Master";
+    } else if (userLvl >= 15) {
+      return "Expert";
+    } else if (userLvl >= 10) {
+      return "Graduate";
+    } else if (userLvl >= 5) {
+      return "Novice";
+    } else {
+      return "Beginner";
     }
   };
 
@@ -383,12 +433,286 @@ function LeaderboardComponent(props) {
           </ScrollView>
         </Modal>
       </Portal>
-      <FlatList
-        data={leaderboardUsers}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        ListFooterComponent={<View style={styles.footer} />}
-      />
+      {isLoading ? ( //SKELETON PLACEHOLDER UI
+        <View style={{ flex: 1 }}>
+          <Placeholder
+            Animation={ShineOverlay}
+            style={{
+              alignSelf: "center",
+              overflow: "hidden",
+            }}
+          >
+            <Surface
+              style={[
+                styles.userContainer,
+                {
+                  backgroundColor: !theme.dark
+                    ? "#F0F0F0"
+                    : theme.colors.border,
+                  justifyContent: "center",
+                },
+              ]}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <PlaceholderMedia
+                  style={{
+                    borderRadius: 40,
+                    height: 80,
+                    width: 80,
+                    marginRight: 10,
+                    backgroundColor: "#CDCDCD",
+                  }}
+                />
+                <View
+                  style={{
+                    justifyContent: "center",
+                  }}
+                >
+                  <PlaceholderLine
+                    style={{
+                      backgroundColor: "#CDCDCD",
+                      width: responsiveWidth(40),
+                      height: responsiveHeight(3),
+                    }}
+                  />
+                  <PlaceholderLine
+                    style={{
+                      backgroundColor: "#CDCDCD",
+                      width: responsiveWidth(30),
+                      height: responsiveHeight(3),
+                    }}
+                  />
+                </View>
+              </View>
+            </Surface>
+            <Surface
+              style={[
+                styles.userContainer,
+                {
+                  backgroundColor: !theme.dark
+                    ? "#F0F0F0"
+                    : theme.colors.border,
+                  justifyContent: "center",
+                },
+              ]}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <PlaceholderMedia
+                  style={{
+                    borderRadius: 40,
+                    height: 80,
+                    width: 80,
+                    marginRight: 10,
+                    backgroundColor: "#CDCDCD",
+                  }}
+                />
+                <View
+                  style={{
+                    justifyContent: "center",
+                  }}
+                >
+                  <PlaceholderLine
+                    style={{
+                      backgroundColor: "#CDCDCD",
+                      width: responsiveWidth(40),
+                      height: responsiveHeight(3),
+                    }}
+                  />
+                  <PlaceholderLine
+                    style={{
+                      backgroundColor: "#CDCDCD",
+                      width: responsiveWidth(30),
+                      height: responsiveHeight(3),
+                    }}
+                  />
+                </View>
+              </View>
+            </Surface>
+            <Surface
+              style={[
+                styles.userContainer,
+                {
+                  backgroundColor: !theme.dark
+                    ? "#F0F0F0"
+                    : theme.colors.border,
+                  justifyContent: "center",
+                },
+              ]}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <PlaceholderMedia
+                  style={{
+                    borderRadius: 40,
+                    height: 80,
+                    width: 80,
+                    marginRight: 10,
+                    backgroundColor: "#CDCDCD",
+                  }}
+                />
+                <View
+                  style={{
+                    justifyContent: "center",
+                  }}
+                >
+                  <PlaceholderLine
+                    style={{
+                      backgroundColor: "#CDCDCD",
+                      width: responsiveWidth(40),
+                      height: responsiveHeight(3),
+                    }}
+                  />
+                  <PlaceholderLine
+                    style={{
+                      backgroundColor: "#CDCDCD",
+                      width: responsiveWidth(30),
+                      height: responsiveHeight(3),
+                    }}
+                  />
+                </View>
+              </View>
+            </Surface>
+            <Surface
+              style={[
+                styles.userContainer,
+                {
+                  backgroundColor: !theme.dark
+                    ? "#F0F0F0"
+                    : theme.colors.border,
+                  justifyContent: "center",
+                },
+              ]}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <PlaceholderMedia
+                  style={{
+                    borderRadius: 40,
+                    height: 80,
+                    width: 80,
+                    marginRight: 10,
+                    backgroundColor: "#CDCDCD",
+                  }}
+                />
+                <View
+                  style={{
+                    justifyContent: "center",
+                  }}
+                >
+                  <PlaceholderLine
+                    style={{
+                      backgroundColor: "#CDCDCD",
+                      width: responsiveWidth(40),
+                      height: responsiveHeight(3),
+                    }}
+                  />
+                  <PlaceholderLine
+                    style={{
+                      backgroundColor: "#CDCDCD",
+                      width: responsiveWidth(30),
+                      height: responsiveHeight(3),
+                    }}
+                  />
+                </View>
+              </View>
+            </Surface>
+            <Surface
+              style={[
+                styles.userContainer,
+                {
+                  backgroundColor: !theme.dark
+                    ? "#F0F0F0"
+                    : theme.colors.border,
+                  justifyContent: "center",
+                },
+              ]}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <PlaceholderMedia
+                  style={{
+                    borderRadius: 40,
+                    height: 80,
+                    width: 80,
+                    marginRight: 10,
+                    backgroundColor: "#CDCDCD",
+                  }}
+                />
+                <View
+                  style={{
+                    justifyContent: "center",
+                  }}
+                >
+                  <PlaceholderLine
+                    style={{
+                      backgroundColor: "#CDCDCD",
+                      width: responsiveWidth(40),
+                      height: responsiveHeight(3),
+                    }}
+                  />
+                  <PlaceholderLine
+                    style={{
+                      backgroundColor: "#CDCDCD",
+                      width: responsiveWidth(30),
+                      height: responsiveHeight(3),
+                    }}
+                  />
+                </View>
+              </View>
+            </Surface>
+            <Surface
+              style={[
+                styles.userContainer,
+                {
+                  backgroundColor: !theme.dark
+                    ? "#F0F0F0"
+                    : theme.colors.border,
+                  justifyContent: "center",
+                },
+              ]}
+            >
+              <View style={{ flexDirection: "row" }}>
+                <PlaceholderMedia
+                  style={{
+                    borderRadius: 40,
+                    height: 80,
+                    width: 80,
+                    marginRight: 10,
+                    backgroundColor: "#CDCDCD",
+                  }}
+                />
+                <View
+                  style={{
+                    justifyContent: "center",
+                  }}
+                >
+                  <PlaceholderLine
+                    style={{
+                      backgroundColor: "#CDCDCD",
+                      width: responsiveWidth(40),
+                      height: responsiveHeight(3),
+                    }}
+                  />
+                  <PlaceholderLine
+                    style={{
+                      backgroundColor: "#CDCDCD",
+                      width: responsiveWidth(30),
+                      height: responsiveHeight(3),
+                    }}
+                  />
+                </View>
+              </View>
+            </Surface>
+          </Placeholder>
+        </View>
+      ) : (
+        <FlatList
+          data={leaderboardUsers}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          ListFooterComponent={<View style={styles.footer} />}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+        />
+      )}
     </View>
   );
 }

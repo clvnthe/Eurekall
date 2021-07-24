@@ -1,5 +1,9 @@
 import { Dimensions } from "react-native";
 import { ScaledSheet } from "react-native-size-matters";
+import {
+  responsiveHeight,
+  responsiveWidth,
+} from "react-native-responsive-dimensions";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -10,8 +14,8 @@ export default ScaledSheet.create({
     justifyContent: "center",
   },
   userContainer: {
-    height: "80@s",
-    width: "95%",
+    height: responsiveHeight(12.5), //"80@s",
+    width: responsiveWidth(95), //"95%",
     marginTop: "10@s",
     borderRadius: "20@s",
     alignItems: "center",
@@ -32,6 +36,7 @@ export default ScaledSheet.create({
   innerPPandTextContainer: {
     flex: 6,
     flexDirection: "row",
+    alignItems: "center",
   },
   innerTextContainer: {
     height: "80@s",
@@ -39,7 +44,7 @@ export default ScaledSheet.create({
     marginLeft: "5@s",
   },
   usernameText: {
-    fontSize: "24@s",
+    fontSize: "20@s",
   },
   levelContainer: {
     flex: 1,

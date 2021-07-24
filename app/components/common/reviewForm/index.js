@@ -4,17 +4,18 @@ import { TextInput, Text, useTheme } from "react-native-paper";
 import { Formik } from "formik";
 import CustomButton from "../CustomButton";
 
-function ReviewFormComponent({ createDeckHandler }) {
+function ReviewFormComponent({ createDeckHandler, autoGeneratorUI }) {
   return (
     <View style={{ elevation: 24 }}>
       <Formik
         initialValues={{
           title: "",
           subtitle: "",
+          paragraph: "",
         }}
         onSubmit={(values, actions) => {
           actions.resetForm();
-          createDeckHandler(values.title, values.subtitle);
+          createDeckHandler(values.title, values.subtitle, values.paragraph);
         }}
       >
         {(props) => (
@@ -43,6 +44,19 @@ function ReviewFormComponent({ createDeckHandler }) {
               value={props.values.subtitle}
               left={<TextInput.Icon name="subtitles" />}
             ></TextInput>
+            {autoGeneratorUI && (
+              <TextInput
+                mode="outlined"
+                label="Your paragraph"
+                style={{
+                  marginTop: -10,
+                  padding: 10,
+                }}
+                placeholder="Enter your paragraph"
+                value={props.values.paragraph}
+                left={<TextInput.Icon name="note-text" />}
+              />
+            )}
             <View
               style={{
                 alignSelf: "center",
@@ -53,7 +67,19 @@ function ReviewFormComponent({ createDeckHandler }) {
                 bgColor="#28A44B"
                 width={310}
                 onPress={
-                  props.values.title !== "" && props.values.subtitle !== ""
+                  autoGeneratorUI
+                    ? props.values.title !== "" &&
+                      props.values.subtitle !== "" &&
+                      props.values.paragraph !== ""
+                      ? props.handleSubmit
+                      : () =>
+                          Alert.alert("Alert", "Fields cannot be empty!", [
+                            {
+                              text: "OK",
+                              onPress: () => console.log("OK Pressed"),
+                            },
+                          ])
+                    : props.values.title !== "" && props.values.subtitle !== ""
                     ? props.handleSubmit
                     : () =>
                         Alert.alert("Alert", "Fields cannot be empty!", [
