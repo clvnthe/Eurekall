@@ -23,11 +23,33 @@ const updateCard = async (deckId,cardId,boxTypeValue,dateValue) => {
   const userId = String(fireauth.currentUser.email);
   const updateCardRef = firestore.collection('users').doc(userId).collection('decks')
       .doc(deckId).collection('cards').doc(cardId);
+  const updateBoxRef = firestore.collection('users').doc(userId);
   try {
     await updateCardRef.update({
       "boxType": boxTypeValue,
       "date": dateValue
     })
+    if (boxTypeValue === 1){
+      await updateBoxRef.update({
+        "stats.box1Cards": firebase.firestore.FieldValue.increment(1),
+      })
+    } else if (boxTypeValue === 2){
+      await updateBoxRef.update({
+        "stats.box2Cards": firebase.firestore.FieldValue.increment(1),
+      })
+    } else if (boxTypeValue === 3){
+      await updateBoxRef.update({
+        "stats.box3Cards": firebase.firestore.FieldValue.increment(1),
+      })
+    } else if (boxTypeValue === 4){
+      await updateBoxRef.update({
+        "stats.box4Cards": firebase.firestore.FieldValue.increment(1),
+      })
+    } else if (boxTypeValue === 5){
+      await updateBoxRef.update({
+        "stats.box5Cards": firebase.firestore.FieldValue.increment(1),
+      })
+    }
   } catch (err) {
     console.log(err);
   }

@@ -1,12 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="working leaderboard and objectives">
+    <list default="true" id="8590b4b4-8bc4-4a4c-be85-4c05cc5f2765" name="Default Changelist" comment="Check and confirmed">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ConfirmRegistration/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ConfirmRegistration/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ConfirmRegistration/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ConfirmRegistration/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Objectives/Completed/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Objectives/Completed/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Objectives/Completed/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Objectives/Completed/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Objectives/Ongoing/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Objectives/Ongoing/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Objectives/Ongoing/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Objectives/Ongoing/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Register/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Register/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ResetPassword/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ResetPassword/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/ResetPassword/styles.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ResetPassword/styles.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/components/Study/PostStudy/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/Study/PostStudy/index.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/components/ViewDecks/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/components/ViewDecks/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/node_modules/.yarn-integrity" beforeDir="false" afterPath="$PROJECT_DIR$/node_modules/.yarn-integrity" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/yarn.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/store/slices/deckSlice.js" beforeDir="false" afterPath="$PROJECT_DIR$/store/slices/deckSlice.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,19 +67,6 @@
       <recent name="C:\Users\clvnt\Desktop\Projects\Eurekall" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -110,7 +105,8 @@
       <workItem from="1627044067389" duration="228000" />
       <workItem from="1627044672255" duration="3689000" />
       <workItem from="1627048486510" duration="1403000" />
-      <workItem from="1627091000481" duration="21035000" />
+      <workItem from="1627091000481" duration="23244000" />
+      <workItem from="1627178665788" duration="7085000" />
     </task>
     <task id="LOCAL-00001" summary="miscellaneous changes please ignore">
       <created>1623057973234</created>
@@ -245,7 +241,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627108986266</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="added ML model">
+      <created>1627146350156</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1627146350156</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -281,7 +284,9 @@
     <MESSAGE value="leaderboard(faulty), objectives(not live)" />
     <MESSAGE value="leaderboard(faulty), objectives(not live)[updated]" />
     <MESSAGE value="working leaderboard and objectives" />
-    <option name="LAST_COMMIT_MESSAGE" value="working leaderboard and objectives" />
+    <MESSAGE value="added ML model" />
+    <MESSAGE value="Check and confirmed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Check and confirmed" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

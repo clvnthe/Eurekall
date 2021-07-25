@@ -7,41 +7,55 @@ import CustomButton from "../common/CustomButton";
 import styles from "./styles";
 import Container from "../common/Container";
 import { useTheme } from "@react-navigation/native";
+import firebase from "firebase";
+import {responsiveHeight, responsiveWidth} from "react-native-responsive-dimensions";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+    authDomain: "eurekall.firebaseapp.com",
+    projectId: "eurekall",
+    storageBucket: "eurekall.appspot.com",
+    messagingSenderId: "132679568347",
+    appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+    measurementId: "G-H1N45TFCSX",
+};
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+} else {
+    firebase.app(); // if already initialized, use that one
+}
 
 function ResetPasswordComponent() {
   const [loading, setLoading] = React.useState(false);
   const theme = useTheme();
 
   const { navigate } = useNavigation();
-
-  //For AWS reset Password
-  /*function resetPassword() {
-     setLoading(true);
-     Auth.forgotPasswordSubmit(username.toString(), confirmationCode, password)
-       .then((data) => console.log(data))
-       .then(() => {
-         console.log("reset fully successful");
-         setLoading(false);
-         setIsSignInHelperTextVisible(false);
-       })
-       .then(() => navigate(LOGIN))
-       .catch((err) => {
-         console.log(err);
-         setLoading(false);
-         setIsSignInHelperTextVisible(true);
-       });
-   }*/
+  const resendEmailVerification = async() =>{
+      try {
+          await firebase.auth().currentUser.sendEmailVerification();
+      } catch(error) {
+          console.log('firebase resend email error');
+          console.log(error);
+      }
+  }
 
   return (
     <Container backgroundColor={theme.colors.background}>
-      <Image
-        style={styles.logo}
-        source={
-          theme.dark
-            ? require("../../../assets/images/eurekall_whitelogo.png")
-            : require("../../../assets/images/eurekall_logo.png")
-        }
-      ></Image>
+        <View style={{justifyContent:'flex-end',
+            height:responsiveHeight(15),
+            width:responsiveWidth(95),
+            marginLeft:responsiveWidth(16)
+        }}>
+            <Image
+                style={styles.logo}
+                resizeMode='contain'
+                source={
+                    theme.dark
+                        ? require("../../../assets/images/eurekall_whitelogo_cropped.png")
+                        : require("../../../assets/images/eurekall_logo_cropped.png")
+                }
+            ></Image>
+        </View>
       <Text
         style={[
           styles.title,
@@ -62,7 +76,7 @@ function ResetPasswordComponent() {
           bgColor={theme.colors.primary}
           loading={loading}
           onPress={() => {
-            console.log("link sent to email");
+            resendEmailVerification();
           }}
         ></CustomButton>
       </View>

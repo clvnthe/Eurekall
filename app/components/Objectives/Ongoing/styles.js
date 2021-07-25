@@ -21,4 +21,7 @@ export default ScaledSheet.create({
   footer: {
     height: hp(10),
   },
+  imageWrapper: {
+    height: hp(45),
+  },
 });

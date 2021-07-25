@@ -365,7 +365,7 @@ function DeckComponent(props) {
     await deckRef.set({
       question: question,
       answer: answer,
-      boxType: 1,
+      boxType: 0,
       id: cardId,
       date: currentDate,
     });
@@ -382,7 +382,7 @@ function DeckComponent(props) {
   const createFlashcardHandler = (
     question,
     answer,
-    boxType = 1,
+    boxType = 0,
     id = nanoid(),
     inputDate = currentDate,
     cardtoDeckIndex = 0,
@@ -398,7 +398,7 @@ function DeckComponent(props) {
       const index = cardtoDeckIndex;
       dispatch(Decks.createFlashcard(index, card));
       const cardDays = dateComparator(inputDate);
-      if (boxType === 1) {
+      if (boxType === 0 || boxType === 1) {
         dispatch(Decks.pushOntoStudydeck(index, card));
       } else if (boxType === 2 && cardDays >= 2) {
         dispatch(Decks.pushOntoStudydeck(index, card));

@@ -1,16 +1,55 @@
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import React from "react";
+import React, {useEffect} from "react";
 import { FlatList, Text, View } from "react-native";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { Surface, Title } from "react-native-paper";
 import { DECKS, HOME_MAIN } from "../../../constants/routeNames";
 import CustomButton from "../../common/CustomButton";
 import LottieView from "lottie-react-native";
+import firebase from "firebase";
+const firebaseConfig = {
+  apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
+  authDomain: "eurekall.firebaseapp.com",
+  projectId: "eurekall",
+  storageBucket: "eurekall.appspot.com",
+  messagingSenderId: "132679568347",
+  appId: "1:132679568347:web:5fb1b1b852eefc092cf5fe",
+  measurementId: "G-H1N45TFCSX",
+};
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+} else {
+  firebase.app(); // if already initialized, use that one
+}
+const firestore = firebase.firestore();
+const fireauth = firebase.auth();
 
 function PostStudyComponent({ route }) {
   const { reset } = useNavigation();
   const theme = useTheme();
+
+  const updateExptoFirebase = async () => {
+    try {
+      const userEmail = await String(fireauth.currentUser.email);
+      const updateExp = firestore.collection("users").doc(userEmail);
+      const userExpRef = await updateExp.get();
+      const userExpDetails = userExpRef.data();
+      const overallUserExp = userExpDetails["exp"];
+      const updatedExp = overallUserExp + 10;
+      await updateExp.set(
+          {
+            exp: updatedExp,
+          },
+          { merge: true }
+      );
+    } catch (error) {
+      console.log("score update error");
+      console.log(error);
+    }
+  };
+
+  updateExptoFirebase();
 
   const [loaded] = useFonts({
     MontserratLight: require("../../../../assets/fonts/Montserrat-Light.ttf"),
@@ -76,7 +115,7 @@ function PostStudyComponent({ route }) {
               fontFamily: "PoppinsMedium",
             }}
           >
-            Exp earned: 100
+            Exp earned: 10
           </Text>
         </Surface>
         <Surface style={styles.motivationWrapper}>

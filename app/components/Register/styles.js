@@ -1,4 +1,5 @@
 import { ScaledSheet } from "react-native-size-matters";
+import {responsiveHeight} from "react-native-responsive-dimensions";
 
 export default ScaledSheet.create({
   logoView: {
@@ -33,7 +34,7 @@ export default ScaledSheet.create({
     flex: 2,
     //top: "60@s",
     //left: "20@s",
-    fontSize: "48@s",
+    fontSize: responsiveHeight(6),
   },
   inputView: {
     width: "310@s",
