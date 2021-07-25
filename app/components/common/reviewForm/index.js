@@ -3,6 +3,7 @@ import { Alert, View } from "react-native";
 import { TextInput, Text, useTheme } from "react-native-paper";
 import { Formik } from "formik";
 import CustomButton from "../CustomButton";
+import { responsiveHeight } from "react-native-responsive-dimensions";
 
 function ReviewFormComponent({
   createDeckHandler,
@@ -58,20 +59,16 @@ function ReviewFormComponent({
               <TextInput
                 mode="outlined"
                 label="Your paragraph"
-                maxLength={256}
+                multiline={true}
                 style={{
                   marginTop: -10,
                   padding: 10,
+                  maxHeight: responsiveHeight(25),
                 }}
                 placeholder="Enter your paragraph"
                 onChangeText={props.handleChange("paragraph")}
                 value={props.values.paragraph}
                 left={<TextInput.Icon name="note-text" />}
-                right={
-                  <TextInput.Affix
-                    text={props.values.paragraph.trim().length + "/256"}
-                  />
-                }
               />
             )}
             <View

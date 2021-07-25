@@ -9,6 +9,7 @@ import {
   Searchbar,
   Card,
   ProgressBar,
+  ActivityIndicator,
 } from "react-native-paper";
 import ReviewFormComponent from "../common/reviewForm";
 import FlashCardForm from "../common/flashcardForm";
@@ -524,7 +525,11 @@ function DeckComponent(props) {
           >
             <Title style={{ fontFamily: "PoppinsBold" }}>Help</Title>
             <TouchableOpacity onPress={hideHelpModal}>
-              <Ionicons name="ios-close-outline" size={24} color="black" />
+              <Ionicons
+                name="ios-close-outline"
+                size={24}
+                color={theme.colors.text}
+              />
             </TouchableOpacity>
           </View>
           <Text
@@ -579,9 +584,9 @@ function DeckComponent(props) {
           <Text
             style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
           >
-            {"\n"}2) To delete a deck, press on the "⋮" icon located on the top
-            right of that deck. A "delete deck" button will appear. Press on
-            that button to proceed with the deletion of the deck. {"\n"}
+            2) To delete a deck, press on the "⋮" icon located on the top right
+            of that deck. A "delete deck" button will appear. Press on that
+            button to proceed with the deletion of the deck. {"\n"}
             {"\n"}3) To study your cards, press on the left button of that deck
             titled "Study". An alert will appear if there are currently no cards
             to be studied.{"\n"}
@@ -614,7 +619,11 @@ function DeckComponent(props) {
           >
             <Title style={{ fontFamily: "PoppinsBold" }}>Create a deck</Title>
             <TouchableOpacity onPress={hideModal}>
-              <Ionicons name="ios-close-outline" size={24} color="black" />
+              <Ionicons
+                name="ios-close-outline"
+                size={24}
+                color={theme.colors.text}
+              />
             </TouchableOpacity>
           </View>
           <ReviewFormComponent
@@ -625,14 +634,13 @@ function DeckComponent(props) {
         <Modal
           visible={visibleUploadPDFModal}
           onDismiss={hideUploadPDFModal}
-          //overlayAccessibilityLabel="do nothing"
-          style={{
-            justifyContent: "center",
-          }}
+          dismissable={!mlIsLoading}
           contentContainerStyle={[
-            styles.modal,
+            styles.modalCardForm,
             {
+              justifyContent: "flex-start",
               backgroundColor: theme.colors.background,
+              borderColor: theme.colors.surface,
             },
           ]}
         >
@@ -645,9 +653,20 @@ function DeckComponent(props) {
             <Title style={{ fontFamily: "PoppinsBold" }}>
               Upload Your Notes
             </Title>
-            <TouchableOpacity onPress={hideUploadPDFModal}>
-              <Ionicons name="ios-close-outline" size={24} color="black" />
-            </TouchableOpacity>
+            {mlIsLoading ? (
+              <ActivityIndicator
+                animating={true}
+                color={theme.colors.primary}
+              />
+            ) : (
+              <TouchableOpacity onPress={hideUploadPDFModal}>
+                <Ionicons
+                  name="ios-close-outline"
+                  size={24}
+                  color={theme.colors.text}
+                />
+              </TouchableOpacity>
+            )}
           </View>
           {mlIsLoading ? (
             <View>
@@ -656,7 +675,9 @@ function DeckComponent(props) {
                 color={theme.colors.primary}
                 style={{ height: responsiveHeight(0.5), borderRadius: 20 }}
               />
-              <Text style={{ fontFamily: "PoppinsLight" }}>
+              <Text
+                style={{ fontFamily: "PoppinsLight", color: theme.colors.text }}
+              >
                 {mlProgressText}
               </Text>
             </View>
@@ -689,7 +710,11 @@ function DeckComponent(props) {
               Create a flashcard
             </Title>
             <TouchableOpacity onPress={hideAddCardModal}>
-              <Ionicons name="ios-close-outline" size={24} color="black" />
+              <Ionicons
+                name="ios-close-outline"
+                size={24}
+                color={theme.colors.text}
+              />
             </TouchableOpacity>
           </View>
           <FlashCardForm createFlashcardHandler={createFlashcardHandler} />
@@ -701,6 +726,7 @@ function DeckComponent(props) {
             !visibleHelp &&
             !visible &&
             !visibleAddCardModal &&
+            !visibleUploadPDFModal &&
             isFocused
           }
           open={open}
