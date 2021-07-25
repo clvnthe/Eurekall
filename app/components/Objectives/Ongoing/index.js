@@ -1,6 +1,6 @@
 import { useFonts } from "expo-font";
 import React from "react";
-import {FlatList, Image, Text, View} from "react-native";
+import { FlatList, Image, Text, View } from "react-native";
 import { Surface, useTheme } from "react-native-paper";
 import { objectivesData } from "../../../../assets/data/objectivesData";
 import styles from "./styles";
@@ -10,7 +10,7 @@ function OngoingObjectivesComponent() {
   const [objectivesRenderData, setObjectivesRenderData] =
     React.useState(objectivesData);
   const objectiveCollectedFilter = (objectives) => {
-      return objectives.filter((objective) => objective.collected === false)
+    return objectives.filter((objective) => objective.collected === false);
   };
   const renderItem = ({ item }) => {
     return (
@@ -24,13 +24,19 @@ function OngoingObjectivesComponent() {
             },
           ]}
         >
-          <Text style={{ fontFamily: "PoppinsRegular" }}>
+          <Text
+            style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+          >
             {item.objectiveName}
           </Text>
-          <Text style={{ fontFamily: "PoppinsRegular" }}>
+          <Text
+            style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+          >
             0/{item.targetAmt}
           </Text>
-          <Text style={{ fontFamily: "PoppinsBold" }}>{item.expAmt} exp</Text>
+          <Text style={{ fontFamily: "PoppinsBold", color: theme.colors.text }}>
+            {item.expAmt} exp
+          </Text>
         </Surface>
       </View>
     );
@@ -50,32 +56,33 @@ function OngoingObjectivesComponent() {
     return null;
   }
 
-  if (objectiveCollectedFilter(objectivesRenderData).length === 0){
-      return (
-          <View style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}>
-              <Text style={{ fontFamily: "PoppinsMedium" }}>
-                  finally some peace and quiet
-              </Text>
-              <Image
-                  source={require("../../../../assets/images/eastwood-come-back-later.png")}
-                  style={styles.imageWrapper}
-                  resizeMode="contain"
-              ></Image>
-          </View>
-      );
+  if (objectiveCollectedFilter(objectivesRenderData).length === 0) {
+    return (
+      <View
+        style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}
+      >
+        <Text style={{ fontFamily: "PoppinsMedium" }}>
+          finally some peace and quiet
+        </Text>
+        <Image
+          source={require("../../../../assets/images/eastwood-come-back-later.png")}
+          style={styles.imageWrapper}
+          resizeMode="contain"
+        ></Image>
+      </View>
+    );
   } else {
-      return (
-          <View style={{ flex: 1 }}>
-              <FlatList
-                  data={objectiveCollectedFilter(objectivesRenderData)}
-                  renderItem={renderItem}
-                  keyExtractor={(item) => item.id}
-                  ListFooterComponent={<View style={styles.footer} />}
-              />
-          </View>
-      );
+    return (
+      <View style={{ flex: 1 }}>
+        <FlatList
+          data={objectiveCollectedFilter(objectivesRenderData)}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          ListFooterComponent={<View style={styles.footer} />}
+        />
+      </View>
+    );
   }
-
 }
 
 export default OngoingObjectivesComponent;
