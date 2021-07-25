@@ -1,6 +1,6 @@
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { FlatList, Text, View } from "react-native";
 import EStyleSheet from "react-native-extended-stylesheet";
 import { Surface, Title } from "react-native-paper";
@@ -38,10 +38,10 @@ function PostStudyComponent({ route }) {
       const overallUserExp = userExpDetails["exp"];
       const updatedExp = overallUserExp + 10;
       await updateExp.set(
-          {
-            exp: updatedExp,
-          },
-          { merge: true }
+        {
+          exp: updatedExp,
+        },
+        { merge: true }
       );
     } catch (error) {
       console.log("score update error");
@@ -49,7 +49,7 @@ function PostStudyComponent({ route }) {
     }
   };
 
-  updateExptoFirebase();
+  !route.params.studyAll && updateExptoFirebase();
 
   const [loaded] = useFonts({
     MontserratLight: require("../../../../assets/fonts/Montserrat-Light.ttf"),

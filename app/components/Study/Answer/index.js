@@ -46,6 +46,7 @@ function AnswerComponent({ route }) {
                   name: POST_STUDY,
                   params: {
                     statsTracker: route.params.statsTracker,
+                    studyAll: route.params.studyAll,
                   },
                 },
               ],
