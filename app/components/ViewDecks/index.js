@@ -8,6 +8,7 @@ import {
   Avatar,
   Searchbar,
   Card,
+  ProgressBar,
 } from "react-native-paper";
 import ReviewFormComponent from "../common/reviewForm";
 import FlashCardForm from "../common/flashcardForm";
@@ -45,7 +46,7 @@ import {
   PlaceholderMedia,
   ShineOverlay,
 } from "rn-placeholder";
-import axios from 'axios';
+import axios from "axios";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -80,7 +81,11 @@ function DeckComponent(props) {
   const onStateChange = ({ open }) => setState({ open });
   const { open } = state;
   const [isLoading, setIsLoading] = useState(!decks.length);
-  const [mlText, setMLText] = useState([]);
+  let mlText = [];
+  let numOfDecks = decks.length;
+  const [mlIsLoading, setMlIsLoading] = useState(false);
+  const [mlProgress, setMlProgress] = useState(0);
+  const [mlProgressText, setMlProgressText] = useState("");
 
   useEffect(() => {
     setFilteredDecks(
@@ -97,6 +102,28 @@ function DeckComponent(props) {
     setIsLoading(true);
     setRefreshBoolean(() => !refreshBoolean);
   };
+
+  // const test_text = 'The Empire of Japan aimed to dominate Asia and the Pacific and was already at war with the Republic of China in 1937, but the world war is generally said to have begun on 1 September 1939 with the invasion of Poland by Germany and subsequent declarations of war on Germany by France and the United Kingdom. From late 1939 to early 1941, in a series of campaigns and treaties, Germany conquered or controlled much of continental Europe, and formed the Axis alliance with Italy and Japan. Under the Molotov-Ribbentrop Pact of August 1939, Germany and the Soviet Union partitioned and annexed territories of their European neighbours, Poland, Finland, Romania and the Baltic states. The war continued primarily between the European Axis powers and the coalition of the United Kingdom and the British Commonwealth, with campaigns including the North Africa and East Africa campaigns, the aerial Battle of Britain, the Blitz bombing campaign, the Balkan Campaign as well as the long-running Battle of the Atlantic. In June 1941, the European Axis powers launched an invasion of the Soviet Union, opening the largest land theatre of war in history, which trapped the major part of the Axis\' military forces into a war of attrition. In December 1941, Japan attacked the United States and European territories in the Pacific Ocean, and quickly conquered much of the Western Pacific.'
+  function generateQuestions(test_text) {
+    return new Promise((resolve, reject) => {
+      axios
+        .post("https://plated-hash-320814.as.r.appspot.com/generate/", {
+          text: test_text,
+        })
+        .then((response) => {
+          mlText = response["data"]["result"];
+          //setMLText(qna);
+          console.log(mlText);
+        })
+        .then(() => {
+          console.log(mlText);
+          resolve();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  }
 
   const createDeckDatabase = async (title, subtitle, id) => {
     const userEmail = await String(fireauth.currentUser.email);
@@ -142,7 +169,43 @@ function DeckComponent(props) {
         setEmpty(false);
         setIsLoading(false);
       }
+      numOfDecks = ++numOfDecks;
     }
+  };
+
+  const createMlDeckHandler = async (
+    title,
+    subtitle,
+    paragraph,
+    id = nanoid()
+  ) => {
+    setMlIsLoading(true);
+    setMlProgressText("Generating questions...");
+    setMlProgress(1);
+    await generateQuestions(paragraph);
+    setMlProgressText("Creating deck...");
+    setMlProgress(2);
+    dispatch(Decks.createDeck(id, title, subtitle, [], []));
+    console.log("deck created");
+    await createDeckDatabase(title, subtitle, id);
+    console.log("deck created on firebase");
+    setVisibleUploadPDFModal(false);
+    console.log("modal closed");
+    if (decks.length === 0) {
+      setEmpty(false);
+      setIsLoading(false);
+    }
+    const mlDeckIndex = numOfDecks;
+    console.log("mlDeckIndex is", mlDeckIndex);
+    setMlProgressText("Creating card(s)...");
+    setMlProgress(3);
+    mlText.forEach((mlTextItem) => {
+      console.log("creating cards");
+      createMlFlashcardHandler(mlTextItem[0], mlTextItem[1], mlDeckIndex, id);
+    });
+    numOfDecks = ++numOfDecks;
+    console.log("done");
+    setMlIsLoading(false);
   };
 
   const loadCardDatabaseForDeck = async (deckID, userEmail, indexer) => {
@@ -359,6 +422,27 @@ function DeckComponent(props) {
     }
   };
 
+  const createMlFlashcardHandler = (
+    question,
+    answer,
+    mlDeckIndex,
+    mlDeckID,
+    boxType = 1,
+    id = nanoid(),
+    inputDate = currentDate
+  ) => {
+    const card = {
+      id: id,
+      question,
+      answer,
+      boxType: boxType,
+      date: inputDate,
+    };
+    createCardDatabase(question, answer, mlDeckID, id, inputDate);
+    dispatch(Decks.createFlashcard(mlDeckIndex, card));
+    dispatch(Decks.pushOntoStudydeck(mlDeckIndex, card));
+  };
+
   const deleteDeckDatabase = async (id) => {
     const userEmail = await String(fireauth.currentUser.email);
     await firestore
@@ -384,6 +468,7 @@ function DeckComponent(props) {
       setEmpty(true);
       setIsLoading(false);
     }
+    numOfDecks = --numOfDecks;
   };
 
   const renderItem = (deck) => (
@@ -409,20 +494,6 @@ function DeckComponent(props) {
   if (!loaded) {
     return null;
   }
-  // const test_text = 'The Empire of Japan aimed to dominate Asia and the Pacific and was already at war with the Republic of China in 1937, but the world war is generally said to have begun on 1 September 1939 with the invasion of Poland by Germany and subsequent declarations of war on Germany by France and the United Kingdom. From late 1939 to early 1941, in a series of campaigns and treaties, Germany conquered or controlled much of continental Europe, and formed the Axis alliance with Italy and Japan. Under the Molotov-Ribbentrop Pact of August 1939, Germany and the Soviet Union partitioned and annexed territories of their European neighbours, Poland, Finland, Romania and the Baltic states. The war continued primarily between the European Axis powers and the coalition of the United Kingdom and the British Commonwealth, with campaigns including the North Africa and East Africa campaigns, the aerial Battle of Britain, the Blitz bombing campaign, the Balkan Campaign as well as the long-running Battle of the Atlantic. In June 1941, the European Axis powers launched an invasion of the Soviet Union, opening the largest land theatre of war in history, which trapped the major part of the Axis\' military forces into a war of attrition. In December 1941, Japan attacked the United States and European territories in the Pacific Ocean, and quickly conquered much of the Western Pacific.'
-
-  const generateQuestions = (test_text) => {
-    axios.post("https://plated-hash-320814.as.r.appspot.com/generate/",{"text":test_text})
-        .then((response) => {
-          const qna = response["data"]["result"];
-          console.log(qna);
-          setMLText(qna);
-        }).catch((err) => {
-          console.log(err);
-    })
-  }
-
-
 
   return (
     <SafeAreaView
@@ -469,7 +540,11 @@ function DeckComponent(props) {
               a){" "}
             </Text>
             <Text
-              style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+              style={{
+                fontFamily: "PoppinsRegular",
+                color: theme.colors.text,
+                paddingRight: 5,
+              }}
             >
               Press on the button with the "Create Deck" label to manually
               create a deck.
@@ -482,15 +557,23 @@ function DeckComponent(props) {
             }}
           >
             <Text
-              style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+              style={{
+                fontFamily: "PoppinsRegular",
+                color: theme.colors.text,
+              }}
             >
               b){" "}
             </Text>
             <Text
-              style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
+              style={{
+                fontFamily: "PoppinsRegular",
+                color: theme.colors.text,
+                paddingRight: 5,
+              }}
             >
               Press on the button with the "Upload Your Notes" label to create a
-              deck from your notes.
+              deck from your notes. This button will auto-generate cards for
+              your newly-created deck based on your notes.
             </Text>
           </View>
           <Text
@@ -534,11 +617,15 @@ function DeckComponent(props) {
               <Ionicons name="ios-close-outline" size={24} color="black" />
             </TouchableOpacity>
           </View>
-          <ReviewFormComponent createDeckHandler={createDeckHandler} />
+          <ReviewFormComponent
+            createDeckHandler={createDeckHandler}
+            createMlDeckHandler={createMlDeckHandler}
+          />
         </Modal>
         <Modal
           visible={visibleUploadPDFModal}
           onDismiss={hideUploadPDFModal}
+          //overlayAccessibilityLabel="do nothing"
           style={{
             justifyContent: "center",
           }}
@@ -562,10 +649,24 @@ function DeckComponent(props) {
               <Ionicons name="ios-close-outline" size={24} color="black" />
             </TouchableOpacity>
           </View>
-          <ReviewFormComponent
-            autoGeneratorUI
-            createDeckHandler={createDeckHandler}
-          />
+          {mlIsLoading ? (
+            <View>
+              <ProgressBar
+                progress={mlProgress / 3}
+                color={theme.colors.primary}
+                style={{ height: responsiveHeight(0.5), borderRadius: 20 }}
+              />
+              <Text style={{ fontFamily: "PoppinsLight" }}>
+                {mlProgressText}
+              </Text>
+            </View>
+          ) : (
+            <ReviewFormComponent
+              autoGeneratorUI
+              createDeckHandler={createDeckHandler}
+              createMlDeckHandler={createMlDeckHandler}
+            />
+          )}
         </Modal>
         <Modal
           visible={visibleAddCardModal}

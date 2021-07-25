@@ -4,7 +4,11 @@ import { TextInput, Text, useTheme } from "react-native-paper";
 import { Formik } from "formik";
 import CustomButton from "../CustomButton";
 
-function ReviewFormComponent({ createDeckHandler, autoGeneratorUI }) {
+function ReviewFormComponent({
+  createDeckHandler,
+  autoGeneratorUI,
+  createMlDeckHandler,
+}) {
   return (
     <View style={{ elevation: 24 }}>
       <Formik
@@ -15,7 +19,13 @@ function ReviewFormComponent({ createDeckHandler, autoGeneratorUI }) {
         }}
         onSubmit={(values, actions) => {
           actions.resetForm();
-          createDeckHandler(values.title, values.subtitle, values.paragraph);
+          autoGeneratorUI
+            ? createMlDeckHandler(
+                values.title,
+                values.subtitle,
+                values.paragraph
+              )
+            : createDeckHandler(values.title, values.subtitle);
         }}
       >
         {(props) => (
@@ -48,13 +58,20 @@ function ReviewFormComponent({ createDeckHandler, autoGeneratorUI }) {
               <TextInput
                 mode="outlined"
                 label="Your paragraph"
+                maxLength={256}
                 style={{
                   marginTop: -10,
                   padding: 10,
                 }}
                 placeholder="Enter your paragraph"
+                onChangeText={props.handleChange("paragraph")}
                 value={props.values.paragraph}
                 left={<TextInput.Icon name="note-text" />}
+                right={
+                  <TextInput.Affix
+                    text={props.values.paragraph.trim().length + "/256"}
+                  />
+                }
               />
             )}
             <View
