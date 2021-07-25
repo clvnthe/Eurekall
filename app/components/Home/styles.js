@@ -60,13 +60,14 @@ export default ScaledSheet.create({
   progressbar: { height: "9@s", borderRadius: "20@s" },
   objectivesView: {
     width: "100%",
+    justifyContent: "center",
     alignSelf: "center",
     paddingTop: "10@s",
     paddingBottom: "10@s",
-    marginLeft: "20@s",
+    //marginLeft: "20@s",
   },
   objectivesText: {
-    marginLeft: "10@s",
+    marginLeft: "20@s",
   },
   objectivesFlatListView: {
     height: "160@s",
@@ -74,7 +75,7 @@ export default ScaledSheet.create({
     marginRight: "20@s",
     marginTop: "10@s",
     marginBottom: "10@s",
-    marginLeft: "10@s",
+    marginLeft: "20@s",
     justifyContent: "center",
     alignItems: "center",
     borderRadius: "20@s",
@@ -113,6 +114,7 @@ export default ScaledSheet.create({
   decksText: {
     fontSize: "31@s",
     alignSelf: "center",
+    textAlign: "center",
   },
   decksCaption: {
     fontSize: "17@s",

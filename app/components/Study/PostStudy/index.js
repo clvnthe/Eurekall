@@ -109,14 +109,16 @@ function PostStudyComponent({ route }) {
             renderItem={renderStats}
             keyExtractor={(item) => item.id}
           />
-          <Text
-            style={{
-              color: theme.dark ? theme.colors.onPrimary : "#ffffff",
-              fontFamily: "PoppinsMedium",
-            }}
-          >
-            Exp earned: 10
-          </Text>
+          {!route.params.studyAll && (
+            <Text
+              style={{
+                color: theme.dark ? theme.colors.onPrimary : "#ffffff",
+                fontFamily: "PoppinsMedium",
+              }}
+            >
+              Exp earned: 10
+            </Text>
+          )}
         </Surface>
         <Surface style={styles.motivationWrapper}>
           <Title>Great Job!</Title>

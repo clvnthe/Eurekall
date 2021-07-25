@@ -26,7 +26,7 @@ import firebase from "firebase";
 import { ScrollView } from "moti";
 import { objectivesData } from "../../../assets/data/objectivesData";
 import merge from "deepmerge";
-import {userStatsLocal} from "../../../assets/data/userStatsLocal";
+import { userStatsLocal } from "../../../assets/data/userStatsLocal";
 import LottieView from "lottie-react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 
@@ -71,7 +71,8 @@ function HomeComponent(props) {
   const numOfDecks = useSelector(Decks.getDecks).length;
   const [objectivesRenderData, setObjectivesRenderData] =
     React.useState(objectivesData);
-  const [initialObjectivesRender, setInitialObjectivesRender] = React.useState(true);
+  const [initialObjectivesRender, setInitialObjectivesRender] =
+    React.useState(true);
   const [userStats, setUserStats] = React.useState();
   const isFocused = useIsFocused();
   const [hasLeveledUp, setHasLeveledUp] = React.useState(false);
@@ -136,7 +137,7 @@ function HomeComponent(props) {
         const actualUserExp = overallUserExp % 500;
         setUserExp(actualUserExp);
         setUserLvl(actualUserLvl);
-        console.log('running exp')
+        console.log("running exp");
       } catch (error) {
         console.log(error);
       }
@@ -150,9 +151,9 @@ function HomeComponent(props) {
           const userEmail = String(fireauth.currentUser.email);
           await updateObjectiveStatusFirebaseCompleted(userEmail);
           const retrieveUser = await firestore
-              .collection("users")
-              .doc(userEmail)
-              .get();
+            .collection("users")
+            .doc(userEmail)
+            .get();
           const userDetails = retrieveUser.data();
 
           // For updating objectives tracking
@@ -166,15 +167,15 @@ function HomeComponent(props) {
           }
           setInitialObjectivesRender(false);
         } else {
-          setUserStats(userStatsLocal[0])
-          updateObjectiveStatusLocally()
+          setUserStats(userStatsLocal[0]);
+          updateObjectiveStatusLocally();
         }
       } catch (error) {
         console.log("firebase objective loading error");
         console.log(error);
       }
-    },0)
-  },[userStats]);
+    }, 0);
+  }, [userStats]);
 
   useEffect(() => {
     setTimeout(() => setHasLeveledUp(false), 3000);
@@ -205,7 +206,6 @@ function HomeComponent(props) {
       console.log(error);
     }
   };
-
 
   const updateObjectiveStatusFirebaseCollection = async (id, userEmail) => {
     try {
@@ -272,22 +272,34 @@ function HomeComponent(props) {
   const updateObjectiveStatusLocally = () => {
     const userStats = userStatsLocal[0];
     const userObjectives = objectivesData;
-    if (userStats["decksCreated"] >= 1 && userObjectives[0]["collected"] === false) {
+    if (
+      userStats["decksCreated"] >= 1 &&
+      userObjectives[0]["collected"] === false
+    ) {
       userObjectives[0]["completed"] = true;
     }
-    if (userStats["cardsCreated"] >= 1 && userObjectives[1]["collected"] === false) {
+    if (
+      userStats["cardsCreated"] >= 1 &&
+      userObjectives[1]["collected"] === false
+    ) {
       userObjectives[1]["completed"] = true;
     }
-    if (userStats["cardsDeleted"] >= 1 && userObjectives[2]["collected"] === false) {
+    if (
+      userStats["cardsDeleted"] >= 1 &&
+      userObjectives[2]["collected"] === false
+    ) {
       userObjectives[2]["completed"] = true;
     }
-    if (userStats["box5Cards"] >= 5  && userObjectives[3]["collected"] === false) {
+    if (
+      userStats["box5Cards"] >= 5 &&
+      userObjectives[3]["collected"] === false
+    ) {
       userObjectives[3]["completed"] = true;
     }
-  }
+  };
 
   const objectiveCollectedFilter = (objectives) => {
-    return objectives.filter((objective) => objective.collected === false)
+    return objectives.filter((objective) => objective.collected === false);
   };
 
   const objectiveUnlockedHandler = (id) => {
@@ -434,12 +446,48 @@ function HomeComponent(props) {
             />
           </TouchableOpacity>
         </View>
-        <FlatList
-          data={objectiveCollectedFilter(objectivesRenderData)}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          horizontal={true}
-        ></FlatList>
+        {!objectiveCollectedFilter(objectivesRenderData) ? (
+          <TouchableOpacity
+            onPress={() => navigate(OBJECTIVES_NAVIGATOR)}
+            style={styles.decksContainer}
+          >
+            <Surface
+              style={[
+                styles.decksSurface,
+                {
+                  backgroundColor: theme.dark ? "#4d4b50" : "#F0FFF0",
+                  borderColor: theme.dark ? "#030200" : "#f1f9ec",
+                },
+              ]}
+            >
+              <MaterialCommunityIcons
+                name="bullseye-arrow"
+                size={50}
+                color={theme.colors.text}
+                style={{ alignSelf: "center" }}
+              />
+              <Text
+                style={[
+                  styles.decksText,
+                  {
+                    color: theme.colors.text,
+                    fontFamily: "PoppinsLight",
+                    fontSize: 18,
+                  },
+                ]}
+              >
+                ongoing/completed
+              </Text>
+            </Surface>
+          </TouchableOpacity>
+        ) : (
+          <FlatList
+            data={objectiveCollectedFilter(objectivesRenderData)}
+            renderItem={renderItem}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+          ></FlatList>
+        )}
       </View>
       <View style={styles.decksView}>
         <Title style={[{ fontFamily: "PoppinsMedium" }, styles.decksTitle]}>
