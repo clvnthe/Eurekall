@@ -54,7 +54,7 @@ Currently the app is released on Android platforms only. However, we are aiming 
 ### Installation
 
 1. Click on the following link and download:
-https://drive.google.com/file/d/1Y7iGjvNWfz7wbK5CLKujRSB_t1-9Fzk_/view?usp=sharing
+https://drive.google.com/file/d/1awYcNMhjUCBhh8pI0SjITHYMjSLxzy2q/view?usp=sharing
 
 2. Simply click on the APK Package and give permission for the installation.
 
