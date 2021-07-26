@@ -4,31 +4,35 @@ export var objectivesData = [
     objectiveName: "Create your first deck",
     targetAmt: "1",
     expAmt: "50",
+    iconName: "card-plus-outline",
     completed: false,
-    collected: false
+    collected: false,
   },
   {
     id: "2",
     objectiveName: "Create your first card",
     targetAmt: "1",
     expAmt: "100",
+    iconName: "credit-card-plus",
     completed: false,
-    collected: false
+    collected: false,
   },
   {
     id: "3",
     objectiveName: "Delete your first card",
     targetAmt: "1",
     expAmt: "200",
+    iconName: "credit-card-remove",
     completed: false,
-    collected: false
+    collected: false,
   },
   {
     id: "4",
     objectiveName: "Achieve 5 gold-coloured cards",
     targetAmt: "5",
     expAmt: "1000",
+    iconName: "gold",
     completed: false,
-    collected: false
+    collected: false,
   },
 ];

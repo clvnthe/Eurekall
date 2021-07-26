@@ -4,6 +4,7 @@ import { FlatList, Image, Text, View } from "react-native";
 import styles from "./styles";
 import { objectivesData } from "../../../../assets/data/objectivesData";
 import { Surface, useTheme } from "react-native-paper";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 function CompletedObjectivesComponent(props) {
   const [loaded] = useFonts({
@@ -38,6 +39,11 @@ function CompletedObjectivesComponent(props) {
           >
             {item.objectiveName}
           </Text>
+          <MaterialCommunityIcons
+            name={item.iconName}
+            size={24}
+            color={theme.dark ? "white" : "black"}
+          />
           <Text style={{ fontFamily: "PoppinsBold", color: theme.colors.text }}>
             {item.expAmt} exp
           </Text>

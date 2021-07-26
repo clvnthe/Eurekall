@@ -551,8 +551,8 @@ function DeckComponent(props) {
                 paddingRight: 5,
               }}
             >
-              Press on the button with the "Create Deck" label to manually
-              create a deck.
+              Press on the button with the "Create Deck Manually" label to
+              manually create a deck.
             </Text>
           </View>
           <View
@@ -576,9 +576,10 @@ function DeckComponent(props) {
                 paddingRight: 5,
               }}
             >
-              Press on the button with the "Upload Your Notes" label to create a
-              deck from your notes. This button will auto-generate cards for
-              your newly-created deck based on your notes.
+              Press on the button with the "Create Deck Automatically" label to
+              create a deck automatically from your notes. This button will
+              auto-generate cards for your newly-created deck based on your
+              notes.{"\n"}
             </Text>
           </View>
           <Text
@@ -617,7 +618,9 @@ function DeckComponent(props) {
               justifyContent: "space-between",
             }}
           >
-            <Title style={{ fontFamily: "PoppinsBold" }}>Create a deck</Title>
+            <Title style={{ fontFamily: "PoppinsBold" }}>
+              Create Deck Manually
+            </Title>
             <TouchableOpacity onPress={hideModal}>
               <Ionicons
                 name="ios-close-outline"
@@ -651,7 +654,7 @@ function DeckComponent(props) {
             }}
           >
             <Title style={{ fontFamily: "PoppinsBold" }}>
-              Upload Your Notes
+              Create Deck Automatically
             </Title>
             {mlIsLoading ? (
               <ActivityIndicator
@@ -734,14 +737,14 @@ function DeckComponent(props) {
           actions={[
             {
               icon: "credit-card-plus",
-              label: "Create Deck",
+              label: "Create Deck Manually",
               onPress: () => {
                 showModal();
               },
             },
             {
-              icon: "file-upload",
-              label: "Upload Your Notes",
+              icon: "auto-upload",
+              label: "Create Deck Automatically",
               onPress: () => showUploadPDFModal(),
             },
           ]}

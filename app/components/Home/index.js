@@ -14,7 +14,11 @@ import {
   useTheme,
 } from "@react-navigation/native";
 import { Surface, Title, Text, ProgressBar, Badge } from "react-native-paper";
-import { DECKS, OBJECTIVES_NAVIGATOR } from "../../constants/routeNames";
+import {
+  DECKS,
+  HOME_MAIN,
+  OBJECTIVES_NAVIGATOR,
+} from "../../constants/routeNames";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as Decks from "../../../store/slices/deckSlice";
 import { useSelector } from "react-redux";
@@ -181,7 +185,7 @@ function HomeComponent(props) {
     setTimeout(() => setHasLeveledUp(false), 3000);
   }, [hasLeveledUp]);
 
-  const { navigate } = useNavigation();
+  const { navigate, reset } = useNavigation();
 
   const updateExptoFirebase = async (addExp, userEmail) => {
     try {
@@ -345,17 +349,11 @@ function HomeComponent(props) {
           }}
         >
           {!item.completed ? (
-            <Text
-              style={[
-                {
-                  fontFamily: "PoppinsMedium",
-                  color: "#666666",
-                },
-                styles.objectivesFlatListName,
-              ]}
-            >
-              0/{item.targetAmt}
-            </Text>
+            <MaterialCommunityIcons
+              name="progress-wrench"
+              size={24}
+              color="black"
+            />
           ) : (
             <MaterialCommunityIcons
               name="treasure-chest"
@@ -437,7 +435,12 @@ function HomeComponent(props) {
           </Title>
           <TouchableOpacity
             style={{ alignSelf: "center" }}
-            onPress={() => navigate(OBJECTIVES_NAVIGATOR)}
+            onPress={() =>
+              reset({
+                index: 1,
+                routes: [{ name: HOME_MAIN }, { name: OBJECTIVES_NAVIGATOR }],
+              })
+            }
           >
             <MaterialIcons
               name="arrow-forward-ios"

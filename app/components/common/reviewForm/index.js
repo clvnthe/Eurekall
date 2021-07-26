@@ -58,14 +58,14 @@ function ReviewFormComponent({
             {autoGeneratorUI && (
               <TextInput
                 mode="outlined"
-                label="Your paragraph"
+                label="Your Notes"
                 multiline={true}
                 style={{
                   marginTop: -10,
                   padding: 10,
                   maxHeight: responsiveHeight(25),
                 }}
-                placeholder="Enter your paragraph"
+                placeholder="Enter your notes"
                 onChangeText={props.handleChange("paragraph")}
                 value={props.values.paragraph}
                 left={<TextInput.Icon name="note-text" />}

@@ -103,7 +103,6 @@ function LeaderboardComponent(props) {
         const firebaseUserRef = firestore.collection("users");
         const getLeaderboardData = await firebaseUserRef
           .orderBy("exp", "desc")
-          .limit(8)
           .get();
         const leaderboardData = getLeaderboardData["docs"];
         let i = 1;

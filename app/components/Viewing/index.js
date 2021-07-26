@@ -30,8 +30,8 @@ import firebase from "firebase";
 import { ScaledSheet } from "react-native-size-matters";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
-import {userStatsLocal} from "../../../assets/data/userStatsLocal";
-import {objectivesData} from "../../../assets/data/objectivesData";
+import { userStatsLocal } from "../../../assets/data/userStatsLocal";
+import { objectivesData } from "../../../assets/data/objectivesData";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAq9csfcFvRvMPS-kEjBN1IJ5iL0Sfvn2w",
@@ -66,19 +66,31 @@ function ViewingComponent({ route }) {
   const updateObjectiveStatusLocally = () => {
     const userStats = userStatsLocal[0];
     const userObjectives = objectivesData;
-    if (userStats["decksCreated"] >= 1 && userObjectives[0]["collected"] === false) {
+    if (
+      userStats["decksCreated"] >= 1 &&
+      userObjectives[0]["collected"] === false
+    ) {
       userObjectives[0]["completed"] = true;
     }
-    if (userStats["cardsCreated"] >= 1 && userObjectives[1]["collected"] === false) {
+    if (
+      userStats["cardsCreated"] >= 1 &&
+      userObjectives[1]["collected"] === false
+    ) {
       userObjectives[1]["completed"] = true;
     }
-    if (userStats["cardsDeleted"] >= 1 && userObjectives[2]["collected"] === false) {
+    if (
+      userStats["cardsDeleted"] >= 1 &&
+      userObjectives[2]["collected"] === false
+    ) {
       userObjectives[2]["completed"] = true;
     }
-    if (userStats["box5Cards"] >= 5  && userObjectives[3]["collected"] === false) {
+    if (
+      userStats["box5Cards"] >= 5 &&
+      userObjectives[3]["collected"] === false
+    ) {
       userObjectives[3]["completed"] = true;
     }
-  }
+  };
 
   const theme = useTheme();
 
@@ -121,10 +133,13 @@ function ViewingComponent({ route }) {
       id: cardId,
       date: currentDate,
     });
-    await firestore.collection("users").doc(userEmail).update({
-      'stats.cardsCreated': firebase.firestore.FieldValue.increment(1)
-    })
-    userStatsLocal[0]['cardsCreated'] = userStatsLocal[0]['cardsCreated'] + 1;
+    await firestore
+      .collection("users")
+      .doc(userEmail)
+      .update({
+        "stats.cardsCreated": firebase.firestore.FieldValue.increment(1),
+      });
+    userStatsLocal[0]["cardsCreated"] = userStatsLocal[0]["cardsCreated"] + 1;
     updateObjectiveStatusLocally();
   };
 
@@ -161,11 +176,14 @@ function ViewingComponent({ route }) {
       .collection("cards")
       .doc(id)
       .delete();
-    await firestore.collection("users").doc(userEmail).update({
-      'stats.cardsDeleted': firebase.firestore.FieldValue.increment(1)
-    })
-    userStatsLocal[0]['cardsDeleted'] = userStatsLocal[0]['cardsDeleted'] + 1;
-    updateObjectiveStatusLocally()
+    await firestore
+      .collection("users")
+      .doc(userEmail)
+      .update({
+        "stats.cardsDeleted": firebase.firestore.FieldValue.increment(1),
+      });
+    userStatsLocal[0]["cardsDeleted"] = userStatsLocal[0]["cardsDeleted"] + 1;
+    updateObjectiveStatusLocally();
   };
 
   const deleteFlashcardHandler = (id) => {
@@ -257,25 +275,25 @@ function ViewingComponent({ route }) {
               color: theme.colors.text,
             }}
           >
-            Box Type 1:
+            Box Type 1 (Grey):
           </Text>
           <View style={[styles.boxShape, { backgroundColor: "#CCCFBC" }]} />
           <Text
             style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
           >
-            Box Type 2:
+            Box Type 2 (Orange):
           </Text>
           <View style={[styles.boxShape, { backgroundColor: "#ff9f68" }]} />
           <Text
             style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
           >
-            Box Type 3:
+            Box Type 3 (Red):
           </Text>
           <View style={[styles.boxShape, { backgroundColor: "#FF7F7F" }]} />
           <Text
             style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
           >
-            Box Type 4:
+            Box Type 4 (Gold):
           </Text>
           <LinearGradient
             style={styles.boxShape}
@@ -284,7 +302,7 @@ function ViewingComponent({ route }) {
           <Text
             style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
           >
-            Box Type 5:
+            Box Type 5 (Multicoloured):
           </Text>
           <LinearGradient
             style={styles.boxShape}
@@ -321,6 +339,10 @@ function ViewingComponent({ route }) {
             {"\n"}2) To delete a card, press and hold on the card. An alert will
             appear to prompt you of the deletion. {"\n"}
             {"\n"}3) To flip a card, simply tap on the card.{"\n"}
+            {"\n"}
+            4) To upgrade a card to the next box type, you will have to
+            correctly answer that card on your first try during your study
+            session!{"\n"}
           </Text>
         </Modal>
         <Modal

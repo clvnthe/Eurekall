@@ -4,6 +4,7 @@ import { FlatList, Image, Text, View } from "react-native";
 import { Surface, useTheme } from "react-native-paper";
 import { objectivesData } from "../../../../assets/data/objectivesData";
 import styles from "./styles";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 function OngoingObjectivesComponent() {
   const theme = useTheme();
@@ -29,11 +30,11 @@ function OngoingObjectivesComponent() {
           >
             {item.objectiveName}
           </Text>
-          <Text
-            style={{ fontFamily: "PoppinsRegular", color: theme.colors.text }}
-          >
-            0/{item.targetAmt}
-          </Text>
+          <MaterialCommunityIcons
+            name={item.iconName}
+            size={24}
+            color={theme.dark ? "white" : "black"}
+          />
           <Text style={{ fontFamily: "PoppinsBold", color: theme.colors.text }}>
             {item.expAmt} exp
           </Text>
