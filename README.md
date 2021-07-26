@@ -40,7 +40,8 @@ This section should list any major frameworks that you built your project using.
 * JavaScript (FrontEnd)
   - ReactNative
 * FireBase (Backend)
-* TensorFlow (Machine learning & Analytics)
+* Google cloud python flask app (Backend)
+* Pytorch (Machine learning & Analytics)
 
 
 
@@ -73,6 +74,8 @@ https://drive.google.com/file/d/1Y7iGjvNWfz7wbK5CLKujRSB_t1-9Fzk_/view?usp=shari
 ### Creating a new deck
 1. To add a study deck, click on the (+) and create your deck
 2. Give a deck title and subtitle to your deck
+3. Alternatively you may create a deck automatically by selecting create a deck automatically.
+4. Give a deck title, subtitle and provide a text paragraph to generate questions.
 
 ### Creating cards for your deck and viewing your cards
 1. After creating your deck, you may add cards to study in your deck by clicking the respective add card for each deck
@@ -90,7 +93,6 @@ https://drive.google.com/file/d/1Y7iGjvNWfz7wbK5CLKujRSB_t1-9Fzk_/view?usp=shari
 4. By answering correctly, the question will be removed from you current study pile and will be presented to you again (watch the project video for a more detailed explanation on our spaced repeition techniques)
 5. By answering incorrectly, the card will be placed back into your study pile.
 
-
 ### User profile Customization 
 1. To edit your user profile, tap on the three bars on the top left of the Home menu
 2. Here a drawer menu will appear, tap on profile to view your profile
@@ -99,6 +101,14 @@ https://drive.google.com/file/d/1Y7iGjvNWfz7wbK5CLKujRSB_t1-9Fzk_/view?usp=shari
 5. Here you can upload or take a new photo by clicking on the picture
 6. Make any changes you want to your name or username
 7. Don't forget to click submit :)
+
+### User objectives
+1. To collect your objectives simply tap on the chest icon below each objective
+2. To view your ongoing objectives and completed objectives clicked on the right pointed arrow beside objectives
+
+### Leaderboards
+1. To view the leaderboards, tap on the leaderboards icon on the bottom right of the screen
+2. Tap on any user to view a profile summary
 
 
 <!-- Project Log -->
