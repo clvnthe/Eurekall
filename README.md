@@ -48,7 +48,7 @@ This section should list any major frameworks that you built your project using.
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Currently the app is released on Android platforms only. However, we are aiming to push the app to be available for IOS as well in milestone 3.
+Currently the app is released on Android platforms only. This is due to Apple's policy which requires developers to pay a fee to deploy any ipa apps, we plan to release the app on ios if and when the app is ready,stable and successful. Sorry apple users :(
 
 
 ### Installation
