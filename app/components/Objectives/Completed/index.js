@@ -6,7 +6,9 @@ import { objectivesData } from "../../../../assets/data/objectivesData";
 import { Surface, useTheme } from "react-native-paper";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-function CompletedObjectivesComponent(props) {
+function CompletedObjectivesComponent({ route }) {
+  console.log(route);
+
   const [loaded] = useFonts({
     MontserratLight: require("../../../../assets/fonts/Montserrat-Light.ttf"),
     MontserratBold: require("../../../../assets/fonts/Montserrat-Bold.ttf"),
@@ -19,8 +21,14 @@ function CompletedObjectivesComponent(props) {
   const theme = useTheme();
   const [objectivesRenderData, setObjectivesRenderData] =
     React.useState(objectivesData);
+  const completedIDs = route.params.completedIDs;
+  const collectedObjectives = route.params.data.filter(
+    (objective) => objective.collected === true
+  );
   const objectiveDoneFilter = (objectives) => {
-    return objectives.filter((objective) => objective.collected === true);
+    return collectedObjectives.concat(
+      objectives.filter((objective) => completedIDs.includes(objective.id))
+    );
   };
   const renderItem = ({ item }) => {
     return (

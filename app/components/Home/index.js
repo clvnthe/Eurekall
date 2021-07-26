@@ -29,7 +29,6 @@ import { useFonts } from "expo-font";
 import firebase from "firebase";
 import { ScrollView } from "moti";
 import { objectivesData } from "../../../assets/data/objectivesData";
-import merge from "deepmerge";
 import { userStatsLocal } from "../../../assets/data/userStatsLocal";
 import LottieView from "lottie-react-native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -80,6 +79,7 @@ function HomeComponent(props) {
   const [userStats, setUserStats] = React.useState();
   const isFocused = useIsFocused();
   const [hasLeveledUp, setHasLeveledUp] = React.useState(false);
+  const [completedIDs, setCompletedIDs] = React.useState([]);
 
   useEffect(() => {
     setTimeout(async () => {
@@ -307,6 +307,7 @@ function HomeComponent(props) {
   };
 
   const objectiveUnlockedHandler = (id) => {
+    completedIDs.push(id);
     setObjectivesRenderData(
       objectivesRenderData.filter((objective) => objective.id !== id)
     );
@@ -344,6 +345,7 @@ function HomeComponent(props) {
           ]}
           disabled={!item.completed}
           onPress={() => {
+            updateObjectiveStatusLocally();
             updateExptoFirebase(Number(item["expAmt"]), userInfo[0]);
             updateObjectiveStatusFirebaseCollection(item.id, userInfo[0]);
           }}
@@ -438,7 +440,16 @@ function HomeComponent(props) {
             onPress={() =>
               reset({
                 index: 1,
-                routes: [{ name: HOME_MAIN }, { name: OBJECTIVES_NAVIGATOR }],
+                routes: [
+                  { name: HOME_MAIN },
+                  {
+                    name: OBJECTIVES_NAVIGATOR,
+                    params: {
+                      data: objectivesRenderData,
+                      completedIDs: completedIDs,
+                    },
+                  },
+                ],
               })
             }
           >
@@ -451,7 +462,12 @@ function HomeComponent(props) {
         </View>
         {!objectiveCollectedFilter(objectivesRenderData) ? (
           <TouchableOpacity
-            onPress={() => navigate(OBJECTIVES_NAVIGATOR)}
+            onPress={() =>
+              reset({
+                index: 1,
+                routes: [{ name: HOME_MAIN }, { name: OBJECTIVES_NAVIGATOR }],
+              })
+            }
             style={styles.decksContainer}
           >
             <Surface

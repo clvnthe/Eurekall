@@ -9,14 +9,14 @@ import {
 import CompletedObjectivesScreen from "../screens/Home/ObjectivesScreens/Completed";
 import OngoingObjectivesScreen from "../screens/Home/ObjectivesScreens/Ongoing";
 
-export const ObjectivesTopTabsNavigator = () => {
+export const ObjectivesTopTabsNavigator = ({ route }) => {
   return (
     <Tabs iconPosition="top">
       <TabScreen label="Ongoing" icon="progress-clock">
-        <OngoingObjectivesScreen />
+        <OngoingObjectivesScreen route={route} />
       </TabScreen>
       <TabScreen label="Completed" icon="checkbox-marked-circle-outline">
-        <CompletedObjectivesScreen />
+        <CompletedObjectivesScreen route={route} />
       </TabScreen>
     </Tabs>
   );

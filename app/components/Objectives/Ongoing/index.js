@@ -1,18 +1,20 @@
 import { useFonts } from "expo-font";
-import React from "react";
+import React, { useEffect } from "react";
 import { FlatList, Image, Text, View } from "react-native";
 import { Surface, useTheme } from "react-native-paper";
 import { objectivesData } from "../../../../assets/data/objectivesData";
 import styles from "./styles";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-function OngoingObjectivesComponent() {
+function OngoingObjectivesComponent({ route }) {
   const theme = useTheme();
-  const [objectivesRenderData, setObjectivesRenderData] =
-    React.useState(objectivesData);
+  const [objectivesRenderData, setObjectivesRenderData] = React.useState(
+    route.params.data
+  );
   const objectiveCollectedFilter = (objectives) => {
     return objectives.filter((objective) => objective.collected === false);
   };
+
   const renderItem = ({ item }) => {
     return (
       <View style={styles.objectivesWrapper}>

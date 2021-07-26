@@ -1,8 +1,10 @@
 import React from "react";
 import CompletedObjectivesComponent from "../../../../components/Objectives/Completed";
 
-function CompletedObjectivesScreen(props) {
-  return <CompletedObjectivesComponent></CompletedObjectivesComponent>;
-}
+const CompletedObjectivesScreen = ({ route }) => {
+  return (
+    <CompletedObjectivesComponent route={route}></CompletedObjectivesComponent>
+  );
+};
 
 export default CompletedObjectivesScreen;
