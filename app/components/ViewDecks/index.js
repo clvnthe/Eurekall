@@ -365,7 +365,7 @@ function DeckComponent(props) {
     await deckRef.set({
       question: question,
       answer: answer,
-      boxType: 0,
+      boxType: 1,
       id: cardId,
       date: currentDate,
     });
@@ -382,7 +382,7 @@ function DeckComponent(props) {
   const createFlashcardHandler = (
     question,
     answer,
-    boxType = 0,
+    boxType = 1,
     id = nanoid(),
     inputDate = currentDate,
     cardtoDeckIndex = 0,
