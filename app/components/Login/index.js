@@ -44,9 +44,13 @@ function LoginComponent(props) {
       setLoading(true);
       setIsSignInHelperTextVisible(false);
       const user = await fireauth.signInWithEmailAndPassword(email, password);
-      console.log("login successful");
+      if(user["user"]["emailVerified"]){
+        console.log("login successful");
+        logIn();
+      } else {
+        alert("Kindly verify your email first by accessing the link sent to your email")
+      }
       setLoading(false);
-      logIn();
     } catch (error) {
       setIsSignInHelperTextVisible(true);
       console.log("error signing in", error);
